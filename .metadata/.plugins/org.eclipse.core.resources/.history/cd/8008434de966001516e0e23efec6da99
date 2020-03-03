@@ -1,0 +1,94 @@
+package edu.uoc.ictflag.security.web;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import edu.com.ictflag.security.bll.IUserManager;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.SessionBean;
+import edu.uoc.ictflag.security.model.User;
+import edu.uoc.ictflag.security.model.UserRole;
+
+@Named
+@ViewScoped
+public class UserStatusController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	User user;
+	
+	@Inject
+	IUserManager userManager;
+	
+	public void changeLocale(String locale) throws Exception
+	{
+		FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale(locale));
+		
+		String username = SessionBean.getUsername();
+		
+		if (username != null)
+		{
+			userManager.setUserSelectedLanguage(username, locale);
+		}
+	}
+	
+	public List<String> getUserRoles()
+	{
+		List<String> roles = new ArrayList<String>();
+		
+		for (UserRole ur : user.getRoles())
+		{
+			roles.add(ur.toString());
+		}
+		
+		return roles;
+	}
+	
+	public void changeUserSelectedRole(String role) throws Exception
+	{
+		String username = SessionBean.getUsername();
+		
+		if (username != null)
+		{
+			if (role.startsWith("Role_"))
+			{
+				role = role.substring(5);
+			}
+			
+			userManager.setUserSelectedRole(username, UserRole.FromString(role));
+			
+			user = userManager.getUser(username);
+		}
+	}
+	
+	public String getUserSelectedRole()
+	{
+		return user.getSelectedRole().toString();
+	}
+	
+	public void initialize()
+	{
+		String username = SessionBean.getUsername();
+		
+		if (username != null)
+		{
+			try
+			{
+				user = userManager.getUser(username);
+				
+				FacesContext.getCurrentInstance().getViewRoot().setLocale(new Locale(user.getSelectedLanguage()));
+			}
+			catch (Exception e)
+			{
+				LogHelper.error(e);
+			}
+		}
+	}
+}

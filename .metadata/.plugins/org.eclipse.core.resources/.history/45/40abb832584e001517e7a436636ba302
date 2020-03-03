@@ -1,0 +1,79 @@
+package edu.uoc.ictflag.institution.bll;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import edu.com.ictflag.security.bll.IAuthorizationManager;
+import edu.uoc.ictflag.institution.dal.IProgramRepository;
+import edu.uoc.ictflag.institution.model.Program;
+import edu.uoc.ictflag.security.dal.IUserRepository;
+import edu.uoc.ictflag.security.model.UserRole;
+
+@Stateless
+public class ProgramManager implements IProgramManager, Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	IProgramRepository programRepository;
+	IAuthorizationManager authorizationService;
+	IUserRepository userRepository;
+	
+	@Inject
+	public ProgramManager(IProgramRepository programRepository, IAuthorizationManager authorizationService, IUserRepository userRepository)
+	{
+		this.programRepository = programRepository;
+		this.authorizationService = authorizationService;
+		this.userRepository = userRepository;
+	}
+	
+	public List<Program> getProgramsList(String username) throws Exception
+	{
+		List<Program> programsList = null;
+		
+		if (authorizationService.userHasReadPermission(username, "institution", "Program"))
+		{
+			UserRole ur = userRepository.getUserRole(username);
+			
+			if (ur == UserRole.PROGRAM_MANAGER)
+			{
+				programsList = programRepository.getProgramManagerProgramsList(username);
+			}
+			else
+			{
+				programsList = programRepository.getAllProgramsList();
+			}
+		}
+		
+		return programsList;
+	}
+	
+	@Override
+	public void deleteProgram(String username, long id) throws Exception
+	{
+		if (authorizationService.userHasReadPermission(username, "institution", "Program"))
+		{
+			programRepository.deleteProgram(id);
+		}
+	}
+	
+	@Override
+	public Program getProgram(String username, long id) throws Exception
+	{
+		if (authorizationService.userHasReadPermission(username, "institution", "Program"))
+		{
+		return programRepository.getProgram(id);
+		}
+	}
+	
+	@Override
+	public void createOrUpdateProgram(String username, Program program) throws Exception
+	{
+		if (authorizationService.userHasReadPermission(username, "institution", "Program"))
+		{
+		programRepository.createOrUpdateProgram(program);
+		}
+	}
+}

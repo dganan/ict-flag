@@ -1,0 +1,9 @@
+package edu.uoc.ictflag.institution.web;
+
+public class InstitutionConstants
+{
+	public static final String ModuleName = "institution";
+	public static final String Program = "Program";
+	
+	public static final String ProgramsListPageUrl = "/private/ProgramsList.xhtml";
+}

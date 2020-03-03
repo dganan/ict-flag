@@ -1,0 +1,11 @@
+INDEX VERSION 1.3+/home/david/ICTFLAG/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+2781009354.index
+2123676038.index
+468147447.index
+1509218115.index
+1724060480.index
+3273550222.index
+3152183280.index
+2028938078.index
+2817453647.index
+2200204893.index

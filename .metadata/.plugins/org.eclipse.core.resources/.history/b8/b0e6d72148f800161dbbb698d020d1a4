@@ -1,0 +1,273 @@
+en = English
+es = Spanish
+ca = Catalan
+
+AcademicYear = Academic year
+
+Add = Add
+Add_all = Add all
+
+Add_New = Add new
+
+Add_ellipsis = Add...
+
+Add_translation = Add translation
+
+Apply = Apply
+
+Available_items = Available items
+
+Cancel = Cancel
+
+Code = Code
+
+
+CourseCannotBeDeletedBecauseDependentCourseGroupsAlreadyExist = Course cannot be deleted because there are existing depending groups.
+
+CourseGroups = Groups
+CourseGroups_List = Groups list
+Courses = Courses
+Courses_List = Courses list
+
+Delete = Delete
+Delete_confirmation = Delete operation cannot be undone, and may delete other related elements. Are you sure you want to continue?
+
+Edit = Edit
+Edit_course = Edit course
+Edit_courseGroup = Edit course group
+Edit_institution = Institution data
+Edit_program = Edit program 
+Edit_subject = Edit subject
+Edit_tool = Edit tool
+Edit_vle = Edit VLE
+
+Execute = Execute
+
+File = File
+
+Instructor = Instructor
+
+Key = Key
+
+Language = Language
+
+Lecturer = Lecturer
+
+Login = Login
+Login_to_your_account = Login to your account
+
+Logout = Logout
+
+Main_site_url = Main site url
+
+Members = Members
+
+Name = Name
+
+No_results = No results.
+No_selected_items = No selected items.
+
+Password = Password
+
+Please_enter_correct_username_and_password = Please enter correct username and password.
+
+Process_success = Process finished succesfully. 
+
+Program_manager = Program manager
+
+Programs = Programs
+
+Programs_List = Programs List
+
+Remove = Remove
+Remove_all = Remove all
+
+Role_U = Super user
+Role_A = Admin
+Role_M = Program manager
+Role_L = Lecturer
+Role_I = Instructor
+Role_S = Student
+
+Save = Save
+Select_ellipsis = Select...
+
+Selected_items = Selected items
+
+Semester = Semester
+
+Students = Students
+
+SubjectCannotBeDeletedBecauseDependentCoursesAlreadyExist = Subject cannot be deleted because there are existing depending courses.
+
+Subject = Subject
+Subjects = Subjects
+
+Subjects_List = Subjects List
+
+Tools = Tools
+
+Tools_List = Tools List
+
+Url = Url
+
+Username = Username
+
+VLEs_List = VLEs list
+VLEs = VLEs
+
+# eLA Module
+
+Assignment_assessment = Activity assessment
+
+Attempts = Number of attempts
+AttemptsMax = Number of attempts (max)
+AttemptsAvg = Number of attempts (avg)
+AttemptsMin = Number of attempts (min)
+
+TimeBetweenAttempts = Time between attempts (in hours)
+TimeBetweenAttemptsMax = Time between attempts (max)
+TimeBetweenAttemptsAvg = Time between attempts (avg)
+TimeBetweenAttemptsMin = Time between attempts (min)
+
+Date = Date
+
+AnyTime = Any time
+LastWeek = Last week
+LastMonth = Last month
+Interval = Interval
+
+StartDate = Start date
+EndDate = End date
+
+Duration = Duration (in minutes)
+DurationMax = Duration (max)
+DurationAvg = Duration (avg)
+DurationMin = Duration (min)
+
+NumericGrades = Numeric grades
+NumericGradesMax = Numeric grades (max)
+NumericGradesAvg = Numeric grades (mitjana)
+NumericGradesMin = Numeric grades (min)
+
+AlphabeticGrades = Alphabetic grades
+
+Count = Count
+
+CourseAssignments = Course / Assignments
+
+Etl_process = ETL process
+
+
+Exercises_report = Exercises report
+Courses_report = Courses report 
+Assignments_report = Assignments report
+Students_report = Students report
+
+Filters = Filters
+GroupBy = Group by
+Outcomes = Outcomes
+
+Outcome = Outcome
+Results = Results
+
+OnlyLast = Only last one
+
+ToolExercises = Tool / Exercises
+
+Tool = Tool
+Total = Total
+Program = Program
+Subject = Subject
+Course = Course
+CourseGroup = Course group
+Assignment = Assignment
+Exercise = Exercise
+
+UNASSIGNED = UNASSIGNED
+
+ShowStackedData = Show stacked data
+ShowMaxGroups = Max groups to show
+
+SuccessRate = Success rate
+
+LowestSuccessRateExercises = Exercises with lowest success rate
+LongestDuration = Longest time
+HighestNumberOfAttempts = Highest number of attempts
+LongestDurationExercises = Exercises with longest duration
+HighestNumberOfAttemptsExercises = Exercises with highest number of attempts
+
+Right = Right
+Wrong = Wrong
+Timeout = Timeout
+Error = Error
+
+OnlyLastAttempt = Only last attempt
+Others = Others
+
+AssignmentsNumericGrades = Assignments numeric grades
+AssignmentsAlphabeticGrades = Assignments alphabetic grades
+AssignmentsDuration = Assignments duration (in  minutes) 
+AssignmentsSuccessRate = Assignments success rate
+ExercisesOutcomes = Exercises outcomes
+
+ShowAllGroups = Show all groups
+
+ShowMaxExercises = Max exercises to show
+ShowAllExercises = Show all exercises
+
+FailureRate = Failure rate
+HighestFailureRateStudents = Students with highest failure rate
+HighestNumberOfAttemptsStudents = Students with greater total attempts number
+LowestNumberOfRightExercisesStudents = Students with less right exercises
+
+ShowMaxStudents = Max students to show
+ShowAllStudents = Show all students
+
+NoDataFound = No data found
+
+
+Student_report = Student report
+TotalSubmissions = Total submissions
+TotalExercises = Total exercises
+CompletedExercises = Completed exercises
+CompletedExercises1stTime = Completed exercises on the first try
+ExperiencePoints = Experience points
+		
+PercentageOfStudentsCompletedMoreExercises = of students performed more exercises
+NumberOfExercisesLeaderboard = Leaderboard - Number of exercises
+PercentageOfSuccessLeaderboard = Leaderboard - Percentage of success
+
+Level = Level
+TotalStudents = Total students
+NumberOfExercises = Number of exercises
+PercentageOfSuccess = Percentage of success
+IncludingYou = (INCLUDING YOU)
+
+PercentageRelativeToAllStudentsMedian = % relative to the median of all students
+
+
+YourPerformance = Your performance
+ToolSummary = Tool summary
+ReportDate = Report date
+Suggestions = Suggestions
+RecentActivity = Recent activity
+
+StudentReportSuggestions = Your classmates are working on TOOL. Why don't you try another exercise?
+
+RecentActivityLast48Hours = SOLVED_EXERCISES exercises solved in the last 48 hours. Well done!
+RecentActivityNone = No recent activity. Ready for a new exercise?
+
+TendencePositive = Congratulations! You have improved from yesterday.
+TendenceNegative = Be careful! You have worsened from yesterday.
+TendenceZeroWithoutActivity = No new activity. Try to practice more. 
+TendenceZeroWithActivity = You had the same performance as yesterday. 
+
+GlobalProgressDescription = This bar shows the number of solved exercises by the group, and the levels achieved.
+GlobalProgress = Global progress 
+Level = Level
+ExercisesLeft = EXERCISES exercises to complete the level!
+NoExercisesLeft = EXERCISES exercises solved. Level complete!
+
+StudentsReports = Student's reports
+StudentsReportsDescription = Click on the student username to open the corresponding report:

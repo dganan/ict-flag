@@ -1,0 +1,225 @@
+.langname {
+    text-transform: uppercase;
+}
+
+.img-login-button {
+
+	position:relative;
+	margin-right:-20px;
+}
+
+.img-login-button .btn {
+	
+	padding-right: 37px;
+	position: relative;	
+}
+
+.img-login-button i {
+	
+	position: relative;
+	top: 10px;
+	right:27px;
+	z-index:999;
+	margin-top: 0px;
+	margin-left: 3px;
+	margin-right: 3px;
+	pointer-events:none;
+}
+
+.img-fa-right-button {
+
+	position:relative;
+	display:inline-block; 
+}
+
+.img-fa-right-button .btn {
+	
+	padding-right: 37px;
+	position: relative;	
+}
+
+.img-fa-right-button i {
+	
+	position: relative;
+	top: 2px;
+	right:30px;
+	margin-top: 0px;
+	margin-left: 3px;
+	margin-right: 3px;
+	pointer-events:none;
+}
+
+
+.alert.alert-danger i {
+	
+	float: left;
+	margin-right: 10px;
+	line-height: 20px;
+}
+
+.login {
+	
+	width: 360px;
+	margin: auto;
+}
+
+.login_background {
+	
+	margin_bottom: 20px !important;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user > .loggedout {
+    
+    padding: 28px 12px 26px !important;
+}
+
+.page-header.navbar .top-menu .navbar-nav > li.dropdown-user > .loggedin {
+    
+    padding: 23px 10px 18px !important;
+}
+
+i.white {
+	
+	color: #FFF;
+}
+
+i.fa.fa-warning.validation {
+	
+	display:none;
+}
+
+.has-error i.fa.fa-warning.validation {
+	
+	display:inline-block !important;
+	color:#A94442 !important;
+}
+
+.has-error {
+	
+	 color:#A94442 !important;
+}
+
+
+.input-icon.left > .form-control {
+	
+	padding-left: 33px !important;
+}
+
+.input-icon.left > img {
+	
+	position:absolute;
+	top:12px;
+	left:12px;
+}
+
+.translation.input-icon {
+	
+	margin-bottom:10px;
+}
+
+.transparent{
+	
+	color:#000;
+	background-color:transparent;	
+}
+
+.closeable {
+	
+	margin-right:20px;
+}
+
+.img-fa-only-button {
+
+	position:relative;
+	display:inline-block;
+	top:8px; 
+}
+
+.ui-datalist-item > .img-fa-only-button {
+
+	position:relative;
+	display:inline-block;
+	top:4px; 
+}
+
+.img-fa-only-button .btn {
+
+	padding: 6px;
+	position: relative;	
+}
+
+.ui-datalist-item > .img-fa-only-button .btn {
+
+	padding-right: 16px !important;
+	position: relative;	
+}
+ 
+.img-fa-only-button i {
+	
+	margin-top: 0px;
+	pointer-events:none;
+	left: 0px;
+	position: absolute;
+}
+
+.float-right {
+	
+	float: right;	
+}
+
+.dropdown-menu{
+	
+	background-color: #E5E5E5;
+	padding-left: 15px;
+}
+
+.login .content .form-title {
+
+	font-weight:normal !important;
+}
+	
+.small-left-margin{
+	
+	margin-left:5px;
+}
+
+.vspacer { margin:0; padding:0; height:20px; }
+
+.ui-picklist .ui-picklist-filter, .ui-picklist .ui-picklist-list {
+	
+	width:100% !important;
+}
+
+.ui-picklist-buttons-cell {
+
+	margin: auto;
+	width: 2.4em;
+}
+
+.ui-picklist {
+
+	display:table !important;
+}
+
+.ui-chkbox.ui-chkbox-all.ui-widget {
+	
+    display:none !important;
+}
+
+
+.ui-chkbox .ui-chkbox-box {
+	
+	margin-right:5px;
+	vertical-align: middle;
+}
+
+.ui-selectonemenu-trigger .ui-icon.ui-icon-triangle-1-s.ui-c {
+	
+	margin-top: 5px !important;
+	margin-left: -4px !important;
+}	 
+
+.calendar-full-width input {
+	
+	width:100%;	
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14382688048090" configfile="/edu.uoc.ictflag.web/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="144" y="384" id="pf14392220699174" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf14431415025960 pf14431417040692" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="public/*" x="264" y="108" id="pf14393673096525" referenceLink="//@navigationRule.2/@fromViewId|" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="private/*" x="122" y="948" id="pf14393673096528" referenceLink="//@navigationRule.3/@fromViewId|" path="/private/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="private/error.xhtml" x="122" y="1333" id="pf143936730965210" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" path="/private/error.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="106" y="84" id="pf14431415025961" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14431415025960" path="/login"/>
+  <nodes xsi:type="pageflow:PFPage" name="error" id="pf14431417040693" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf14431417040692" path="/error"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" id="pf14431417040694" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14431417040695" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="private/index" id="pf14431417040696" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14431417040695" path="/private/index"/>
+  <links id="pf14431415025960" target="pf14431415025961" source="pf14392220699174" outcome="logout" redirect="true"/>
+  <links id="pf14431417040692" target="pf14431417040693" source="pf14392220699174" outcome="error" redirect="true"/>
+  <links id="pf14431417040695" target="pf14431417040696" source="pf14431417040694" outcome="private-index" redirect="true"/>
+</pageflow:Pageflow>

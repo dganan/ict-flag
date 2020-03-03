@@ -1,0 +1,11 @@
+1475478060425	Rename field 'CompletedExercises1stTime'
+1475478074434	Rename field 'percentageOfStudentsPassedMoreExercisesThanYou'
+1475480736281	Encapsulate field 'enablePercentageOfStudentsCompletedMoreExercises'
+1475482201524	Encapsulate field 'leaderBoardNumberOfExercises'
+1475482207091	Encapsulate field 'leaderBoardPercentageOfSuccess'
+1475482287481	Encapsulate field 'value'
+1475482293281	Encapsulate field 'level'
+1475482305359	Encapsulate field 'students'
+1475482916630	Rename compilation unit 'LeaderboardItem.java'
+1475483148430	Move compilation unit
+1475512525858	Copy compilation unit

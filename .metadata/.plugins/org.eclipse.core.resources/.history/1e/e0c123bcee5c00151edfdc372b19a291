@@ -1,0 +1,22 @@
+package edu.uoc.ictflag.security.model;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+
+import edu.uoc.ictflag.security.model.UserRole;
+
+@Converter(autoApply = true)
+public class UserRoleConverter implements AttributeConverter<UserRole, String>
+{
+	@Override
+	public String convertToDatabaseColumn(UserRole attribute)
+	{
+		return attribute.toString();
+	}
+	
+	@Override
+	public UserRole convertToEntityAttribute(String dbData)
+	{
+		return UserRole.FromString(dbData);
+	}
+}

@@ -1,0 +1,39 @@
+en = English
+es = Spanish
+ca = Catalan
+
+Add_New = Add new
+
+Add_translation = Add translation
+
+Cancel = Cancel
+
+Delete = Delete
+Delete_confirmation = Delete operation cannot be undone, and may delete other related elements. Are you sure you want to continue?
+
+Edit = Edit
+
+Edit_program = Edit program 
+
+Incorrect_username_and_password = Incorrect username and password.
+
+Login = Login
+Login_to_your_account = Login to your account
+
+Logout = Logout
+
+Name = Name
+
+Password = Password
+
+Please_enter_correct_username_and_password = Please enter correct username and password.
+
+Programs = Programs
+
+Programs_List = Programs List
+
+Save = Save
+
+Username = Username
+
+

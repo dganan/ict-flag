@@ -1,0 +1,116 @@
+package edu.uoc.ictflag.web.security;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.web.core.URLHelper;
+import edu.uoc.ictflag.web.core.URLHelper.Page;
+
+@WebFilter(filterName = "AuthorizationFilter", urlPatterns = { "*.xhtml" })
+public class AuthorizationFilter implements Filter
+{
+	public AuthorizationFilter()
+	{
+	}
+	
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException
+	{
+	
+	}
+	
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
+	{
+		try
+		{
+			HttpServletRequest reqt = (HttpServletRequest) request;
+			HttpServletResponse resp = (HttpServletResponse) response;
+			HttpSession ses = reqt.getSession(false);
+			
+			String reqURI = reqt.getRequestURI();
+			
+			boolean authenticated = userIsAuthenticated(ses);
+			boolean hasPermission = userHasPermission(ses, reqURI);
+			
+			String contextPath = reqt.getContextPath();
+			
+			boolean publicURI = isPublicURI(reqURI, contextPath);
+			boolean validURI = isValidURI(reqURI, contextPath);
+			
+			if (authenticated)
+			{
+				if (validURI && hasPermission)
+				{
+					chain.doFilter(request, response);
+				}
+				else
+				{
+					resp.sendRedirect(URLHelper.getFullPath(Page._404));
+				}
+			}
+			else
+			{
+				if (validURI && publicURI)
+				{
+					chain.doFilter(request, response);
+				}
+				else
+				{
+					resp.sendRedirect(URLHelper.getFullPath(Page.LOGIN));
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			LogHelper.error(e);
+		}
+	}
+	
+	private boolean userHasPermission(HttpSession ses, String reqURI)
+	{
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	private boolean isPublicURI(String reqURI)
+	{
+		return reqURI.contains("javax.faces.resource") // recurs
+				// pagina publica
+				|| reqURI.indexOf(URLHelper.facesPath + URLHelper.publicPath + "/") >= 0
+				// home page
+				|| reqURI.equals(URLHelper.getContextPath() + "/");
+				
+	}
+	
+	private boolean isValidURI(String reqURI, String contextPath)
+	{
+		return reqURI.contains("javax.faces.resource") // recurs
+				// pagina xhtml (adreçada a traves de /pages/
+				|| reqURI.indexOf(URLHelper.facesPath + "/") >= 0
+				// home page
+				|| reqURI.equals(URLHelper.getContextPath() + "/");
+	}
+	
+	private boolean userIsAuthenticated(HttpSession ses)
+	{
+		return (ses != null && ses.getAttribute("username") != null);
+	}
+	
+	@Override
+	public void destroy()
+	{
+	
+	}
+}

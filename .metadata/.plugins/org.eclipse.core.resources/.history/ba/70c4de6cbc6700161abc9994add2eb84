@@ -1,0 +1,36 @@
+<ui:composition template="../WEB-INF/templates/masterpage.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:ictflag="http://java.sun.com/jsf/composite/ictflag" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{studentsReportController.initialize}" onPostback="true" />
+	</f:metadata>
+
+	<ui:define name="head-title">ICT-FLAG #{msg.Students_report}</ui:define>
+
+	<ui:define name="title">#{msg.Students_report}</ui:define>
+
+	<ui:define name="breadcrumb"></ui:define>
+
+	<ui:define name="content">
+
+<div class="ui-chkbox ui-widget"><div class="ui-helper-hidden-accessible"><div id="uniform-grid:0" class="checker"><span><input id="grid:0" name="grid" value="Miami" type="checkbox" /></span></div></div><div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default"><span class="ui-chkbox-icon ui-icon ui-icon-blank ui-c"></span></div></div>
+<div class="ui-chkbox ui-widget"><div class="ui-helper-hidden-accessible">											     <input id="grid:1" name="grid" value="Miami2" type="checkbox" /></div><div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default"><span class="ui-chkbox-icon ui-icon ui-icon-blank ui-c"></span></div></div>
+
+<!-- 							<div> -->
+<!-- 								<h4>#{msg.GroupBy}</h4> -->
+<!-- 								<p:selectManyCheckbox id="groupFieldsOptions" value="#{studentsReportController.groupFieldsSelectedOptions}" layout="grid" columns="2" -->
+<!-- 									style="border-collapse:separate;border-spacing:5px 0px;width:100%"> -->
+<!-- 									<f:selectItems value="#{studentsReportController.groupFieldsOptions}" var="groupFieldsOption" itemLabel="#{groupFieldsOption.displayName}" -->
+<!-- 										itemValue="#{groupFieldsOption.value}" style="margin-right:5px" /> -->
+<!-- 								</p:selectManyCheckbox> -->
+<!-- 						</div> -->
+	
+<!-- 						<div> -->
+<!-- 						<h3>Grid Layout</h3> -->
+<!--     						<p:selectManyCheckbox id="grid" value="#{studentsReportController.selectedCities}" layout="grid" columns="3"> -->
+<!--         						<f:selectItems value="#{studentsReportController.cities}" var="city" itemLabel="#{city}" itemValue="#{city}" /> -->
+<!-- 						    </p:selectManyCheckbox> -->
+<!-- 						</div> -->
+
+	</ui:define>
+</ui:composition>

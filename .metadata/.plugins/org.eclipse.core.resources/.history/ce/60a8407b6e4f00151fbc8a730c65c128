@@ -1,0 +1,40 @@
+en = Angles
+es = Castellà
+ca = Català
+
+Add_New = Afegir
+
+Add_translation = Afegir traducció
+
+Cancel = Cancel·lar
+
+Delete = Esborrar
+Delete_confirmation = L'operació d'eliminació no es pot desfer i pot eliminar altres elements relacionats. Segur que vols continuar?
+
+Edit = Editar
+
+Edit_program = Editar programa
+
+Incorrect_username_and_password = Nom d'usuari o clau incorrectes.
+
+Login = Login
+Login_to_your_account = Accedeix al teu compte
+
+Logout = Tancar sessió
+
+Name = Nom
+
+Password = Clau
+
+Please_enter_correct_username_and_password = Si us plau introduïu un nom d'usuari i clau correctes.
+
+Programs = Programes
+
+Programs_List = Llista de programes
+
+Save = Desar
+
+
+Username = Nom d'usuari
+
+

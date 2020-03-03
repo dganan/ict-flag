@@ -1,0 +1,86 @@
+package edu.uoc.ictflag.institution.web;
+
+import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.validation.Valid;
+
+import edu.uoc.ictflag.core.StringUtils;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.SessionBean;
+import edu.uoc.ictflag.core.web.URLHelper;
+import edu.uoc.ictflag.core.web.ValidationHelper;
+import edu.uoc.ictflag.institution.bll.IProgramManager;
+import edu.uoc.ictflag.institution.model.Program;
+
+@Named
+@ViewScoped
+public class ProgramController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Valid
+	private Program program;
+	
+	@Inject
+	ValidationHelper validationHelper;
+	
+	@Inject
+	URLHelper urlHelper;
+	
+	@Inject
+	IProgramManager programManager;
+	
+	public ProgramController()
+	{
+	}
+	
+	@PostConstruct
+	public void Initialize()
+	{
+		String id = urlHelper.getQueryAttribute("id");
+		
+		Long l = StringUtils.tryParse(id, null);
+		
+		if (l == null)
+		{
+			program = new Program();
+		}
+		else
+		{
+			try
+			{
+				program = programManager.getProgram(SessionBean.getUsername(), l);
+			}
+			catch (Exception e)
+			{
+				LogHelper.error(e);
+			}
+		}
+	}
+	
+	public Program getProgram()
+	{
+		return program;
+	}
+	
+	public void setProgram(Program program)
+	{
+		this.program = program;
+	}
+	
+	public String save() throws Exception
+	{
+		if (validationHelper.validate(this))
+		{
+			programManager.createOrUpdateProgram(SessionBean.getUsername(), program);
+			
+			return InstitutionConstants.ProgramsListPageUrl + URLHelper.facesRedirectTrue;
+		}
+		
+		return "invalid";
+	}
+}

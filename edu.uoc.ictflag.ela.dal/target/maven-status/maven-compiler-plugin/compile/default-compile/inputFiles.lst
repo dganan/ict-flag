@@ -1,0 +1,17 @@
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/DataAuxRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/ELABaseRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/ExerciseDataRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/IExerciseRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/IExerciseDataRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/ReportsEtlRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/DynamicExercisesReportRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/ExercisesReportRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/IAssignmentRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/IDynamicExercisesReportRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/IAssignmentDataRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/IReportsEtlRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/IExercisesReportRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/AssignmentDataRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/ELADataBaseRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/ExerciseRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.ela.dal/src/edu/uoc/ictflag/ela/dal/AssignmentRepository.java

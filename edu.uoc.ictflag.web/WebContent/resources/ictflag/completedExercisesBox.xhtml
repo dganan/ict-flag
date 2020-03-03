@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite" xmlns:p="http://primefaces.org/ui">
+
+
+<composite:interface>
+	<composite:attribute name="dataItem" type="edu.uoc.ictflag.ela.model.StudentReportDataForToolItem" required="true"></composite:attribute>
+</composite:interface>
+
+<composite:implementation>
+
+	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<div class="dashboard-stat2">
+			<div class="display">
+				<div class="number">
+					<h3 style="color:#{studentReportController.semaphoreToColor(cc.attrs.dataItem.completedExercisesSemaphore)}">
+						<h:outputText value="#{cc.attrs.dataItem.completedExercises}" />
+						<small>#{msg.CompletedExercises}</small>
+					</h3>
+				</div>
+				<div style="clear: both"></div>
+				<div style="width: 80%; font-size: medium;height: 43px; float: left; margin-top: 10px; color: #{studentReportController.tendenceToColor(cc.attrs.dataItem.completedExercisesTendence)}">
+					<h:panelGroup layout="block" rendered="#{studentReportController.tendenceToEnabled(cc.attrs.dataItem.completedExercisesTendence)}">
+						<i class="fa fa-#{studentReportController.tendenceToIcon(cc.attrs.dataItem.completedExercisesTendence)}" style="margin-right: 10px"></i>
+						<h:outputText value="#{studentReportController.tendenceToMessage(cc.attrs.dataItem.completedExercisesTendence, studentReportController.exercisesYesterday)}" />
+					</h:panelGroup>
+				</div>
+				<div class="icon">
+					<p:graphicImage name="./assets/ictflag/img/#{studentReportController.semaphoreToString(cc.attrs.dataItem.completedExercisesSemaphore)}.png"
+						width="32" />
+				</div>
+			</div>
+			<div class="progress-info">
+				<div class="progress">
+					<span style="width:#{studentReportController.percentageNormalized(cc.attrs.dataItem.completedExercisesPercentage)}%;background-color:#{studentReportController.semaphoreToColor(cc.attrs.dataItem.completedExercisesSemaphore)}" class="progress-bar progress-bar-success">
+						<span class="sr-only">
+							<h:outputText value="#{cc.attrs.dataItem.completedExercisesPercentage}" />
+							#{msg.PercentageRelativeToAllStudentsMedian}
+						</span>
+					</span>
+				</div>
+				<div class="status">
+					<div class="status-title" style="width: 80%">#{msg.PercentageRelativeToAllStudentsMedian}</div>
+					<div class="status-number">
+						<h:outputText value="#{cc.attrs.dataItem.completedExercisesPercentage}" />
+						%
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</composite:implementation>
+
+</html>
+

@@ -1,0 +1,610 @@
+package edu.uoc.ictflag.ela.web;
+
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.HorizontalBarChartModel;
+
+import edu.com.ictflag.security.bll.IUserManager;
+import edu.uoc.ictflag.core.ListUtils;
+import edu.uoc.ictflag.core.localization.LocalizationController;
+import edu.uoc.ictflag.core.log.ActivityLog;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.NavigationHelper;
+import edu.uoc.ictflag.core.web.SessionBean;
+import edu.uoc.ictflag.ela.bll.IAssignmentsReportManager;
+import edu.uoc.ictflag.ela.model.AssignmentsReportDataItem;
+import edu.uoc.ictflag.ela.model.FilterField;
+import edu.uoc.ictflag.ela.model.ReportDataItem;
+
+@Named
+@ViewScoped
+public class AssignmentsReportController extends ReportController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	public AssignmentsReportController(IAssignmentsReportManager assignmentsReportManager, IUserManager userManager)
+	{
+		this.reportManager = assignmentsReportManager;
+		this.userManager = userManager;
+	}
+	
+	// PRIVATE FIELDS 
+	
+	private BarChartModel numericGradesBarChartModel; // NEW
+	private BarChartModel outcomesBarChartModel;
+	private HorizontalBarChartModel successRateBarChartModel;
+	private BarChartModel attemptsBarChartModel;
+	private BarChartModel timeBetweenAttemptsBarChartModel;
+	private BarChartModel durationBarChartModel;
+	
+	private ChartSeries numericGradesMinSeries;
+	private ChartSeries numericGradesAvgSeries;
+	private ChartSeries numericGradesMaxSeries;
+	private ChartSeries rightSeries;
+	private ChartSeries wrongSeries;
+	private ChartSeries timeoutSeries;
+	private ChartSeries errorSeries;
+	private ChartSeries successRateSeries;
+	private ChartSeries attemptsMinSeries;
+	private ChartSeries attemptsAvgSeries;
+	private ChartSeries attemptsMaxSeries;
+	private ChartSeries timeBetweenAttemptsMinSeries;
+	private ChartSeries timeBetweenAttemptsAvgSeries;
+	private ChartSeries timeBetweenAttemptsMaxSeries;
+	private ChartSeries durationMinSeries;
+	private ChartSeries durationAvgSeries;
+	private ChartSeries durationMaxSeries;
+	
+	// GETTERS AND SETTERS 
+	
+	public BarChartModel getOutcomesBarChartModel()
+	{
+		return outcomesBarChartModel;
+	}
+	
+	public BarChartModel getNumericGradesBarChartModel()
+	{
+		return numericGradesBarChartModel;
+	}
+	
+	public BarChartModel getSuccessRateBarChartModel()
+	{
+		return successRateBarChartModel;
+	}
+	
+	public BarChartModel getAttemptsBarChartModel()
+	{
+		return attemptsBarChartModel;
+	}
+	
+	public void setTimeBetweenAttemptsBarChartModel(BarChartModel timeBetweenAttemptsBarChartModel)
+	{
+		this.timeBetweenAttemptsBarChartModel = timeBetweenAttemptsBarChartModel;
+	}
+	
+	public BarChartModel getTimeBetweenAttemptsBarChartModel()
+	{
+		return timeBetweenAttemptsBarChartModel;
+	}
+	
+	public void setDurationBarChartModel(BarChartModel durationBarChartModel)
+	{
+		this.durationBarChartModel = durationBarChartModel;
+	}
+	
+	public BarChartModel getDurationBarChartModel()
+	{
+		return durationBarChartModel;
+	}
+	
+	public void setAttemptsBarChartModel(BarChartModel attemptsBarChartModel)
+	{
+		this.attemptsBarChartModel = attemptsBarChartModel;
+	}
+	
+	public List<ReportDataItem> getDataTableModel()
+	{
+		return dataTableModel;
+	}
+	
+	// IMPLEMENTATION
+	
+	@ActivityLog
+	public void initialize() throws Exception
+	{
+		try
+		{
+			//if (!FacesContext.getCurrentInstance().isPostback())
+			{
+				setupTools();
+				
+				setupPrograms();
+				
+				setupSubjects();
+				
+				setupCoursesAssignments();
+				
+				setupCourseGroups();
+				
+				setupAttempts();
+				
+				setupDateFilterOptions();
+				
+				setupGroupByOptions();
+				
+				setupSemesters();
+				
+				setupCharts();
+			}
+		}
+		catch (Exception e)
+		{
+			LogHelper.error(e);
+			
+			NavigationHelper.redirectTo404();
+		}
+	}
+
+	@Override
+	protected List<String> getGroupOptions()
+	{
+		List<String> options = new ArrayList<String>();
+		
+		options.add(FilterField.TOOL);
+		options.add(FilterField.PROGRAM);
+		options.add(FilterField.SUBJECT);
+		options.add(FilterField.COURSE);
+		options.add(FilterField.COURSEGROUP);
+		options.add(FilterField.ASSIGNMENT);
+		//options.add(FilterField.EXERCISE);
+		options.add(FilterField.SEMESTER);
+		
+		return options;
+	}
+
+	@Override
+	protected void setupDataInCharts(ReportDataItem assignmentDataItem)
+	{
+		AssignmentsReportDataItem adataItem = (AssignmentsReportDataItem) assignmentDataItem;
+		
+		rightSeries.set(label, assignmentDataItem.getRight());
+		wrongSeries.set(label, assignmentDataItem.getWrong());
+		timeoutSeries.set(label, assignmentDataItem.getTimeout());
+		errorSeries.set(label, assignmentDataItem.getError());
+		
+		successRateSeries.set(label, assignmentDataItem.getSuccessRate());
+		
+		attemptsMinSeries.set(label, assignmentDataItem.getMinAttempts());
+		attemptsAvgSeries.set(label, assignmentDataItem.getAvgAttempts());
+		attemptsMaxSeries.set(label, assignmentDataItem.getMaxAttempts());
+		
+		timeBetweenAttemptsMinSeries.set(label, assignmentDataItem.getMinTimeBetweenAttempts());
+		timeBetweenAttemptsAvgSeries.set(label, assignmentDataItem.getAvgTimeBetweenAttempts());
+		timeBetweenAttemptsMaxSeries.set(label, assignmentDataItem.getMaxTimeBetweenAttempts());
+		
+		durationMinSeries.set(label, assignmentDataItem.getMinDuration());
+		durationAvgSeries.set(label, assignmentDataItem.getAvgDuration());
+		durationMaxSeries.set(label, assignmentDataItem.getMaxDuration());
+		
+		if (stackedData)
+		{
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, assignmentDataItem.getGroupCount());
+			
+			maxNumberOfAttempts = Math.max(maxNumberOfAttempts,
+					assignmentDataItem.getMinAttempts() + Math.round(assignmentDataItem.getAvgAttempts()) + assignmentDataItem.getMaxAttempts());
+			
+			maxTimeBetweenAttempts = Math.max(maxTimeBetweenAttempts,
+					assignmentDataItem.getMinTimeBetweenAttempts() + assignmentDataItem.getAvgTimeBetweenAttempts() + assignmentDataItem.getMaxTimeBetweenAttempts());
+			
+			maxDuration = Math.max(maxDuration, assignmentDataItem.getMinDuration() + assignmentDataItem.getAvgDuration() + assignmentDataItem.getMaxDuration());
+		}
+		else
+		{
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, assignmentDataItem.getRight());
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, assignmentDataItem.getWrong());
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, assignmentDataItem.getTimeout());
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, assignmentDataItem.getError());
+			
+			maxNumberOfAttempts = Math.max(maxNumberOfAttempts, assignmentDataItem.getMaxAttempts());
+			
+			maxTimeBetweenAttempts = Math.max(maxTimeBetweenAttempts, assignmentDataItem.getMaxTimeBetweenAttempts());
+			
+			maxDuration = Math.max(maxDuration, assignmentDataItem.getMaxDuration());
+		}
+	}
+	
+
+	private void chartsPreConfiguration()
+	{
+		// TABLE PRE CONFIGURATION
+		
+		dataTableModel = new ArrayList<AssignmentsReportDataItem>();
+		
+		// GRADES CHART PRE CONFIGURATION
+		
+		numericGradesBarChartModel = new BarChartModel();
+		numericGradesBarChartModel.setStacked(stackedData);
+		
+		numericGradesMinSeries = new ChartSeries();
+		numericGradesMinSeries.setLabel(LocalizationController.getLocalizedString("NumericGradesMin"));
+		//numericGradesMinSeries.setFill(true);
+		
+		numericGradesBarChartModel.addSeries(numericGradesMinSeries);
+		
+		numericGradesAvgSeries = new ChartSeries();
+		numericGradesAvgSeries.setLabel(LocalizationController.getLocalizedString("NumericGradesAvg"));
+		//numericGradesAvgSeries.setFill(true);
+		
+		numericGradesBarChartModel.addSeries(numericGradesAvgSeries);
+		
+		numericGradesMaxSeries = new ChartSeries();
+		numericGradesMaxSeries.setLabel(LocalizationController.getLocalizedString("NumericGradesMax"));
+		//numericGradesMaxSeries.setFill(true);
+		
+		numericGradesBarChartModel.addSeries(numericGradesMinSeries);
+		numericGradesBarChartModel.addSeries(numericGradesAvgSeries);
+		numericGradesBarChartModel.addSeries(numericGradesMaxSeries);
+		
+		// OUTCOMES CHART PRE CONFIGURATION
+		
+		outcomesBarChartModel = new BarChartModel();
+		outcomesBarChartModel.setStacked(stackedData);
+		
+		rightSeries = new ChartSeries();
+		rightSeries.setLabel(LocalizationController.getLocalizedString("Right"));
+		
+		wrongSeries = new ChartSeries();
+		wrongSeries.setLabel(LocalizationController.getLocalizedString("Wrong"));
+		
+		timeoutSeries = new ChartSeries();
+		timeoutSeries.setLabel(LocalizationController.getLocalizedString("Timeout"));
+		
+		errorSeries = new ChartSeries();
+		errorSeries.setLabel(LocalizationController.getLocalizedString("Error"));
+		
+		outcomesBarChartModel.addSeries(rightSeries);
+		outcomesBarChartModel.addSeries(wrongSeries);
+		outcomesBarChartModel.addSeries(timeoutSeries);
+		outcomesBarChartModel.addSeries(errorSeries);
+		
+		// SUCCESS RATE CHART PRE CONFIGURATION
+		
+		successRateBarChartModel = new HorizontalBarChartModel();
+		successRateBarChartModel.setStacked(stackedData);
+		
+		successRateSeries = new ChartSeries();
+		successRateSeries.setLabel(LocalizationController.getLocalizedString("SuccessRate"));
+		
+		successRateBarChartModel.addSeries(successRateSeries);
+		
+		// ATTEMPTS CHART PRE CONFIGURATION
+		
+		attemptsBarChartModel = new BarChartModel();
+		attemptsBarChartModel.setStacked(stackedData);
+		//attemptsBarChartModel.setStacked(true);
+		//attemptsBarChartModel.setShowPointLabels(true);
+		
+		attemptsMinSeries = new ChartSeries();
+		attemptsMinSeries.setLabel(LocalizationController.getLocalizedString("AttemptsMin"));
+		//attemptsMinSeries.setFill(true);
+		
+		attemptsBarChartModel.addSeries(attemptsMinSeries);
+		
+		attemptsAvgSeries = new ChartSeries();
+		attemptsAvgSeries.setLabel(LocalizationController.getLocalizedString("AttemptsAvg"));
+		//attemptsAvgSeries.setFill(true);
+		
+		attemptsBarChartModel.addSeries(attemptsAvgSeries);
+		
+		attemptsMaxSeries = new ChartSeries();
+		attemptsMaxSeries.setLabel(LocalizationController.getLocalizedString("AttemptsMax"));
+		//attemptsMaxSeries.setFill(true);
+		
+		attemptsBarChartModel.addSeries(attemptsMaxSeries);
+		
+		// TIME BETWEEN ATTEMPTS CHART PRE CONFIGURATION
+		
+		timeBetweenAttemptsBarChartModel = new BarChartModel();
+		timeBetweenAttemptsBarChartModel.setStacked(stackedData);
+		
+		timeBetweenAttemptsMinSeries = new ChartSeries();
+		timeBetweenAttemptsMinSeries.setLabel(LocalizationController.getLocalizedString("TimeBetweenAttemptsMin"));
+		
+		timeBetweenAttemptsBarChartModel.addSeries(timeBetweenAttemptsMinSeries);
+		
+		timeBetweenAttemptsAvgSeries = new ChartSeries();
+		timeBetweenAttemptsAvgSeries.setLabel(LocalizationController.getLocalizedString("TimeBetweenAttemptsAvg"));
+		
+		timeBetweenAttemptsBarChartModel.addSeries(timeBetweenAttemptsAvgSeries);
+		
+		timeBetweenAttemptsMaxSeries = new ChartSeries();
+		timeBetweenAttemptsMaxSeries.setLabel(LocalizationController.getLocalizedString("TimeBetweenAttemptsMax"));
+		
+		timeBetweenAttemptsBarChartModel.addSeries(timeBetweenAttemptsMaxSeries);
+		
+		// DURATION CHART PRE CONFIGURATION
+		
+		durationBarChartModel = new BarChartModel();
+		durationBarChartModel.setStacked(stackedData);
+		
+		durationMinSeries = new ChartSeries();
+		durationMinSeries.setLabel(LocalizationController.getLocalizedString("DurationMin"));
+		
+		durationBarChartModel.addSeries(durationMinSeries);
+		
+		durationAvgSeries = new ChartSeries();
+		durationAvgSeries.setLabel(LocalizationController.getLocalizedString("DurationAvg"));
+		
+		durationBarChartModel.addSeries(durationAvgSeries);
+		
+		durationMaxSeries = new ChartSeries();
+		durationMaxSeries.setLabel(LocalizationController.getLocalizedString("DurationMax"));
+		
+		durationBarChartModel.addSeries(durationMaxSeries);
+	}
+	
+
+	private List<AssignmentsReportDataItem> setupFiltersAndGetData() throws Exception
+	{
+		Map<String, String[]> filters = new HashMap<String, String[]>();
+		
+		if (selectedTools.length != tools.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.TOOL, selectedTools);
+		}
+		else
+		{
+			filters.put(FilterField.TOOL, new String[0]);
+		}
+		
+		if (selectedPrograms.length != programs.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.PROGRAM, selectedPrograms);
+		}
+		else
+		{
+			filters.put(FilterField.PROGRAM, new String[0]);
+		}
+		
+		if (selectedSubjects.length != subjects.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.SUBJECT, selectedSubjects);
+		}
+		else
+		{
+			filters.put(FilterField.SUBJECT, new String[0]);
+		}
+		
+		//		if (selectedCourses.size() != totalCoursesCount) // NOT ALL SELECTED
+		//		{
+		//			filters.put(FilterField.COURSE, selectedCourses.toArray(new String[0]));
+		//		}
+		//		else
+		//		{
+		//			filters.put(FilterField.COURSE, new String[0]);
+		//		}
+		
+		if (selectedCourseGroups.length != courseGroups.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.COURSEGROUP, selectedCourseGroups);
+		}
+		else
+		{
+			filters.put(FilterField.COURSEGROUP, new String[0]);
+		}
+		
+		if (selectedSemesters.length != semesters.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.SEMESTER, selectedSemesters);
+		}
+		else
+		{
+			filters.put(FilterField.SEMESTER, new String[0]);
+		}
+		
+		List<String> coursesAssignments = ListUtils.flattenStringList(selectedCoursesAssignments);
+		
+		if (coursesAssignments.size() != totalCoursesAssignmentsCount) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.COURSE_ASSIGNMENT, coursesAssignments.toArray(new String[0]));
+		}
+		else
+		{
+			filters.put(FilterField.COURSE_ASSIGNMENT, new String[0]);
+		}
+		
+		if (!selectedDateFilterOption.equals("AnyTime")) // NOT ANY TIME SELECTED
+		{
+			String startDate = "";
+			String endDate = "";
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+			
+			if (selectedDateFilterOption.equals("LastWeek"))
+			{
+				endDate = dateFormat.format(cal.getTime());
+				
+				cal.add(Calendar.DATE, -7);
+				
+				startDate = dateFormat.format(cal.getTime());
+			}
+			else if (selectedDateFilterOption.equals("LastMonth"))
+			{
+				endDate = dateFormat.format(cal.getTime());
+				
+				cal.add(Calendar.MONTH, -1);
+				
+				startDate = dateFormat.format(cal.getTime());
+			}
+			else if (selectedDateFilterOption.equals("Interval"))
+			{
+				startDate = dateFormat.format(intervalStartDate);
+				endDate = dateFormat.format(intervalEndDate);
+			}
+			
+			filters.put(FilterField.DATE, new String[] { startDate, endDate });
+		}
+		
+		// filters.put(FilterField.ATTEMPTS, new String[] { attemptsOperation, "" + attempts, "" + onlyLastAttempt });
+		
+		return ((IAssignmentsReportManager)reportManager).getAssignmentsReportData(SessionBean.getUsername(), groupBySelectedOptions, filters);
+	}
+
+
+	private void chartsPostConfiguration(List<AssignmentsReportDataItem> data)
+	{
+		// NUMERIC GRADES CHART POST CONFIGURATION
+		
+		numericGradesBarChartModel.setTitle(LocalizationController.getLocalizedString("NumericGrades"));
+		numericGradesBarChartModel.setLegendPosition("ne");
+		
+		Axis xAxis = numericGradesBarChartModel.getAxis(AxisType.X);
+		
+		if (data.size() > 10)
+		{
+			xAxis.setTickAngle(-90);
+		}
+		
+		Axis yAxis = numericGradesBarChartModel.getAxis(AxisType.Y);
+		//yAxis.setLabel(LocalizationController.getLocalizedString("NumericGrades"));
+		yAxis.setMin(0);
+		yAxis.setMax(Math.round(maxNumericGrade * 1.1));
+		yAxis.setTickFormat("%d");
+		
+		// OUTCOMES CHART POST CONFIGURATION 
+		
+		outcomesBarChartModel.setTitle(LocalizationController.getLocalizedString("Outcomes"));
+		outcomesBarChartModel.setLegendPosition("ne");
+		
+		xAxis = outcomesBarChartModel.getAxis(AxisType.X);
+		//xAxis.setLabel(LocalizationController.getLocalizedString("Outcome"));
+		
+		if (data.size() > 10)
+		{
+			xAxis.setTickAngle(-90);
+		}
+	         
+		yAxis = outcomesBarChartModel.getAxis(AxisType.Y);
+		// yAxis.setLabel("#");
+		yAxis.setMin(0);
+		yAxis.setMax(Math.round(maxNumberOfOutcomes * 1.1));
+		//yAxis.setTickFormat("%#.0f");
+		yAxis.setTickFormat("%d");
+
+		
+		// SUCCESS RATE CHART POST CONFIGURATION 
+		
+		successRateBarChartModel.setTitle(LocalizationController.getLocalizedString("SuccessRate"));
+		successRateBarChartModel.setLegendPosition("ne");
+		
+		//xAxis = successRateBarChartModel.getAxis(AxisType.X);
+		//xAxis.setLabel(LocalizationController.getLocalizedString("SuccessRate"));
+		
+		//		if (outcomesData.size() > 10)
+		//		{
+		//			xAxis.setTickAngle(-90);
+		//		}
+		
+		xAxis = successRateBarChartModel.getAxis(AxisType.X);
+		xAxis.setMin(0);
+		xAxis.setMax(100);
+		//xAxis.setTickFormat("%#.0f");
+		xAxis.setTickFormat("%d%");
+		
+
+		// ATTEMPTS CHART POST CONFIGURATION
+		
+		attemptsBarChartModel.setTitle(LocalizationController.getLocalizedString("Attempts"));
+		attemptsBarChartModel.setLegendPosition("ne");
+		
+		xAxis = attemptsBarChartModel.getAxis(AxisType.X);
+		
+		if (data.size() > 10)
+		{
+			xAxis.setTickAngle(-90);
+		}
+		
+		yAxis = attemptsBarChartModel.getAxis(AxisType.Y);
+		//yAxis.setLabel(LocalizationController.getLocalizedString("Attempts"));
+		yAxis.setMin(0);
+		yAxis.setMax(Math.round(maxNumberOfAttempts * 1.1));
+		yAxis.setTickFormat("%d");
+		
+
+		// TIME BETWEEN ATTEMPTS CHART POST CONFIGURATION
+		
+		timeBetweenAttemptsBarChartModel.setTitle(LocalizationController.getLocalizedString("TimeBetweenAttempts"));
+		timeBetweenAttemptsBarChartModel.setLegendPosition("ne");
+		
+		xAxis = timeBetweenAttemptsBarChartModel.getAxis(AxisType.X);
+		
+		if (data.size() > 10)
+		{
+			xAxis.setTickAngle(-90);
+		}
+		
+		yAxis = timeBetweenAttemptsBarChartModel.getAxis(AxisType.Y);
+		//yAxis.setLabel(LocalizationController.getLocalizedString("TimeBetweenAttempts"));
+		yAxis.setMin(0);
+		yAxis.setMax(Math.round(maxTimeBetweenAttempts * 1.1));
+		//yAxis.setTickFormat("%#.0f");
+		yAxis.setTickFormat("%dh");
+
+		// DURATION CHART POST CONFIGURATION
+		
+		durationBarChartModel.setTitle(LocalizationController.getLocalizedString("Duration"));
+		durationBarChartModel.setLegendPosition("ne");
+		
+		xAxis = durationBarChartModel.getAxis(AxisType.X);
+		
+		if (data.size() > 10)
+		{
+			xAxis.setTickAngle(-90);
+		}
+		
+		yAxis = durationBarChartModel.getAxis(AxisType.Y);
+		//yAxis.setLabel(LocalizationController.getLocalizedString("Duration"));
+		yAxis.setMin(0);
+		yAxis.setMax(Math.round(maxDuration * 1.1));
+		//yAxis.setTickFormat("%#.0f");
+		yAxis.setTickFormat("%d'");
+	}
+	
+	@Override
+	protected void chartsPreConfiguration()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	protected void setupDataInCharts(ReportDataItem dataItem)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	protected void chartsPostConfiguration(List<ReportDataItem> data)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+}

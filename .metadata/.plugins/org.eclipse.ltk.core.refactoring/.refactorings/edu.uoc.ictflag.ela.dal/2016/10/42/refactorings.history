@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;reportData&apos; in &apos;edu.uoc.ictflag.ela.dal.StudentReportRepository.getReportDataForTool(...)&apos; to &apos;dataForTool&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.ela.dal&apos;&#x0A;- Original element: &apos;edu.uoc.ictflag.ela.dal.StudentReportRepository.getReportDataForTool(String).reportData&apos;&#x0A;- Renamed element: &apos;reportData&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;reportData&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;edu.uoc.ictflag.ela.dal{StudentReportRepository.java[StudentReportRepository~getReportDataForTool~QString;@reportData!1837!1914!1866!1875!QStudentReportDataForToolItem;!0!false" name="dataForTool" references="true" stamp="1477143722488" version="1.0"/>
+</session>

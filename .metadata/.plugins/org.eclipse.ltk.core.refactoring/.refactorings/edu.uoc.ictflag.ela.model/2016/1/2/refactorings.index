@@ -1,0 +1,7 @@
+1452505822891	Copy compilation unit
+1452505989913	Encapsulate field 'duration_ms'
+1452515616783	Rename field 'start'
+1452515644546	Rename field 'end'
+1452687934986	Rename field 'timestamp'
+1452687970969	Rename method 'getTimestamp'
+1452687982154	Rename method 'setTimestamp'

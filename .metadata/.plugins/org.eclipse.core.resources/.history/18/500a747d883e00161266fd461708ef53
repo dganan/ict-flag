@@ -1,0 +1,70 @@
+package edu.uoc.ictflag.core.dal;
+
+import java.util.List;
+import java.util.Map;
+
+public class SearchParameters
+{
+	int page;
+	int pageSize;
+	
+	Map<String, String[]> filters;
+	
+	List<LazySortArgument> sortFields;
+	
+	public SearchParameters(Map<String, String[]> filters, List<LazySortArgument> sortFields)
+	{
+		this.page = -1;
+		this.pageSize = -1;
+		this.filters = filters;
+		this.sortFields = sortFields;
+	}
+	
+	public SearchParameters(int page, int pageSize, Map<String, String[]> filters, List<LazySortArgument> sortFields)
+	{
+		this.page = page;
+		this.pageSize = pageSize;
+		this.filters = filters;
+		this.sortFields = sortFields;
+	}
+	
+	public int getPage()
+	{
+		return page;
+	}
+	
+	public void setPage(int page)
+	{
+		this.page = page;
+	}
+	
+	public int getPageSize()
+	{
+		return pageSize;
+	}
+	
+	public void setPageSize(int pageSize)
+	{
+		this.pageSize = pageSize;
+	}
+	
+	public Map<String, String[]> getFilters()
+	{
+		return filters;
+	}
+	
+	public void setFilters(Map<String, String[]> filters)
+	{
+		this.filters = filters;
+	}
+	
+	public List<LazySortArgument> getSortFields()
+	{
+		return sortFields;
+	}
+	
+	public void setSortFields(List<LazySortArgument> sortFields)
+	{
+		this.sortFields = sortFields;
+	}
+}

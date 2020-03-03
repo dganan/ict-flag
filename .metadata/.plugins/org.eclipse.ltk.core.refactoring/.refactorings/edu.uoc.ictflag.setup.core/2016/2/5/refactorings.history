@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;edu.uoc.ictflag.setup.core.DbSetupHelper.setupActivityData(...)&apos; to &apos;setupEventData&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.setup.core&apos;&#x0A;- Original element: &apos;edu.uoc.ictflag.setup.core.DbSetupHelper.setupActivityData(...)&apos;&#x0A;- Renamed element: &apos;edu.uoc.ictflag.setup.core.DbSetupHelper.setupEventData(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;setupActivityData&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;edu.uoc.ictflag.setup.core{DbSetupHelper.java[DbSetupHelper~setupActivityData~QTool;~QUser;~QProgram;~QSubject;~QSemester;~QDate;~QAction;~QElementType;~QString;~QResultType;~QString;" name="setupEventData" references="true" stamp="1454485996719" version="1.0"/>
+</session>

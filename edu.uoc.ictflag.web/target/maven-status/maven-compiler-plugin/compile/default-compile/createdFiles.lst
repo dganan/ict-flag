@@ -1,0 +1,9 @@
+edu/uoc/ictflag/web/IctflagExceptionHandlerFactory.class
+edu/uoc/ictflag/web/IctflagExceptionHandler.class
+edu/uoc/ictflag/web/CustomResourceHandler$1.class
+edu/uoc/ictflag/web/CustomResourceHandler.class
+edu/uoc/ictflag/security/web/AuthorizationFilter.class
+edu/uoc/ictflag/security/web/UserStatusController.class
+edu/uoc/ictflag/security/web/LoginController.class
+edu/uoc/ictflag/web/MenuController.class
+edu/uoc/ictflag/security/web/AuthorizationController.class

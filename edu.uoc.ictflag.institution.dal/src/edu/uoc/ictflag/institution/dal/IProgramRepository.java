@@ -1,0 +1,18 @@
+package edu.uoc.ictflag.institution.dal;
+
+import java.util.List;
+
+import edu.uoc.ictflag.institution.model.Program;
+
+public interface IProgramRepository
+{
+	List<Program> getProgramsList(String username) throws Exception;
+	
+	Program getProgram(String username, long id) throws Exception;
+	
+	void createOrUpdateProgram(Program program) throws Exception;
+	
+	void deleteProgram(long id) throws Exception;
+	
+	Program getProgramByCode(String program) throws Exception;
+}

@@ -1,0 +1,143 @@
+package edu.uoc.ictflag.ela.model;
+
+public class StudentReportDataItem
+{
+	private long recentExercises;
+	private long exercisesYesterday;
+	
+	private StudentReportDataForToolItem dataForVerilUOC;
+	private StudentReportDataForToolItem dataForVerilCirc;
+	private StudentReportDataForToolItem dataForKeMap;
+	private StudentReportDataForToolItem dataForVerilChart;
+	
+	private long globalProgressLevel1;
+	private long globalProgressLevel2;
+	private long globalProgressLevel3;
+	private long globalProgressLevel4;
+	private long globalProgressCurrentValue;
+	
+	public StudentReportDataForToolItem getDataForVerilUOC()
+	{
+		return dataForVerilUOC;
+	}
+	
+	public void setDataForVerilUOC(StudentReportDataForToolItem dataForVerilUOC)
+	{
+		this.dataForVerilUOC = dataForVerilUOC;
+	}
+	
+	public StudentReportDataForToolItem getDataForVerilCirc()
+	{
+		return dataForVerilCirc;
+	}
+	
+	public void setDataForVerilCirc(StudentReportDataForToolItem dataForVerilCirc)
+	{
+		this.dataForVerilCirc = dataForVerilCirc;
+	}
+	
+	public StudentReportDataForToolItem getDataForKeMap()
+	{
+		return dataForKeMap;
+	}
+	
+	public void setDataForKeMap(StudentReportDataForToolItem dataForKeMap)
+	{
+		this.dataForKeMap = dataForKeMap;
+	}
+	
+	public StudentReportDataForToolItem getDataForVerilChart()
+	{
+		return dataForVerilChart;
+	}
+	
+	public void setDataForVerilChart(StudentReportDataForToolItem dataForVerilChart)
+	{
+		this.dataForVerilChart = dataForVerilChart;
+	}
+
+	public long getRecentExercises()
+	{
+		return recentExercises;
+	}
+	
+	public void setRecentExercises(long recentExercises)
+	{
+		this.recentExercises = recentExercises;
+	}
+	
+	public long getExercisesYesterday()
+	{
+		return exercisesYesterday;
+	}
+	
+	public void setExercisesYesterday(long exercisesYesterday)
+	{
+		this.exercisesYesterday = exercisesYesterday;
+	}
+
+	public long getGlobalProgressLevel1()
+	{
+		return globalProgressLevel1;
+	}
+
+	public void setGlobalProgressLevel1(long globalProgressLevel1)
+	{
+		this.globalProgressLevel1 = globalProgressLevel1;
+	}
+
+	public long getGlobalProgressLevel2()
+	{
+		return globalProgressLevel2;
+	}
+
+	public void setGlobalProgressLevel2(long globalProgressLevel2)
+	{
+		this.globalProgressLevel2 = globalProgressLevel2;
+	}
+
+	public long getGlobalProgressLevel3()
+	{
+		return globalProgressLevel3;
+	}
+
+	public void setGlobalProgressLevel3(long globalProgressLevel3)
+	{
+		this.globalProgressLevel3 = globalProgressLevel3;
+	}
+
+	public long getGlobalProgressLevel4()
+	{
+		return globalProgressLevel4;
+	}
+
+	public void setGlobalProgressLevel4(long globalProgressLevel4)
+	{
+		this.globalProgressLevel4 = globalProgressLevel4;
+	}
+
+	public long getGlobalProgressCurrentValue()
+	{
+		return globalProgressCurrentValue;
+	}
+
+	public void setGlobalProgressCurrentValue(long globalProgressCurrentValue)
+	{
+		this.globalProgressCurrentValue = globalProgressCurrentValue;
+	}
+	
+	public long getGlobalProgressLevel (int level)
+	{
+		long progress = 0;
+		
+		switch (level)
+		{
+			case 1: progress = getGlobalProgressLevel1(); break;
+			case 2: progress = getGlobalProgressLevel2(); break;
+			case 3: progress = getGlobalProgressLevel3(); break;
+			case 4: progress = getGlobalProgressLevel4(); break;
+		}
+		
+		return progress;
+	}
+}

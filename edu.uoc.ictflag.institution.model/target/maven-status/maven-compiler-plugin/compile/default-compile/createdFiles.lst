@@ -1,0 +1,10 @@
+edu/uoc/ictflag/institution/model/Program.class
+edu/uoc/ictflag/institution/model/Tool.class
+edu/uoc/ictflag/institution/model/Semester.class
+edu/uoc/ictflag/institution/model/CourseGroupMember.class
+edu/uoc/ictflag/institution/model/CourseGroup.class
+edu/uoc/ictflag/institution/model/VLE.class
+edu/uoc/ictflag/institution/model/Course.class
+edu/uoc/ictflag/institution/model/Subject.class
+edu/uoc/ictflag/institution/model/InstitutionValidationErrors.class
+edu/uoc/ictflag/institution/model/Institution.class

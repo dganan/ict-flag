@@ -1,0 +1,4 @@
+edu/uoc/ictflag/institution/bll/test/ProgramManagerTest.class
+edu/uoc/ictflag/security/bll/test/AuthorizationManagerTest.class
+edu/uoc/ictflag/security/bll/test/AuthenticationManagerTest.class
+edu/uoc/ictflag/institution/bll/test/SubjectManagerTest.class

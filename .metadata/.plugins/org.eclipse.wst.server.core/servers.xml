@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<servers>
+  <server auto-publish-setting="1" auto-publish-time="60" glassfish.adminname="admin" glassfish.adminserverportnumber="4848" glassfish.domainpath="/home/david/glassfish4/glassfish/domains/domain1" glassfish.jarDeploy="true" glassfish.keepSessions="true" glassfish.serverportnumber="8282" glassfish.useAnonymousConnection="true" hostname="localhost" id="GlassFish 4 at localhost [domain1]" name="GlassFish 4 at localhost [domain1]" runtime-id="GlassFish 4" server-type="org.glassfish.jst.server.glassfish4" server-type-id="org.glassfish.jst.server.glassfish4" start-timeout="240" stop-timeout="240" timestamp="3093">
+    <list key="modules" value0="edu.uoc.ictflag::org.eclipse.jst.jee.server:edu.uoc.ictflag::jst.ear::6.0"/>
+  </server>
+  <server auto-publish-time="1" hostname="localhost" id="WildFly 9.x (Experimental)1437936531909" name="WildFly 9.x (Experimental)" org.jboss.ide.eclipse.as.core.server.EXPOSE_MANAGEMENT_SERVICE="true" org.jboss.ide.eclipse.as.core.server.IGNORE_LAUNCH_COMMANDS="false" org.jboss.ide.eclipse.as.core.server.attributes.shutdownPollerKey="org.jboss.ide.eclipse.as.core.runtime.server.WebPoller" org.jboss.ide.eclipse.as.core.server.attributes.startupPollerKey="org.jboss.ide.eclipse.as.core.runtime.server.WebPoller" org.jboss.ide.eclipse.as.core.server.deployDirectoryType="server" org.jboss.ide.eclipse.as.core.server.serverMode="local" runtime-id="WildFly 9.x Runtime" server-type="org.jboss.ide.eclipse.as.wildfly.90" server-type-id="org.jboss.ide.eclipse.as.wildfly.90" start-timeout="450" stop-timeout="450" timestamp="29">
+    <list key="modules" value0="edu.uoc.ictflag::org.eclipse.jst.jee.server:edu.uoc.ictflag::jst.ear::6.0"/>
+  </server>
+  <server hostname="localhost" id="HTTP Server at localhost" isPublishing="true" name="HTTP Server at localhost" port="80" runtime-id="HTTP Server" server-type="org.eclipse.wst.server.http.server" server-type-id="org.eclipse.wst.server.http.server" start-timeout="240" stop-timeout="240" timestamp="5" urlPrefix="">
+    <list key="modules"/>
+  </server>
+</servers>

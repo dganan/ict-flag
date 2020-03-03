@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;securityRole&apos; in &apos;edu.uoc.ictflag.security.model.User&apos; to &apos;role&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.security.model&apos;&#x0A;- Original element: &apos;edu.uoc.ictflag.security.model.User.securityRole&apos;&#x0A;- Renamed element: &apos;edu.uoc.ictflag.security.model.User.role&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;securityRole&apos;" flags="589826" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;edu.uoc.ictflag.security.model{User.java[User^securityRole" name="role" references="true" setter="false" stamp="1438497408011" textual="false" version="1.0"/>
+</session>

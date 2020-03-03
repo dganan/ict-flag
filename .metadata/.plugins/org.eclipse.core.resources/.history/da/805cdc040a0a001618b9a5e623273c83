@@ -1,0 +1,41 @@
+package edu.uoc.ictflag.ela.model;
+
+public enum FilterField
+{
+	OUTCOME, TEXT, GRADE, NONE;
+	
+	@Override
+	public String toString()
+	{
+		switch (this)
+		{
+			case OUTCOME:
+				return "F";
+			case TEXT:
+				return "T";
+			case GRADE:
+				return "G";
+			case NONE:
+				return "N";
+		}
+		
+		return null;
+	}
+	
+	public static FilterField fromString(String str)
+	{
+		switch (str)
+		{
+			case "F":
+				return FilterField.OUTCOME;
+			case "T":
+				return FilterField.TEXT;
+			case "G":
+				return FilterField.GRADE;
+			case "N":
+				return FilterField.NONE;
+			default:
+				throw new IllegalArgumentException("Unknown ResultType: " + str);
+		}
+	}
+}

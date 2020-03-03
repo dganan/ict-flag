@@ -1,0 +1,13 @@
+package edu.uoc.ictflag.institution.bll;
+
+import java.util.List;
+
+import javax.ejb.Local;
+
+import edu.uoc.ictflag.institution.model.Program;
+
+@Local
+public interface IProgramService
+{
+	List<Program> getProgramsList() throws Exception;
+}

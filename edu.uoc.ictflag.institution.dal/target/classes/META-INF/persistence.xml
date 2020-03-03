@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="edu.uoc.ictflag.institution" transaction-type="JTA">
+		<jta-data-source>jdbc/ictflag</jta-data-source>
+ 		<class>edu.uoc.ictflag.core.LocalizedString</class>
+ 		<class>edu.uoc.ictflag.core.LocalizedStringConverter</class>
+ 		<class>edu.uoc.ictflag.core.LocalizedStringConverter2</class>
+ 		<class>edu.uoc.ictflag.institution.model.Program</class>
+		<class>edu.uoc.ictflag.institution.model.Subject</class>
+		<class>edu.uoc.ictflag.institution.model.Institution</class>
+		<class>edu.uoc.ictflag.institution.model.VLE</class>
+		<class>edu.uoc.ictflag.institution.model.Course</class>
+		<class>edu.uoc.ictflag.institution.model.CourseGroup</class>
+		<class>edu.uoc.ictflag.institution.model.CourseGroupMember</class>
+ 		<class>edu.uoc.ictflag.institution.model.Semester</class>
+ 		<class>edu.uoc.ictflag.security.model.User</class>
+ 		<class>edu.uoc.ictflag.security.model.UserRolesConverter</class>
+ 		<class>edu.uoc.ictflag.security.model.UserRoleConverter</class>
+ 		<class>edu.uoc.ictflag.security.model.PermissionConverter</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<shared-cache-mode>NONE</shared-cache-mode>
+	</persistence-unit>
+</persistence>

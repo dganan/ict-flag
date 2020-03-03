@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;edu.uoc.ictflag.ela.bll.IEventDataManager.createActivityData(...)&apos; to &apos;createEventData&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.ela.bll&apos;&#x0A;- Original element: &apos;edu.uoc.ictflag.ela.bll.IEventDataManager.createActivityData(...)&apos;&#x0A;- Renamed element: &apos;edu.uoc.ictflag.ela.bll.IEventDataManager.createEventData(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;createActivityData&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;edu.uoc.ictflag.ela.bll{IActivityDataManager.java[IEventDataManager~createActivityData~QEventDataRaw;" name="createEventData" references="true" stamp="1454485843226" version="1.0"/>
+</session>

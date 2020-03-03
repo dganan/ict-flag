@@ -1,0 +1,47 @@
+package edu.uoc.ictflag.ela.model;
+
+public enum FilterField
+{
+	TOOL, PROGRAM, SUBJECT, COURSE, COURSEGROUP, ASSIGNMENT, EXERCISE;
+	
+	@Override
+	public String toString()
+	{
+		switch (this)
+		{
+			case TOOL: 
+				return "T";
+			case PROGRAM: 
+				return "P";
+			case SUBJECT: 
+				return "S";
+			case COURSE: 
+				return "C";
+			case COURSEGROUP: 
+				return "G";
+			case ASSIGNMENT: 
+				return "A";
+			case EXERCISE:
+				return "E";
+		}
+		
+		return null;
+	}
+	
+	public static FilterField fromString(String str)
+	{
+		switch (str)
+		{
+			case "F":
+				return FilterField.OUTCOME;
+			case "T":
+				return FilterField.TEXT;
+			case "G":
+				return FilterField.GRADE;
+			case "N":
+				return FilterField.NONE;
+			default:
+				throw new IllegalArgumentException("Unknown FilterField: " + str);
+		}
+	}
+}

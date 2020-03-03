@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;FakeFat.php&apos; to &apos;edu.uoc.ictflag.fakefat.php&apos;" description="Move &apos;FakeFat.php&apos; to &apos;edu.uoc.ictflag.fakefat.php&apos;" destination="/edu.uoc.ictflag.fakefat.php" element1="/edu.uoc.ictflag.fakefat.php2/WebContent/FakeFat.php" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1445716292525" updateReferences="true"/>
+</session>

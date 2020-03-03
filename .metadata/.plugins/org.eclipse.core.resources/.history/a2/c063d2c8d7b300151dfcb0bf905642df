@@ -1,0 +1,65 @@
+package edu.uoc.ictflag.ela.web;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.net.URL;
+import java.net.URLConnection;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+
+import org.primefaces.util.Base64;
+
+import edu.uoc.ictflag.core.log.ActivityLog;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.NavigationHelper;
+
+@Named
+@ViewScoped
+public class DemoReportController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	String headers;
+	String content;
+	
+	//	@Inject
+	//	IActivityDataManager activityDataManager;
+	
+	@ActivityLog
+	public void initialize() throws Exception
+	{
+		try
+		{
+			headers = PentahoHelper.GetHeaders("Demo");
+			content = PentahoHelper.Getcontent("Demo");
+		}
+		catch (Exception e)
+		{
+			LogHelper.error(e);
+			
+			NavigationHelper.redirectTo404();
+		}
+	}
+	
+	public String getHeaders()
+	{
+		return headers;
+	}
+	
+	public void setHeaders(String headers)
+	{
+		this.headers = headers;
+	}
+	
+	public String getContent()
+	{
+		return content;
+	}
+	
+	public void setContent(String content)
+	{
+		this.content = content;
+	}
+}

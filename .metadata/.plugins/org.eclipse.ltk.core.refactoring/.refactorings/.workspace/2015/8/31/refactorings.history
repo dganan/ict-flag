@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;edu.uoc.ictflag.securityç.dal&apos; to &apos;edu.uoc.ictflag.security.dal&apos;" description="Rename resource &apos;edu.uoc.ictflag.securityç.dal&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/edu.uoc.ictflag.securityç.dal" name="edu.uoc.ictflag.security.dal" stamp="1438444665222" updateReferences="true"/>
+</session>

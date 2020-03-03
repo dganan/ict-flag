@@ -1,0 +1,46 @@
+package edu.uoc.ictflag.core.log;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+@Named
+public class LoggerHelper
+{
+	private Logger getLogger ()
+	{
+		return LogManager.getLogger(LoggerHelper.class);
+	}
+	
+	public void debug (String msg)
+	{
+		getLogger().debug(msg);
+	}
+	
+	public void error (String msg)
+	{
+		getLogger().error(msg);		
+	}
+
+	public void error (String msg, Throwable err)
+	{
+		getLogger().error(msg, err);		
+	}
+
+	public void info (String msg)
+	{
+		getLogger().info(msg);		
+	}
+
+	public void trace (String msg)
+	{
+		getLogger().trace(msg);		
+	}
+
+	public void performance (String msg)
+	{
+		LogManager.getLogger("performance-log").trace(msg);
+	}
+}

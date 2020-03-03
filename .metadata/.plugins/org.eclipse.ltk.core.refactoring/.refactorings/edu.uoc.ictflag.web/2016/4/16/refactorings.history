@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;masterpage.xhtml&apos; to &apos;edu.uoc.ictflag.ela.bll.ExerciseDataManager.java&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.web&apos;&#x0A;- Destination element: &apos;edu.uoc.ictflag.ela.bll.ExerciseDataManager.java&apos;&#x0A;- Original element: &apos;masterpage.xhtml&apos;" description="Copy file" destination="=edu.uoc.ictflag.ela.bll/src&lt;edu.uoc.ictflag.ela.bll{ExerciseDataManager.java" element1="WebContent/WEB-INF/templates/masterpage.xhtml" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1461345233225" units="0" version="1.0"/>
+</session>

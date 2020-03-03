@@ -1,0 +1,60 @@
+package edu.uoc.ictflag.web.core;
+
+import java.util.Map;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+
+@Named
+@ApplicationScoped
+public class URLHelper
+{
+	public enum Page
+	{
+		HOME, LOGIN, _404, ERROR, HOME_PRIVATE
+	}
+	
+	public static String facesPath = "";
+	
+	public static String publicPath = "/public";
+	
+	public static String privatePath = "/private";
+	
+	public static String getRelativePath(Page page)
+	{
+		String path = "";
+		
+		switch (page)
+		{
+			case HOME:
+				path = facesPath + "/index.xhtml";
+				break;
+				
+			case LOGIN:
+				path = facesPath + "/login.xhtml";
+				break;
+			
+			case _404:
+				path = facesPath + "/404.xhtml";
+				break;
+				
+			case ERROR:
+				path = facesPath + "/error.xhtml";
+				break;
+				
+			case HOME_PRIVATE:
+				path = facesPath + privatePath + "/index.xhtml";
+				break;
+		}
+		
+		return path;
+	}
+	
+	public String getQueryAttribute(String param)
+	{
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		
+		return params.get(param);
+	}
+}

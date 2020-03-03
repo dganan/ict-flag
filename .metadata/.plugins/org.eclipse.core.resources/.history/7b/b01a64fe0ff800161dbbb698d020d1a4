@@ -1,0 +1,573 @@
+package edu.uoc.ictflag.ela.web;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.HorizontalBarChartModel;
+
+import edu.uoc.ictflag.core.localization.LocalizationController;
+import edu.uoc.ictflag.core.localization.LocalizedItem;
+import edu.uoc.ictflag.core.log.ActivityLog;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.NavigationHelper;
+import edu.uoc.ictflag.core.web.SessionBean;
+import edu.uoc.ictflag.ela.bll.IExercisesReportManager;
+import edu.uoc.ictflag.ela.bll.IStudentReportManager;
+import edu.uoc.ictflag.ela.model.ExercisesReportDataItem;
+import edu.uoc.ictflag.ela.model.FilterField;
+import edu.uoc.ictflag.ela.model.StudentReportGlobalProgressItem;
+import edu.uoc.ictflag.security.web.UserStatusController;
+
+@Named
+@ViewScoped
+public class ExercisesReportFixedController extends ReportController<ExercisesReportDataItem> implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	IExercisesReportManager exercisesReportManager;
+	
+	@Inject
+	IStudentReportManager studentReportManager;
+	
+	@Inject
+	UserStatusController userStatusController;
+	
+	@Override
+	protected IExercisesReportManager getReportManager()
+	{
+		return exercisesReportManager;
+	}
+	
+	// PRIVATE FIELDS 
+	
+	private StudentReportGlobalProgressItem globalProgress;
+	
+	private int outcomesBarChartMinWidth;
+	private int successRateBarChartMinHeight;
+	private int attemptsBarChartMinWidth;
+	private int timeBetweenAttemptsBarChartMinWidth;
+	private int durationBarChartMinWidth;
+	
+	private BarChartModel outcomesBarChartModel;
+	private HorizontalBarChartModel successRateBarChartModel;
+	private BarChartModel attemptsBarChartModel;
+	private BarChartModel timeBetweenAttemptsBarChartModel;
+	private BarChartModel durationBarChartModel;
+	
+	private ChartSeries rightSeries;
+	private ChartSeries wrongSeries;
+	private ChartSeries timeoutSeries;
+	private ChartSeries errorSeries;
+	private ChartSeries successRateSeries;
+	private ChartSeries attemptsMinSeries;
+	private ChartSeries attemptsAvgSeries;
+	private ChartSeries attemptsMaxSeries;
+	private ChartSeries timeBetweenAttemptsMinSeries;
+	private ChartSeries timeBetweenAttemptsAvgSeries;
+	private ChartSeries timeBetweenAttemptsMaxSeries;
+	private ChartSeries durationMinSeries;
+	private ChartSeries durationAvgSeries;
+	private ChartSeries durationMaxSeries;
+	
+	// GETTERS AND SETTERS 
+	
+	public StudentReportGlobalProgressItem getGlobalProgress()
+	{
+		return globalProgress;
+	}
+	
+	public void setGlobalProgress(StudentReportGlobalProgressItem globalProgress)
+	{
+		this.globalProgress = globalProgress;
+	}
+	
+	public int getOutcomesBarChartMinWidth()
+	{
+		return outcomesBarChartMinWidth;
+	}
+	
+	public int getSuccessRateBarChartMinHeight()
+	{
+		return successRateBarChartMinHeight;
+	}
+	
+	public int getAttemptsBarChartMinWidth()
+	{
+		return attemptsBarChartMinWidth;
+	}
+	
+	public int getTimeBetweenAttemptsBarChartMinWidth()
+	{
+		return timeBetweenAttemptsBarChartMinWidth;
+	}
+	
+	public int getDurationBarChartMinWidth()
+	{
+		return durationBarChartMinWidth;
+	}
+	
+	public BarChartModel getOutcomesBarChartModel()
+	{
+		return outcomesBarChartModel;
+	}
+	
+	public BarChartModel getSuccessRateBarChartModel()
+	{
+		return successRateBarChartModel;
+	}
+	
+	public BarChartModel getAttemptsBarChartModel()
+	{
+		return attemptsBarChartModel;
+	}
+	
+	public void setTimeBetweenAttemptsBarChartModel(BarChartModel timeBetweenAttemptsBarChartModel)
+	{
+		this.timeBetweenAttemptsBarChartModel = timeBetweenAttemptsBarChartModel;
+	}
+	
+	public BarChartModel getTimeBetweenAttemptsBarChartModel()
+	{
+		return timeBetweenAttemptsBarChartModel;
+	}
+	
+	public void setDurationBarChartModel(BarChartModel durationBarChartModel)
+	{
+		this.durationBarChartModel = durationBarChartModel;
+	}
+	
+	public BarChartModel getDurationBarChartModel()
+	{
+		return durationBarChartModel;
+	}
+	
+	public void setAttemptsBarChartModel(BarChartModel attemptsBarChartModel)
+	{
+		this.attemptsBarChartModel = attemptsBarChartModel;
+	}
+	
+	public List<ExercisesReportDataItem> getDataTableModel()
+	{
+		return dataTableModel;
+	}
+	
+	// IMPLEMENTATION
+	
+	@ActivityLog
+	public void initialize() throws Exception
+	{
+		try
+		{
+			//if (!FacesContext.getCurrentInstance().isPostback())
+			{
+				userStatusController.initialize();
+				
+				// setupProgramsFilter();
+				
+				// setupSubjectsFilter();
+				
+				// setupCoursesAssignmentsFilter();
+				
+				// setupCourseGroupsFilter();
+				
+				setupToolsFilter();
+				
+				//setupToolsExercisesFilter();
+				
+				setupAttemptsFilter();
+				
+				setupDateFilterOptions();
+				
+				setupGroupFieldsOptions();
+				
+				//setupSemestersFilter();
+				
+				setupCharts();
+			}
+		}
+		catch (Exception e)
+		{
+			LogHelper.error(e);
+			
+			NavigationHelper.redirectTo404();
+		}
+	}
+	
+	@Override
+	protected List<String> getGroupOptions()
+	{
+		List<String> options = new ArrayList<String>();
+		
+		options.add(FilterField.TOOL);
+		//options.add(FilterField.PROGRAM);
+		//options.add(FilterField.SUBJECT);
+		//options.add(FilterField.COURSE);
+		//options.add(FilterField.COURSEGROUP);
+		options.add(FilterField.ASSIGNMENT);
+		options.add(FilterField.EXERCISE);
+		//options.add(FilterField.SEMESTER);
+		
+		return options;
+	}
+	
+	@Override
+	protected void setupGroupFieldsOptions() throws Exception
+	{
+		groupFieldsOptions = new ArrayList<LocalizedItem>();
+		
+		getGroupOptions().stream().forEach(x -> groupFieldsOptions.add(new LocalizedItem(x, LocalizationController.getLocalizedString(x))));
+	}
+	
+	@Override
+	protected void setupFilters() throws Exception
+	{
+		maxAttempts = getReportManager().getMaxNumberOfAttempts(SessionBean.getUsername());
+		
+		attemptsOperation = "<=";
+		attempts = maxAttempts;
+		
+		showAllGroups = true;
+		showAllExercises = true;
+		
+		if (selectedSemesters == null)
+		{
+			selectedSemesters = new ArrayList<String>();
+		}
+		
+		selectedSemesters.add("21"); // 21 = 2016-1, 20 = 2016-2
+		
+		super.setupFilters();
+	}
+	
+	@Override
+	protected void getData() throws Exception
+	{
+		globalProgress = studentReportManager.getGlobalProgressData();
+		
+		if (groupFieldsSelectedOptions == null)
+		{
+			groupFieldsSelectedOptions = new ArrayList<String>();
+		}
+		
+		groupFieldsSelectedOptions.add(0, FilterField.SEMESTER);
+		groupFieldsSelectedOptions.add(0, FilterField.COURSE);
+		groupFieldsSelectedOptions.add(0, FilterField.SUBJECT);
+		groupFieldsSelectedOptions.add(0, FilterField.PROGRAM);
+		
+		super.getData();
+	}
+	
+	@Override
+	protected void setupDataInCharts(ExercisesReportDataItem dataItem)
+	{
+		rightSeries.set(dataItem.getChartLabel(), dataItem.getRight());
+		wrongSeries.set(dataItem.getChartLabel(), dataItem.getWrong());
+		timeoutSeries.set(dataItem.getChartLabel(), dataItem.getTimeout());
+		errorSeries.set(dataItem.getChartLabel(), dataItem.getError());
+		
+		successRateSeries.set(dataItem.getChartLabel(), dataItem.getSuccessRate() * 100);
+		
+		attemptsMinSeries.set(dataItem.getChartLabel(), dataItem.getMinAttempts());
+		attemptsAvgSeries.set(dataItem.getChartLabel(), dataItem.getAvgAttempts());
+		attemptsMaxSeries.set(dataItem.getChartLabel(), dataItem.getMaxAttempts());
+		
+		timeBetweenAttemptsMinSeries.set(dataItem.getChartLabel(), dataItem.getMinTimeBetweenAttempts());
+		timeBetweenAttemptsAvgSeries.set(dataItem.getChartLabel(), dataItem.getAvgTimeBetweenAttempts());
+		timeBetweenAttemptsMaxSeries.set(dataItem.getChartLabel(), dataItem.getMaxTimeBetweenAttempts());
+		
+		durationMinSeries.set(dataItem.getChartLabel(), dataItem.getMinDuration());
+		durationAvgSeries.set(dataItem.getChartLabel(), dataItem.getAvgDuration());
+		durationMaxSeries.set(dataItem.getChartLabel(), dataItem.getMaxDuration());
+		
+		if (stackedData)
+		{
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, dataItem.getGroupCount());
+			
+			maxNumberOfAttempts = Math.max(maxNumberOfAttempts,
+					dataItem.getMinAttempts() + Math.round(dataItem.getAvgAttempts()) + dataItem.getMaxAttempts());
+			
+			maxTimeBetweenAttempts = Math.max(maxTimeBetweenAttempts,
+					dataItem.getMinTimeBetweenAttempts() + dataItem.getAvgTimeBetweenAttempts() + dataItem.getMaxTimeBetweenAttempts());
+			
+			maxDuration = Math.max(maxDuration, dataItem.getMinDuration() + dataItem.getAvgDuration() + dataItem.getMaxDuration());
+		}
+		else
+		{
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, dataItem.getRight());
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, dataItem.getWrong());
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, dataItem.getTimeout());
+			maxNumberOfOutcomes = Math.max(maxNumberOfOutcomes, dataItem.getError());
+			
+			maxNumberOfAttempts = Math.max(maxNumberOfAttempts, dataItem.getMaxAttempts());
+			
+			maxTimeBetweenAttempts = Math.max(maxTimeBetweenAttempts, dataItem.getMaxTimeBetweenAttempts());
+			
+			maxDuration = Math.max(maxDuration, dataItem.getMaxDuration());
+		}
+	}
+	
+	@Override
+	protected void chartsPreConfiguration()
+	{
+		// OUTCOMES CHART PRE CONFIGURATION
+		
+		outcomesBarChartModel = new BarChartModel();
+		outcomesBarChartModel.setStacked(stackedData);
+		
+		rightSeries = new ChartSeries();
+		rightSeries.setLabel(LocalizationController.getLocalizedString("Right"));
+		
+		wrongSeries = new ChartSeries();
+		wrongSeries.setLabel(LocalizationController.getLocalizedString("Wrong"));
+		
+		timeoutSeries = new ChartSeries();
+		timeoutSeries.setLabel(LocalizationController.getLocalizedString("Timeout"));
+		
+		errorSeries = new ChartSeries();
+		errorSeries.setLabel(LocalizationController.getLocalizedString("Error"));
+		
+		outcomesBarChartModel.addSeries(rightSeries);
+		outcomesBarChartModel.addSeries(wrongSeries);
+		outcomesBarChartModel.addSeries(timeoutSeries);
+		outcomesBarChartModel.addSeries(errorSeries);
+		
+		// SUCCESS RATE CHART PRE CONFIGURATION
+		
+		successRateBarChartModel = new HorizontalBarChartModel();
+		successRateBarChartModel.setStacked(stackedData);
+		
+		successRateSeries = new ChartSeries();
+		successRateSeries.setLabel(LocalizationController.getLocalizedString("SuccessRate"));
+		
+		successRateBarChartModel.addSeries(successRateSeries);
+		
+		// ATTEMPTS CHART PRE CONFIGURATION
+		
+		attemptsBarChartModel = new BarChartModel();
+		attemptsBarChartModel.setStacked(stackedData);
+		//attemptsBarChartModel.setStacked(true);
+		//attemptsBarChartModel.setShowPointLabels(true);
+		
+		attemptsMinSeries = new ChartSeries();
+		attemptsMinSeries.setLabel(LocalizationController.getLocalizedString("AttemptsMin"));
+		//attemptsMinSeries.setFill(true);
+		
+		attemptsBarChartModel.addSeries(attemptsMinSeries);
+		
+		attemptsAvgSeries = new ChartSeries();
+		attemptsAvgSeries.setLabel(LocalizationController.getLocalizedString("AttemptsAvg"));
+		//attemptsAvgSeries.setFill(true);
+		
+		attemptsBarChartModel.addSeries(attemptsAvgSeries);
+		
+		attemptsMaxSeries = new ChartSeries();
+		attemptsMaxSeries.setLabel(LocalizationController.getLocalizedString("AttemptsMax"));
+		//attemptsMaxSeries.setFill(true);
+		
+		attemptsBarChartModel.addSeries(attemptsMaxSeries);
+		
+		// TIME BETWEEN ATTEMPTS CHART PRE CONFIGURATION
+		
+		timeBetweenAttemptsBarChartModel = new BarChartModel();
+		timeBetweenAttemptsBarChartModel.setStacked(stackedData);
+		
+		timeBetweenAttemptsMinSeries = new ChartSeries();
+		timeBetweenAttemptsMinSeries.setLabel(LocalizationController.getLocalizedString("TimeBetweenAttemptsMin"));
+		
+		timeBetweenAttemptsBarChartModel.addSeries(timeBetweenAttemptsMinSeries);
+		
+		timeBetweenAttemptsAvgSeries = new ChartSeries();
+		timeBetweenAttemptsAvgSeries.setLabel(LocalizationController.getLocalizedString("TimeBetweenAttemptsAvg"));
+		
+		timeBetweenAttemptsBarChartModel.addSeries(timeBetweenAttemptsAvgSeries);
+		
+		timeBetweenAttemptsMaxSeries = new ChartSeries();
+		timeBetweenAttemptsMaxSeries.setLabel(LocalizationController.getLocalizedString("TimeBetweenAttemptsMax"));
+		
+		timeBetweenAttemptsBarChartModel.addSeries(timeBetweenAttemptsMaxSeries);
+		
+		// DURATION CHART PRE CONFIGURATION
+		
+		durationBarChartModel = new BarChartModel();
+		durationBarChartModel.setStacked(stackedData);
+		
+		durationMinSeries = new ChartSeries();
+		durationMinSeries.setLabel(LocalizationController.getLocalizedString("DurationMin"));
+		
+		durationBarChartModel.addSeries(durationMinSeries);
+		
+		durationAvgSeries = new ChartSeries();
+		durationAvgSeries.setLabel(LocalizationController.getLocalizedString("DurationAvg"));
+		
+		durationBarChartModel.addSeries(durationAvgSeries);
+		
+		durationMaxSeries = new ChartSeries();
+		durationMaxSeries.setLabel(LocalizationController.getLocalizedString("DurationMax"));
+		
+		durationBarChartModel.addSeries(durationMaxSeries);
+	}
+	
+	@Override
+	protected List<String> getFiltersToSetup()
+	{
+		List<String> filters = new ArrayList<String>();
+		
+		// filters.add(FilterField.TOOL_EXERCISE);
+		filters.add(FilterField.TOOL);
+		// filters.add(FilterField.PROGRAM);
+		// filters.add(FilterField.SUBJECT);
+		// filters.add(FilterField.COURSE_ASSIGNMENT);
+		// filters.add(FilterField.COURSEGROUP);
+		// filters.add(FilterField.SEMESTER);
+		// filters.add(FilterField.EXERCISE);
+		// filters.add(FilterField.ATTEMPTS);
+		filters.add(FilterField.DATE);
+		
+		return filters;
+	}
+	
+	@Override
+	protected void chartsPostConfiguration(List<ExercisesReportDataItem> data)
+	{
+		//int minWidth = data.size() * minColumnWidth;
+		int minWidth = Math.min(maxGroups, data.size()) * minColumnWidth;
+		
+		boolean rotateLabels = data.size() > 5;
+		
+		// OUTCOMES CHART POST CONFIGURATION 
+		
+		setupVerticalBarChartAxis(outcomesBarChartModel, LocalizationController.getLocalizedString("Outcomes"), "nw", rotateLabels, 0,
+				Math.round(maxNumberOfOutcomes * 1.1), "%d");
+		
+		outcomesBarChartMinWidth = minWidth * 4; // minWidth * series
+		
+		// SUCCESS RATE CHART POST CONFIGURATION 
+		
+		setupHorizontalBarChartAxis(successRateBarChartModel, LocalizationController.getLocalizedString("SuccessRate"), "ne", false, 0, 100,
+				"%d%");
+		
+		successRateBarChartMinHeight = Math.max(500, minWidth);
+		
+		// ATTEMPTS CHART POST CONFIGURATION
+		
+		setupVerticalBarChartAxis(attemptsBarChartModel, LocalizationController.getLocalizedString("Attempts"), "nw", rotateLabels, 0,
+				Math.round(maxNumberOfAttempts * 1.1), "%d");
+		
+		attemptsBarChartMinWidth = minWidth * 3; // minWidth * series
+		
+		// TIME BETWEEN ATTEMPTS CHART POST CONFIGURATION
+		
+		setupVerticalBarChartAxis(timeBetweenAttemptsBarChartModel, LocalizationController.getLocalizedString("TimeBetweenAttempts"), "nw",
+				rotateLabels, 0, (float) Math.round(maxTimeBetweenAttempts * 1.1), "%dh");
+		
+		timeBetweenAttemptsBarChartMinWidth = minWidth * 3; // minWidth * series
+		
+		// DURATION CHART POST CONFIGURATION
+		
+		setupVerticalBarChartAxis(durationBarChartModel, LocalizationController.getLocalizedString("Duration"), "nw", rotateLabels, 0,
+				(float) Math.round(maxDuration * 1.1), "%d'");
+		
+		durationBarChartMinWidth = minWidth * 3; // minWidth * series
+	}
+	
+	public String getLevel1Message()
+	{
+		return getLevelMessage(0);
+	}
+	
+	public String getLevel2Message()
+	{
+		return getLevelMessage(1);
+	}
+	
+	public String getLevel3Message()
+	{
+		return getLevelMessage(2);
+	}
+	
+	public String getLevel4Message()
+	{
+		return getLevelMessage(3);
+	}
+	
+	public String getLevelMessage(int level)
+	{
+		String levelMessage = null;
+		
+		long left = globalProgress.getGlobalProgressLevelMaxValue(level) - globalProgress.getGlobalProgressCurrentValue();
+		
+		if (left <= 0)
+		{
+			levelMessage = LocalizationController.getLocalizedString("NoExercisesLeft");
+		}
+		else
+		{
+			levelMessage = LocalizationController.getLocalizedString("ExercisesLeft").replace("EXERCISES", "" + left);
+		}
+		
+		return levelMessage;
+	}
+	
+	public double getPercentageLevel1()
+	{
+		return getPercentageLevel(0);
+	}
+	
+	public double getPercentageLevel2()
+	{
+		return getPercentageLevel(1);
+	}
+	
+	public double getPercentageLevel3()
+	{
+		return getPercentageLevel(2);
+	}
+	
+	public double getPercentageLevel4()
+	{
+		return getPercentageLevel(3);
+	}
+	
+	public double getPercentageLevel(int level)
+	{
+		double percentage = 0;
+		long min = 0;
+		long max = 0;
+		
+		switch (level)
+		{
+			case 1:
+				min = 0;
+				max = globalProgress.getGlobalProgressLevelMaxValue(level);
+				break;
+			default:
+				min = globalProgress.getGlobalProgressLevelMaxValue(level - 1);
+				max = globalProgress.getGlobalProgressLevelMaxValue(level);
+				break;
+		}
+		
+		long currentValue = globalProgress.getGlobalProgressCurrentValue();
+		
+		if (currentValue > min)
+		{
+			if (currentValue >= max)
+			{
+				percentage = 100;
+			}
+			else
+			{
+				percentage = Math.round((((currentValue - min) * 100) / (max - min)) * 100) / 100;
+			}
+		}
+		
+		return percentage;
+	}
+}

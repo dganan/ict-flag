@@ -1,0 +1,430 @@
+package edu.uoc.ictflag.ela.dal.test;
+
+import static edu.uoc.ictflag.setup.core.DbSetupHelper.commitTransaction;
+import static edu.uoc.ictflag.setup.core.DbSetupHelper.createDataRawTables;
+import static edu.uoc.ictflag.setup.core.DbSetupHelper.getEntityManager;
+//import static edu.uoc.ictflag.setup.core.DbSetupHelper.setupProgram;
+//import static edu.uoc.ictflag.setup.core.DbSetupHelper.setupSubject;
+//import static edu.uoc.ictflag.setup.core.DbSetupHelper.setupUser;
+import static edu.uoc.ictflag.setup.core.DbSetupHelper.setupSemester;
+import static edu.uoc.ictflag.setup.core.DbSetupHelper.setupTool;
+import static edu.uoc.ictflag.setup.core.DbSetupHelper.setupUser;
+import static edu.uoc.ictflag.setup.core.DbSetupHelper.startTransaction;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Date;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import edu.uoc.ictflag.core.dal.DBHelper;
+import edu.uoc.ictflag.core.localization.LocalizedString;
+import edu.uoc.ictflag.dal.test.DBTestHelper;
+import edu.uoc.ictflag.ela.dal.ExerciseDataRepository;
+import edu.uoc.ictflag.ela.model.ExerciseData;
+import edu.uoc.ictflag.ela.model.ExerciseDataRaw;
+import edu.uoc.ictflag.ela.model.Outcome;
+import edu.uoc.ictflag.institution.dal.CourseGroupRepository;
+import edu.uoc.ictflag.institution.dal.CourseRepository;
+import edu.uoc.ictflag.institution.dal.ProgramRepository;
+import edu.uoc.ictflag.institution.dal.SemesterRepository;
+import edu.uoc.ictflag.institution.dal.SubjectRepository;
+import edu.uoc.ictflag.institution.dal.ToolRepository;
+import edu.uoc.ictflag.institution.model.Semester;
+import edu.uoc.ictflag.security.dal.UserRepository;
+import edu.uoc.ictflag.security.model.User;
+import edu.uoc.ictflag.security.model.UserRole;
+import edu.uoc.ictflag.setup.core.DbSetupHelper;
+
+public class ExerciseDataRepositoryTest
+{
+	private static ToolRepository toolRepository;
+	private static UserRepository userRepository;
+	private static ProgramRepository programRepository;
+	private static SubjectRepository subjectRepository;
+	private static SemesterRepository semesterRepository;
+	private static CourseRepository courseRepository;
+	private static CourseGroupRepository courseGroupRepository;
+	
+	private static ExerciseDataRepository exerciseDataRepository;
+	
+	//	private static UserRepository ur;
+	
+	private static Semester semester;
+	private static User std;
+	
+	//	private static Subject s2;
+	//	private static Subject s3;
+	//	
+	//	private static User pm1;
+	//	private static User pm2;
+	
+	@Before
+	public void setUpExerciseDataRepositoryTest() throws Exception
+	{
+		DBTestHelper.reset();
+		
+		userRepository = new UserRepository();
+		userRepository.setEntityManager(getEntityManager());
+		
+		toolRepository = new ToolRepository(userRepository);
+		toolRepository.setEntityManager(getEntityManager());
+		
+		programRepository = new ProgramRepository(userRepository);
+		programRepository.setEntityManager(getEntityManager());
+		
+		subjectRepository = new SubjectRepository(userRepository);
+		subjectRepository.setEntityManager(getEntityManager());
+		
+		semesterRepository = new SemesterRepository(userRepository);
+		semesterRepository.setEntityManager(getEntityManager());
+		
+		courseRepository = new CourseRepository(userRepository);
+		courseRepository.setEntityManager(getEntityManager());
+		
+		courseGroupRepository = new CourseGroupRepository(userRepository);
+		courseGroupRepository.setEntityManager(getEntityManager());
+		
+		exerciseDataRepository = new ExerciseDataRepository(toolRepository, userRepository, programRepository, subjectRepository, semesterRepository,
+				courseRepository, courseGroupRepository);
+		exerciseDataRepository.setEntityManager(getEntityManager());
+		
+		startTransaction();
+		
+		createDataRawTables();
+		
+		semester = setupSemester(2016, 2, 2016, 3, 15, 2016, 7, 15);
+
+		std = setupUser("std", "Student", "std", "std@uoc.edu", Arrays.asList(UserRole.STUDENT));
+		
+		setupTool(LocalizedString.fromStringFormat("ca#Fake FAT"), "FAKEFAT", "afe9ead0-8a55-4bf7-bce9-f78e81afdecb");
+		
+		//		setupUser("su", "Super user", "su", "su@uoc.edu", Arrays.asList(UserRole.SUPERUSER));
+		//		pm1 = setupUser("pm1", "Program manager 1", "pm1", "pm1@uoc.edu", Arrays.asList(UserRole.PROGRAM_MANAGER));
+		//		pm2 = setupUser("pm2", "Program manager 2", "pm2", "pm2@uoc.edu", Arrays.asList(UserRole.PROGRAM_MANAGER));
+		//		
+		//		programs = new ArrayList<Program>();
+		//		
+		//		programs.add(setupProgram("P1", LocalizedString.fromStringFormat("ca#Programa 1;en#Program 1"), pm1));
+		//		programs.add(setupProgram("P2", LocalizedString.fromStringFormat("ca#Programa 2;en#Program 2"), pm1));
+		//		programs.add(setupProgram("P3", LocalizedString.fromStringFormat("ca#Programa 3;en#Program 3"), pm2));
+		//		programs.add(setupProgram("P4", LocalizedString.fromStringFormat("ca#Programa 4;en#Program 4"), null));
+		//		
+		//		s1 = setupSubject(LocalizedString.fromStringFormat("ca#Assignatura 1;en#Subject 1"), "12.000");
+		//		s2 = setupSubject(LocalizedString.fromStringFormat("ca#Assignatura 2;en#Subject 2"), "14.000");
+		//		s3 = setupSubject(LocalizedString.fromStringFormat("ca#Assignatura 3;en#Subject 3"), "16.000");
+		//		
+		//		
+		//		programs.get(0).getSubjects().add(s1);
+		//		programs.get(0).getSubjects().add(s3);
+		//		programs.get(1).getSubjects().add(s3);
+		//		programs.get(2).getSubjects().add(s1);
+		//		programs.get(2).getSubjects().add(s2);
+		//		
+		//		pr.createOrUpdateProgram(programs.get(0));
+		//		pr.createOrUpdateProgram(programs.get(1));
+		//		pr.createOrUpdateProgram(programs.get(2));
+		//		
+		commitTransaction();
+	}
+	
+	@Test
+	public void processExerciseDataRawFixUpsTest() throws Exception
+	{
+		ExerciseDataRaw exerciseDataRaw = new ExerciseDataRaw();
+		
+		ExerciseData exerciseData;
+		
+		exerciseDataRaw.setTool("FAKEFAT");
+		exerciseDataRaw.setToolUUID("afe9ead0-8a55-4bf7-bce9-f78e81afdecb");
+		exerciseDataRaw.setUserId("std");
+		
+		// TEST 1 
+		
+		// PROGRAM NULL 				==> NULL
+		// SUBJECT NULL 				==> NULL
+		// GRADE NULL (NO ASSESSMENT) 	==> NULL
+		// ASSIGNMENT NULL 				==> NULL
+		// DATETIME NULL 				==> NOW
+		// SEMESTER NULL 				==> CURRENT / NULL
+		
+		exerciseDataRaw.setAction("ES");
+		exerciseDataRaw.setExercise("exercise1");
+
+		//DbSetupHelper.startTransaction();
+		
+		DbSetupHelper.emptyDataRawTables();
+		
+		DbSetupHelper.startTransaction();
+		exerciseDataRepository.saveExerciseDataRaw(exerciseDataRaw);
+		DbSetupHelper.commitTransaction();
+		
+		DbSetupHelper.startTransaction();
+		exerciseDataRepository.exerciseDataEtlProcess();
+		DbSetupHelper.commitTransaction();
+		
+		exerciseData = getLastExerciseData();
+		
+		//DbSetupHelper.commitTransaction();
+		
+		// VALIDATE FIX-UPS
+		
+		assertEquals(std.getId(), exerciseData.getStudent().getId());
+		assertFalse(exerciseData.isStudentFixedUp());
+		assertNull(exerciseData.getProgram());
+		assertFalse(exerciseData.isProgramFixedUp());
+		assertNull(exerciseData.getSubject());
+		assertFalse(exerciseData.isSubjectFixedUp());
+		assertTrue(exerciseData.isGradeNull());
+		assertFalse(exerciseData.isGradeIncorrect());
+		assertNull(exerciseData.getAssignment());
+		assertEquals(semester.getCode(), exerciseData.getSemester().getCode());
+		assertTrue(exerciseData.isSemesterFixedUp());
+		
+		Date startDate = exerciseData.getStartDate();
+		
+		assertTrue(new Date().getTime() - startDate.getTime() < 100000);
+		
+		// TEST 2 
+		
+		// PROGRAM EMPTY 				==> NULL
+		// SUBJECT EMPTY 				==> NULL
+		// GRADE EMPTY (NO ASSESSMENT) 	==> NULL
+		// ASSIGNMENT EMPTY 			==> NULL
+		// DATETIME EMPTY 				==> NOW
+		// SEMESTER EMPTY 				==> CURRENT / NULL
+		
+		exerciseDataRaw.setProgramCode("");
+		exerciseDataRaw.setSubjectCode("");
+		exerciseDataRaw.setGrade("");
+		exerciseDataRaw.setAssignment("");
+		exerciseDataRaw.setTimestamp("");
+		exerciseDataRaw.setSemester("");
+		
+		//DbSetupHelper.startTransaction();
+		
+		DbSetupHelper.emptyDataRawTables();
+		
+		DbSetupHelper.startTransaction();
+		exerciseDataRepository.saveExerciseDataRaw(exerciseDataRaw);
+		DbSetupHelper.commitTransaction();
+		
+		DbSetupHelper.startTransaction();
+		exerciseDataRepository.exerciseDataEtlProcess();
+		DbSetupHelper.commitTransaction();
+		
+		exerciseData = getLastExerciseData();
+		
+		//DbSetupHelper.commitTransaction();
+		
+		// VALIDATE FIX-UPS
+		
+		assertEquals(std.getId(), exerciseData.getStudent().getId());
+		assertFalse(exerciseData.isStudentFixedUp());
+		assertNull(exerciseData.getProgram());
+		assertTrue(exerciseData.isProgramFixedUp());
+		assertNull(exerciseData.getSubject());
+		assertTrue(exerciseData.isSubjectFixedUp());
+		assertTrue(exerciseData.isGradeNull());
+		assertFalse(exerciseData.isGradeIncorrect());
+		assertNull(exerciseData.getAssignment());
+		assertEquals(semester.getCode(), exerciseData.getSemester().getCode());
+		assertTrue(exerciseData.isSemesterFixedUp());
+		
+		startDate = exerciseData.getStartDate();
+		
+		assertTrue(new Date().getTime() - startDate.getTime() < 100000);
+		
+		/*
+		// TEST 3
+		
+		// PROGRAM NOT EXISTS 			==> NULL
+		// SUBJECT NOT EXISTS 			==> CREATES IT
+		// USER NOT EXISTS 				==> CREATES IT
+		// ASSIGNMENT NULL 				==> NULL
+		// SEMESTER NOT VALID			==> CURRENT / NULL
+		
+		// VALIDATE FIX-UPS
+		// COURSE AND COURSEGROUP ARE NULL
+		
+		exerciseDataRaw.setProgramCode("P");
+		exerciseDataRaw.setSubjectCode("S");
+		exerciseDataRaw.setUserId("nostd");
+		exerciseDataRaw.setAssignment(null);
+		exerciseDataRaw.setSemester("2015--2");
+		
+		DbSetupHelper.startTransaction();
+		
+		DbSetupHelper.emptyDataRawTables();
+		
+		exerciseDataRepository.saveExerciseDataRaw(exerciseDataRaw);
+		
+		exerciseDataRepository.exerciseDataEtlProcess();
+				
+		exerciseData = getLastExerciseData();
+				
+		DbSetupHelper.commitTransaction();
+				
+		// VALIDATE FIX-UPS
+				
+		assertNotNull(userRepository.getUserByUsername("nostd"));
+		assertTrue(exerciseData.isStudentFixedUp());
+		assertNull(exerciseData.getProgram());
+		assertTrue(exerciseData.isProgramFixedUp());
+		assertNotNull(subjectRepository.getSubjectByCode("S"));
+		assertTrue(exerciseData.isSubjectFixedUp());
+		assertTrue(exerciseData.isGradeNull());
+		assertFalse(exerciseData.isGradeIncorrect());
+		assertNull(exerciseData.getAssignment());
+		assertEquals(semester.getCode(), exerciseData.getSemester().getCode());
+		assertTrue(exerciseData.isSemesterFixedUp());
+		assertNull(exerciseData.getCourse());
+		assertNull(exerciseData.getCourseGroup());
+				
+		startDate = exerciseData.getStartDate();
+				
+		assertTrue(new Date().getTime() - startDate.getTime() < 100000);
+		*/
+		
+		// TEST 4
+		
+		// EXERCISEACTION SUBMISSION
+		// OUTCOME NULL					==> ERROR
+		
+		exerciseDataRaw.setAction("EU");
+		exerciseDataRaw.setOutcome("");
+		
+		//DbSetupHelper.startTransaction();
+		
+		DbSetupHelper.emptyDataRawTables();
+		
+		DbSetupHelper.startTransaction();
+		exerciseDataRepository.saveExerciseDataRaw(exerciseDataRaw);
+		DbSetupHelper.commitTransaction();
+		
+		DbSetupHelper.startTransaction();
+		exerciseDataRepository.exerciseDataEtlProcess();
+		DbSetupHelper.commitTransaction();
+		
+		exerciseData = getLastExerciseData();
+		
+		//DbSetupHelper.commitTransaction();
+		
+		// VALIDATE FIX-UPS
+		
+		assertFalse(exerciseData.isStudentFixedUp());
+		assertFalse(exerciseData.isSubjectFixedUp());
+		assertTrue(exerciseData.isOutcomeFixedUp());
+		assertEquals(Outcome.ERROR, exerciseData.getOutcome());
+		
+		Date endDate = exerciseData.getEndDate();
+		
+		assertTrue(new Date().getTime() - endDate.getTime() < 100000);
+
+		// TEST 5
+		
+		// EXERCISEACTION SUBMISSION
+		// OUTCOME EMPTY				==> ERROR
+		
+		exerciseDataRaw.setOutcome("");
+		
+		//		DbSetupHelper.startTransaction();
+		
+		DbSetupHelper.emptyDataRawTables();
+		
+		exerciseDataRepository.saveExerciseDataRaw(exerciseDataRaw);
+		
+		exerciseDataRepository.exerciseDataEtlProcess();
+		
+		exerciseData = getLastExerciseData();
+		
+		//DbSetupHelper.commitTransaction();
+		
+		// VALIDATE FIX-UPS
+		
+		assertFalse(exerciseData.isStudentFixedUp());
+		assertFalse(exerciseData.isSubjectFixedUp());
+		assertTrue(exerciseData.isOutcomeFixedUp());
+		assertEquals(Outcome.ERROR, exerciseData.getOutcome());
+		
+		endDate = exerciseData.getEndDate();
+		
+		assertTrue(new Date().getTime() - endDate.getTime() < 100000);
+		
+		// TEST 6
+		
+		// EXERCISEACTION ASSESSMENT
+		// GRADE OUTSIDE RANGE 0..1		==> NO CHANGE
+		
+		exerciseDataRaw.setAction("EA");
+		exerciseDataRaw.setGrade("12");
+		
+		DbSetupHelper.startTransaction();
+		
+		DbSetupHelper.emptyDataRawTables();
+		
+		exerciseDataRepository.saveExerciseDataRaw(exerciseDataRaw);
+		
+		exerciseDataRepository.exerciseDataEtlProcess();
+		
+		exerciseData = getLastExerciseData();
+		
+		DbSetupHelper.commitTransaction();
+		
+		// VALIDATE FIX-UPS
+		
+		assertFalse(exerciseData.isStudentFixedUp());
+		assertFalse(exerciseData.isSubjectFixedUp());
+		assertTrue(exerciseData.isOutcomeFixedUp());
+		assertEquals(Outcome.ERROR, exerciseData.getOutcome());
+		assertTrue(exerciseData.isGradeIncorrect());
+		
+		endDate = exerciseData.getEndDate();
+		
+		assertTrue(new Date().getTime() - endDate.getTime() < 100000);
+		
+		// TEST 7
+		
+		// ALL OK (COURSE AND COURSEGROUP CALCULABLE)
+		
+		exerciseDataRaw.setGrade("5");
+		
+		DbSetupHelper.startTransaction();
+		
+		DbSetupHelper.emptyDataRawTables();
+		
+		exerciseDataRepository.saveExerciseDataRaw(exerciseDataRaw);
+		
+		exerciseDataRepository.exerciseDataEtlProcess();
+		
+		exerciseData = getLastExerciseData();
+		
+		DbSetupHelper.commitTransaction();
+		
+		// VALIDATE FIX-UPS
+		
+		assertFalse(exerciseData.isStudentFixedUp());
+		assertFalse(exerciseData.isSubjectFixedUp());
+		assertTrue(exerciseData.isOutcomeFixedUp());
+		assertEquals(Outcome.ERROR, exerciseData.getOutcome());
+		assertTrue(exerciseData.isGradeIncorrect());
+		
+		endDate = exerciseData.getEndDate();
+		
+		assertTrue(new Date().getTime() - endDate.getTime() < 100000);
+	}
+	
+	@Test
+	public void processExerciseDataRawETLProcessTest() throws Exception
+	{
+	}
+	
+	private ExerciseData getLastExerciseData() throws Exception
+	{
+		return new DBHelper(getEntityManager()).getFirst("SELECT s FROM ExerciseData s ORDER BY s.startDate DESC", ExerciseData.class);
+	}
+}

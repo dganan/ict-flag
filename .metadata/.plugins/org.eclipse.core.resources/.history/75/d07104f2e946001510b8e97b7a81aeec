@@ -1,0 +1,51 @@
+package edu.uoc.ictflag.core;
+
+import java.util.List;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+
+@Converter(autoApply = true)
+public class LocalizedStringConverter2 implements AttributeConverter<List<Translation>, String>
+{
+	@Override
+	public String convertToDatabaseColumn(List<Translation> attribute)
+	{
+		StringBuilder sb = new StringBuilder();
+		
+		boolean firstTime = true;
+		
+		for (Translation t : attribute)
+		{
+			if (!firstTime)
+			{
+				sb.append(";");
+			}
+			
+			sb.append(t.getCode());
+			sb.append("#");
+			sb.append(t.getTranslation());
+			
+			firstTime = false;
+		}
+		
+		return sb.toString();
+	}
+	
+	@Override
+	public List<Translation> convertToEntityAttribute(String dbData)
+	{
+		List<Translation> lt = new List<Translation>();
+		
+		String[] parts = dbData.split(";");
+		
+		for (String s : parts)
+		{
+			String[] tparts = s.split("#");
+			
+			ls.setTranslation(tparts[0], tparts[1]);
+		}
+		
+		return ls;
+	}
+}

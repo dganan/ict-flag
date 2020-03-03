@@ -1,0 +1,16 @@
+package edu.uoc.ictflag.institution.bll;
+
+import java.util.List;
+
+import edu.uoc.ictflag.institution.model.Program;
+
+public interface IProgramManager
+{
+	List<Program> getProgramsList(String username) throws Exception;
+	
+	void deleteProgram(long id) throws Exception;
+	
+	Program getProgram(long id) throws Exception;
+	
+	void createOrUpdateProgram(Program program) throws Exception;
+}

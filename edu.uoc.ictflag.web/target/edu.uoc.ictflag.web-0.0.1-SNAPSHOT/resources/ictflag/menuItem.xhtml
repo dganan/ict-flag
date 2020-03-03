@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="url" type="java.lang.String" required="true"></composite:attribute>
+	<composite:attribute name="iconClass" type="java.lang.String" required="true"></composite:attribute>
+	<composite:attribute name="text" type="java.lang.String" required="true"></composite:attribute>
+</composite:interface>
+
+<composite:implementation>
+	<h:outputLink value="#{cc.attrs.url}">
+		<i class="#{cc.attrs.iconClass}"></i>
+		<span class="title small-left-margin">#{cc.attrs.text}</span>
+	</h:outputLink>
+</composite:implementation>
+
+</html>
+

@@ -1,0 +1,285 @@
+package edu.uoc.ictflag.ela.model;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
+public class ExercisesReportDataItem extends ReportDataItem
+{
+	long right;
+	long wrong;
+	long timeout;
+	long error;
+	
+	long score1;
+	long score2;
+	long score3;
+	
+	long minAttempts;
+	double avgAttempts;
+	long maxAttempts;
+	
+	double minTimeBetweenAttempts;
+	double avgTimeBetweenAttempts;
+	double maxTimeBetweenAttempts;
+	
+	double minDuration;
+	double avgDuration;
+	double maxDuration;
+	
+	long groupCount;
+	double successRate;
+	
+	public ExercisesReportDataItem(Object... args)
+	{
+		int index = 0;
+		
+		this.right = args[index] == null ? 0 : (long) args[index];
+		index++;
+		this.wrong = args[index] == null ? 0 : (long) args[index];
+		index++;
+		this.timeout = args[index] == null ? 0 : (long) args[index];
+		index++;
+		this.error = args[index] == null ? 0 : (long) args[index];
+		index++;
+		
+		this.successRate = args[index] == null ? 0 : (double) args[index];
+		index++;
+		
+		this.minAttempts = args[index] == null ? 0 : (int) args[index];
+		index++;
+		this.avgAttempts = args[index] == null ? 0 : ((BigDecimal) args[index]).doubleValue();
+		index++;
+		this.maxAttempts = args[index] == null ? 0 : (int) args[index];
+		index++;
+		
+		this.minTimeBetweenAttempts = args[index] == null ? 0 : ((BigDecimal) args[index]).doubleValue();
+		index++;
+		this.avgTimeBetweenAttempts = args[index] == null ? 0 : ((BigDecimal) args[index]).doubleValue();
+		index++;
+		this.maxTimeBetweenAttempts = args[index] == null ? 0 : ((BigDecimal) args[index]).doubleValue();
+		index++;
+		
+		this.minDuration = args[index] == null ? 0 : ((BigDecimal) args[index]).doubleValue();
+		index++;
+		this.avgDuration = args[index] == null ? 0 : ((BigDecimal) args[index]).doubleValue();
+		index++;
+		this.maxDuration = args[index] == null ? 0 : ((BigDecimal) args[index]).doubleValue();
+		index++;
+
+		this.score1 = args[index] == null ? 0 : (long) args[index];
+		index++;
+		this.score2 = args[index] == null ? 0 : (long) args[index];
+		index++;
+		this.score3 = args[index] == null ? 0 : (long) args[index];
+		index++;
+
+		this.groupFields = new ArrayList<String>();
+		
+		for (; index < args.length; index++)
+		{
+			this.groupFields.add((String) args[index]);
+		}
+		
+		this.groupCount = right + wrong + timeout + error;
+	}
+	
+	public long getRight()
+	{
+		return right;
+	}
+	
+	public void setRight(long right)
+	{
+		this.right = right;
+	}
+	
+	public long getWrong()
+	{
+		return wrong;
+	}
+	
+	public void setWrong(long wrong)
+	{
+		this.wrong = wrong;
+	}
+	
+	public long getTimeout()
+	{
+		return timeout;
+	}
+	
+	public void setTimeout(long timeout)
+	{
+		this.timeout = timeout;
+	}
+	
+	public long getError()
+	{
+		return error;
+	}
+	
+	public void setError(long error)
+	{
+		this.error = error;
+	}
+	
+	public double getRightPercentage()
+	{
+		return groupCount == 0 ? 0 : (double) right / (double) groupCount;
+	}
+	
+	public double getWrongPercentage()
+	{
+		return groupCount == 0 ? 0 : (double) wrong / (double) groupCount;
+	}
+	
+	public double getTimeoutPercentage()
+	{
+		return groupCount == 0 ? 0 : (double) timeout / (double) groupCount;
+	}
+	
+	public double getErrorPercentage()
+	{
+		return groupCount == 0 ? 0 : (double) error / (double) groupCount;
+	}
+	
+	public long getMinAttempts()
+	{
+		return minAttempts;
+	}
+	
+	public void setMinAttempts(long minAttempts)
+	{
+		this.minAttempts = minAttempts;
+	}
+	
+	public double getAvgAttempts()
+	{
+		return avgAttempts;
+	}
+	
+	public void setAvgAttempts(double avgAttempts)
+	{
+		this.avgAttempts = avgAttempts;
+	}
+	
+	public long getMaxAttempts()
+	{
+		return maxAttempts;
+	}
+	
+	public void setMaxAttempts(long maxAttempts)
+	{
+		this.maxAttempts = maxAttempts;
+	}
+	
+	public double getMinTimeBetweenAttempts()
+	{
+		return minTimeBetweenAttempts;
+	}
+	
+	public void setMinTimeBetweenAttempts(double minTimeBetweenAttempts)
+	{
+		this.minTimeBetweenAttempts = minTimeBetweenAttempts;
+	}
+	
+	public double getAvgTimeBetweenAttempts()
+	{
+		return avgTimeBetweenAttempts;
+	}
+	
+	public void setAvgTimeBetweenAttempts(double avgTimeBetweenAttempts)
+	{
+		this.avgTimeBetweenAttempts = avgTimeBetweenAttempts;
+	}
+	
+	public double getMaxTimeBetweenAttempts()
+	{
+		return maxTimeBetweenAttempts;
+	}
+	
+	public void setMaxTimeBetweenAttempts(long maxTimeBetweenAttempts)
+	{
+		this.maxTimeBetweenAttempts = maxTimeBetweenAttempts;
+	}
+	
+	public double getMinDuration()
+	{
+		return minDuration;
+	}
+	
+	public void setMinDuration(double minDuration)
+	{
+		this.minDuration = minDuration;
+	}
+	
+	public double getAvgDuration()
+	{
+		return avgDuration;
+	}
+	
+	public void setAvgDuration(double avgDuration)
+	{
+		this.avgDuration = avgDuration;
+	}
+	
+	public double getMaxDuration()
+	{
+		return maxDuration;
+	}
+	
+	public void setMaxDuration(double maxDuration)
+	{
+		this.maxDuration = maxDuration;
+	}
+	
+	public long getGroupCount()
+	{
+		return groupCount;
+	}
+	
+	public void setGroupCount(long groupCount)
+	{
+		this.groupCount = groupCount;
+	}
+	
+	public double getSuccessRate()
+	{
+		return successRate;
+	}
+	
+	public void setSuccessRate(double successRate)
+	{
+		this.successRate = successRate;
+	}
+	
+	public long getScore1()
+	{
+		return score1;
+	}
+	
+	public void setScore1(long score1)
+	{
+		this.score1 = score1;
+	}
+	
+	public long getScore2()
+	{
+		return score2;
+	}
+	
+	public void setScore2(long score2)
+	{
+		this.score2 = score2;
+	}
+	
+	public long getScore3()
+	{
+		return score3;
+	}
+	
+	public void setScore3(long score3)
+	{
+		this.score3 = score3;
+	}
+}

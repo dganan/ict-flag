@@ -1,0 +1,10 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:body>
+<h:form>
+    <h3>Grid Layout</h3>
+    <p:selectManyCheckbox id="grid" value="#{studentsReportController.selectedCities}" layout="grid" columns="3">
+        <f:selectItems value="#{studentsReportController.cities}" var="city" itemLabel="#{city}" itemValue="#{city}" />
+    </p:selectManyCheckbox>
+</h:form>
+</h:body>
+</html>

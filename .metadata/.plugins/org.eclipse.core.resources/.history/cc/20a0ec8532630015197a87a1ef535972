@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+<composite:interface>
+	<composite:attribute name="propertyName" type="java.lang.String" required="true"></composite:attribute>
+	<composite:attribute name="localizedString" type="edu.uoc.ictflag.core.localization.LocalizedString" required="true"></composite:attribute>
+</composite:interface>
+
+<composite:implementation>
+
+	<ui:repeat value="#{cc.attrs.localizedString.translations}" id="#{cc.attrs.propertyName}-translations" var="item">
+		<div class="img-fa-only-button float-right">
+			<h:commandButton class="btn transparent submit" value="" action="#{cc.attrs.localizedString.removeTranslation(item.code)}" />
+			<i class="fa fa-times"></i>
+		</div>
+		<div class="input-icon translation right left closeable">
+			<h:graphicImage name="./assets/global/img/flags/${item.code}.png" />
+			<i class="fa fa-warning validation"></i>
+			<h:inputText id="#{cc.attrs.propertyName}-translations-translation" value="#{item.translation}" class="form-control placeholder-no-fix" />
+		</div>
+		<h:message for="#{cc.attrs.propertyName}-translations-translation" class="has-error help-block" />
+	</ui:repeat>
+	<h:message for="#{cc.attrs.propertyName}-translations" class="help-block has-error" />
+	<h:panelGroup rendered="#{not empty (localization.availableLanguages(cc.attrs.localizedString))}" class="btn-group">
+		<button class="btn blue-madison" type="button">#{msg.Add_translation}</button>
+		<button class="btn blue-madison dropdown-toggle" type="button" data-toggle="dropdown">
+			<i class="fa fa-angle-down"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<ui:repeat value="#{localization.availableLanguages(cc.attrs.localizedString)}" var="lang">
+				<li>
+					<div class="img-fa-right-button">
+						<h:graphicImage name="./assets/global/img/flags/${lang}.png" />
+						<h:commandButton class="btn transparent submit" value="#{msg[lang]}" action="#{cc.attrs.localizedString.addTranslation(lang)}" />
+					</div>
+				</li>
+			</ui:repeat>
+		</ul>
+	</h:panelGroup>
+
+</composite:implementation>
+
+</html>
+

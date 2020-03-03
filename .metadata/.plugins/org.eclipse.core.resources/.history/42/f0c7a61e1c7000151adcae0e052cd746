@@ -1,0 +1,38 @@
+package edu.uoc.ictflag.ela.api;
+
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import edu.uoc.ictflag.core.api.ActivityData;
+import edu.uoc.ictflag.core.log.LogHelper;
+
+@Stateless
+@LocalBean
+@Path("/activity")
+public class ActivityApi
+{
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.TEXT_PLAIN })
+	public String processActivityData(ActivityData data)
+	{
+		LogHelper.info("Data received");
+		//		LogHelper.info("Data received: " + data.getTool() + ", " + data.getUser() + ", " + data.getTimestamp() + ", " + data.getAction() + ", "
+		//				+ data.getElement() + ", " + data.getResult());
+		
+		return "ok";
+	}
+	
+	//	@GET
+	//	@Produces(MediaType.APPLICATION_JSON)
+	//	@Path("{id}")
+	//	public String read(@PathParam("id") long id)
+	//	{
+	//		return "Hello World! " + id;
+	//	}
+}

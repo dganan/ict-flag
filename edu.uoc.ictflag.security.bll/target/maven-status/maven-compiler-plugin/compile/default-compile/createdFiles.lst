@@ -1,0 +1,6 @@
+edu/com/ictflag/security/bll/IAuthenticationManager.class
+edu/com/ictflag/security/bll/AuthenticationManager.class
+edu/com/ictflag/security/bll/AuthorizationManager.class
+edu/com/ictflag/security/bll/IAuthorizationManager.class
+edu/com/ictflag/security/bll/IUserManager.class
+edu/com/ictflag/security/bll/UserManager.class

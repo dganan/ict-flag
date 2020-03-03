@@ -1,0 +1,6 @@
+edu/uoc/ictflag/security/dal/IAuthorizationRepository.class
+edu/uoc/ictflag/security/dal/AuthorizationRepository.class
+edu/uoc/ictflag/security/dal/PasswordHasher.class
+edu/uoc/ictflag/security/dal/UserRepository.class
+edu/uoc/ictflag/security/dal/IUserRepository.class
+edu/uoc/ictflag/security/dal/SecurityBaseRepository.class

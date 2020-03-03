@@ -1,0 +1,1075 @@
+package edu.uoc.ictflag.ela.dal;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.ejb.Stateless;
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
+import edu.uoc.ictflag.core.ListUtils;
+import edu.uoc.ictflag.core.dal.SearchParameters;
+import edu.uoc.ictflag.core.dal.SortArgument;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.model.IIdentifiable;
+import edu.uoc.ictflag.ela.model.Assignment;
+import edu.uoc.ictflag.ela.model.Exercise;
+import edu.uoc.ictflag.ela.model.FilterField;
+import edu.uoc.ictflag.ela.model.ReportDataItem;
+import edu.uoc.ictflag.ela.model.Tool;
+import edu.uoc.ictflag.institution.model.Course;
+import edu.uoc.ictflag.institution.model.CourseGroup;
+import edu.uoc.ictflag.institution.model.Program;
+import edu.uoc.ictflag.institution.model.Semester;
+import edu.uoc.ictflag.institution.model.Subject;
+import edu.uoc.ictflag.security.model.User;
+import edu.uoc.ictflag.security.model.UserRole;
+
+@Stateless
+@Transactional(TxType.REQUIRED)
+public abstract class ReportRepository<D extends ReportDataItem> extends ELADataBaseRepository implements IReportRepository<D>
+{
+	private <T extends IIdentifiable> List<T> getItems(String username, List<T> items, String field) throws Exception
+	{
+		return getItems(username, items, field, "", false);
+	}
+	
+	private <T extends IIdentifiable> List<T> getItems(String username, List<T> items, String field, String where) throws Exception
+	{
+		return getItems(username, items, field, "", false);
+	}
+	
+	private <T extends IIdentifiable> List<T> getItems(String username, List<T> items, String field, boolean allowNulls) throws Exception
+	{
+		return getItems(username, items, field, "", allowNulls);
+	}
+	
+	private <T extends IIdentifiable> List<T> getItems(String username, List<T> items, String field, String where, boolean allowNulls)
+			throws Exception
+	{
+		try
+		{
+			List<Object[]> itemsIds = dbHelper.getNativeQueryResult("SELECT DISTINCT " + field + " FROM ExercisesDW dw " + where);
+		
+			for (int index = 0; index < items.size();)
+			{
+				if (!itemsIds.contains(items.get(index).getId()))
+				{
+					items.remove(index);
+				}
+				else
+				{
+					index++;
+				}
+			}
+			
+			UserRole role = userRepository.getUserByUsername(username).getSelectedRole();
+			
+			if ((itemsIds.contains(null) && (role == UserRole.SUPERUSER || role == UserRole.ADMIN)) || allowNulls)
+			{
+				items.add(0, null); // NONE value 
+			}
+		}
+		catch (Exception ex)
+		{
+			LogHelper.error(ex);
+			
+			ex.printStackTrace();
+			
+			throw ex;
+		}
+		
+		return items;
+	}
+	
+	@Override
+	public List<Tool> getTools(String username) throws Exception
+	{
+		return getItems(username, toolRepository.getToolsList(username), "tool_id");
+	}
+	
+	@Override
+	public List<Program> getPrograms(String username) throws Exception
+	{
+		return getItems(username, programRepository.getProgramsList(username), "program_id");
+	}
+	
+	@Override
+	public List<Subject> getSubjects(String username) throws Exception
+	{
+		return getItems(username, subjectRepository.getSubjectsList(username), "subject_id");
+	}
+	
+	@Override
+	public List<Course> getCourses(String username) throws Exception
+	{
+		return getItems(username, courseRepository.getCoursesList(username), "course_id");
+	}
+	
+	@Override
+	public List<CourseGroup> getCourseGroups(String username) throws Exception
+	{
+		return getItems(username, courseGroupRepository.getCourseGroupsList(username), "courseGroup_id", true);
+	}
+	
+	@Override
+	public List<Semester> getSemesters(String username) throws Exception
+	{
+		return getItems(username, semesterRepository.getSemestersList(username), "semester_id");
+	}
+	
+	@Override
+	public List<Assignment> getAssignments(String username) throws Exception
+	{
+		return getItems(username, assignmentRepository.getAssignmentsList(username), "assignment_id");
+	}
+	
+	private List<Assignment> getAssignmentsWithoutCourse(String username) throws Exception
+	{
+		return getItems(username, assignmentRepository.getAssignmentsList(username), "assignment_id", "WHERE dw.course_id IS NULL");
+	}
+	
+	private List<Assignment> getAssignmentsByCourse(String username, String courseId) throws Exception
+	{
+		return getItems(username, assignmentRepository.getAssignmentsList(username), "assignment_id", "WHERE dw.course_id = " + courseId);
+	}
+	
+	@Override
+	public List<Exercise> getExercises(String username) throws Exception
+	{
+		return getItems(username, exerciseRepository.getExercisesList(username), "exercise_id");
+	}
+	
+	private List<Exercise> getExercisesByTool(String username, String toolId) throws Exception
+	{
+		return getItems(username, exerciseRepository.getExercisesList(username), "exercise_id", "WHERE dw.tool_id = " + toolId);
+	}
+	
+	@Override
+	public Map<Tool, List<Exercise>> getToolsWithExercises(String username) throws Exception
+	{
+		Map<Tool, List<Exercise>> toolsWithExercises = null;
+		
+		try
+		{
+			List<Tool> tools = getTools(username);
+			
+			toolsWithExercises = new HashMap<Tool, List<Exercise>>();
+			
+			for (Tool t : tools)
+			{
+				List<Exercise> toolExercises = getExercisesByTool(username, t.getId() + "");
+				
+				Collections.sort(toolExercises, new Comparator<Exercise>()
+				{
+					@Override
+					public int compare(Exercise s1, Exercise s2)
+					{
+						return s1.getName().compareToIgnoreCase(s2.getName());
+					}
+				});
+				
+				if (toolExercises.size() > 0)
+				{
+					toolsWithExercises.put(t, toolExercises);
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			LogHelper.error(ex);
+			
+			ex.printStackTrace();
+			
+			throw ex;
+		}
+		
+		return toolsWithExercises;
+	}
+	
+	//	public Map<Tool, List<Exercise>> getToolsWithExercises_old(String username) throws Exception
+	//	{
+	//		Map<Tool, List<Exercise>> toolsWithExercises = null;
+	//		
+	//		try
+	//		{
+	//			List<Object[]> tools_exercises = dbHelper.getNativeQueryResult(
+	//					"SELECT dw.tool_id, dw.exercise_id, t.code, e.name FROM ExercisesDW dw JOIN Tool t ON dw.tool_id = t.id JOIN Exercise e ON dw.exercise_id = e.id GROUP BY dw.tool_id, dw.exercise_id, t.code, e.name ORDER BY t.code, e.name;");
+	//		
+	//			toolsWithExercises = new HashMap<Tool, List<Exercise>>();
+	//
+	//			int index = 0;
+	//			
+	//			while (index < tools_exercises.size())
+	//			{
+	//				long tid = (long) tools_exercises.get(index)[0];
+	//				
+	//				Tool t = toolRepository.getToolById(tid);
+	//				
+	//				List<Exercise> exercises = new ArrayList<Exercise>();
+	//				
+	//				while (index < tools_exercises.size() && tid == (long) tools_exercises.get(index)[0])
+	//				{
+	//					Exercise ex = exerciseRepository.getExerciseById((long) tools_exercises.get(index)[1]);
+	//					
+	//					exercises.add(ex);
+	//					
+	//					index++;
+	//				}
+	//				
+	//				toolsWithExercises.put(t, exercises);
+	//			}
+	//		}
+	//		catch (Exception ex)
+	//		{
+	//			LogHelper.error(ex);
+	//			
+	//			ex.printStackTrace();
+	//			
+	//			throw ex;
+	//		}
+	//		
+	//		return toolsWithExercises;
+	//	}
+	
+	@Override
+	public Map<Course, List<Assignment>> getCoursesWithAssignments(String username) throws Exception
+	{
+		Map<Course, List<Assignment>> coursesWithAssignments = null;
+		
+		try
+		{
+			List<Course> courses = getCourses(username);
+			
+			coursesWithAssignments = new HashMap<Course, List<Assignment>>();
+			
+			for (Course c : courses)
+			{
+				List<Assignment> courseAssignments = null;
+				
+				if (c == null)
+				{
+					courseAssignments = getAssignmentsWithoutCourse(username);
+				}
+				else
+				{
+					courseAssignments = getAssignmentsByCourse(username, c.getId() + "");
+				}
+				
+				Collections.sort(courseAssignments, new Comparator<Assignment>()
+				{
+					@Override
+					public int compare(Assignment s1, Assignment s2)
+					{
+						return s1.getName().compareToIgnoreCase(s2.getName());
+					}
+				});
+				
+				if (courseAssignments.size() > 0)
+				{
+					coursesWithAssignments.put(c, courseAssignments);
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			LogHelper.error(ex);
+			
+			ex.printStackTrace();
+			
+			throw ex;
+		}
+		
+		return coursesWithAssignments;
+	}
+	
+	//	public Map<Course, List<Assignment>> getCoursesWithAssignments_old(String username) throws Exception
+	//	{
+	//		Map<Course, List<Assignment>> coursesWithAssignments = null;
+	//		
+	//		try
+	//		{
+	//			List<Object[]> courses_assignments = dbHelper.getNativeQueryResult(
+	//					"SELECT dw.course_id, dw.assignment_id, c.code, a.name FROM ExercisesDW dw LEFT OUTER JOIN Course c ON dw.course_id = c.id LEFT OUTER JOIN Assignment a ON dw.assignment_id = a.id GROUP BY dw.course_id, dw.assignment_id, c.code, a.name ORDER BY c.code, a.name;");
+	//			
+	//			coursesWithAssignments = new HashMap<Course, List<Assignment>>();
+	//			
+	//			int index = 0;
+	//			
+	//			while (index < courses_assignments.size())
+	//			{
+	//				long tid = (long) courses_assignments.get(index)[0];
+	//				
+	//				Course t = courseRepository.getCourseById(tid);
+	//				
+	//				List<Assignment> assignments = new ArrayList<Assignment>();
+	//				
+	//				while (index < courses_assignments.size() && tid == (long) courses_assignments.get(index)[0])
+	//				{
+	//					Assignment ex = assignmentRepository.getAssignmentById((long) courses_assignments.get(index)[1]);
+	//					
+	//					assignments.add(ex);
+	//					
+	//					index++;
+	//				}
+	//				
+	//				coursesWithAssignments.put(t, assignments);
+	//			}
+	//		}
+	//		catch (Exception ex)
+	//		{
+	//			LogHelper.error(ex);
+	//			
+	//			ex.printStackTrace();
+	//			
+	//			throw ex;
+	//		}
+	//		
+	//		return coursesWithAssignments;
+	//	}
+	
+	@Override
+	public int getMaxNumberOfAttempts(String username) throws Exception
+	{
+		try
+		{
+			User user = userRepository.getUserByUsername(username);
+			
+			String where = "";
+			
+			List<String> filter = null;
+			
+			switch (user.getSelectedRole())
+			{
+				case SUPERUSER:
+				case ADMIN:
+					
+					break;
+				
+				case PROGRAM_MANAGER:
+
+					filter = checkFiltersByRole(user, FilterField.PROGRAM, new ArrayList<String>());
+					
+					where = "WHERE " + whereForFilter(FilterField.PROGRAM, filter, "dw").substring(4);
+
+					break;
+				
+				case LECTURER:
+					
+					filter = checkFiltersByRole(user, FilterField.SUBJECT, new ArrayList<String>());
+					
+					where = "WHERE " + whereForFilter(FilterField.SUBJECT, filter, "dw").substring(4);
+					
+					break;
+				
+				case INSTRUCTOR:
+					
+					filter = checkFiltersByRole(user, FilterField.COURSE, new ArrayList<String>());
+					
+					where = "WHERE " + whereForFilter(FilterField.COURSE, filter, "dw").substring(4);
+					
+					break;
+				
+				case STUDENT:
+					
+					filter = new ArrayList<String>();
+					
+					filter.add(user.getId() + "");
+					
+					where = "WHERE " + whereForFilter(FilterField.STUDENT, filter, "dw").substring(4);
+					
+					break;
+				
+				default:
+					
+					where = "WHERE FALSE";
+					break;
+			}
+			
+			List<Object[]> maxAttempts = dbHelper.getNativeQueryResult("SELECT MAX(attemptnumber) FROM ExercisesDW dw " + where + ";");
+			
+			if (maxAttempts != null)
+			{
+				if (maxAttempts.get(0) != null)
+				{
+					return (Integer) (Object) (maxAttempts.get(0));
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			LogHelper.error(ex);
+			
+			ex.printStackTrace();
+			
+			throw ex;
+		}
+		
+		return 0;
+	}
+	
+	protected String selectForGroupByField(String groupByField)
+	{
+		switch (groupByField)
+		{
+			case FilterField.TOOL:
+				
+				return "t.code";
+			
+			case FilterField.PROGRAM:
+				
+				return "p.code";
+
+			case FilterField.SUBJECT:
+				
+				return "s.code";
+			
+			case FilterField.COURSE:
+				
+				return "c.code";
+			
+			case FilterField.COURSEGROUP:
+				
+				return "cg.code";
+			
+			case FilterField.SEMESTER:
+				
+				return "sem.academicyear || '-' || sem.number as semester";
+			
+			case FilterField.ASSIGNMENT:
+				
+				return "a.name";
+			
+			case FilterField.EXERCISE:
+				
+				return "e.name";
+
+			case FilterField.STUDENT:
+				
+				return "std.username";
+		}
+		
+		return "";
+	}
+	
+	protected String fromForGroupByField(String groupByField)
+	{
+		switch (groupByField)
+		{
+			case FilterField.TOOL:
+				
+				return " LEFT OUTER JOIN Tool t on dw.tool_id = t.id ";
+			
+			case FilterField.PROGRAM:
+				
+				return " LEFT OUTER JOIN Program p on dw.program_id = p.id ";
+
+			case FilterField.SUBJECT:
+				
+				return " LEFT OUTER JOIN Subject s on dw.subject_id = s.id ";
+			
+			case FilterField.COURSE:
+				
+				return " LEFT OUTER JOIN Course c on dw.course_id = c.id ";
+			
+			case FilterField.COURSEGROUP:
+				
+				return " LEFT OUTER JOIN CourseGroup cg on dw.coursegroup_id = cg.id ";
+			
+			case FilterField.SEMESTER:
+				
+				return " LEFT OUTER JOIN Semester sem on dw.semester_id = sem.id ";
+
+			case FilterField.ASSIGNMENT:
+				
+				return " LEFT OUTER JOIN Assignment a on dw.assignment_id = a.id ";
+			
+			case FilterField.EXERCISE:
+				
+				return " LEFT OUTER JOIN Exercise e on dw.exercise_id = e.id ";
+
+			case FilterField.STUDENT:
+				
+				return " LEFT OUTER JOIN Users std on dw.student_id = std.id ";
+			
+		}
+		
+		return "";
+	}
+	
+	protected String groupByForGroupByField(String groupByField)
+	{
+		switch (groupByField)
+		{
+			case FilterField.TOOL:
+				
+				return "t.code";
+			
+			case FilterField.PROGRAM:
+				
+				return "p.code";
+
+			case FilterField.SUBJECT:
+				
+				return "s.code";
+			
+			case FilterField.COURSE:
+				
+				return "c.code";
+			
+			case FilterField.COURSEGROUP:
+				
+				return "cg.code";
+			
+			case FilterField.SEMESTER:
+				
+				return " sem.academicyear, sem.number ";
+
+			case FilterField.ASSIGNMENT:
+				
+				return "a.id, a.name";
+			
+			case FilterField.EXERCISE:
+				
+				return "e.id, e.name";
+
+			case FilterField.STUDENT:
+				
+				return "std.username";
+		}
+		
+		return "";
+	}
+	
+	protected String whereForFilter(String filter, List<String> filterValues, String tableAlias)
+	{
+		switch (filter)
+		{
+			case FilterField.TOOL:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".tool_id");
+			
+			case FilterField.PROGRAM:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".program_id");
+			
+			case FilterField.SUBJECT:
+			
+				return prepareWhereFilterValues(filterValues, tableAlias + ".subject_id");
+			
+			case FilterField.COURSE:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".course_id");
+			
+			case FilterField.COURSEGROUP:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".coursegroup_id");
+			
+			case FilterField.SEMESTER:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".semester_id");
+			
+			case FilterField.ASSIGNMENT:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".assignment_id");
+			
+			case FilterField.EXERCISE:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".exercise_id");
+
+			case FilterField.COURSE_ASSIGNMENT:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".course_id", tableAlias + ".assignment_id");
+
+			case FilterField.TOOL_EXERCISE:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".tool_id", tableAlias + ".exercise_id");
+			
+			case FilterField.STUDENT:
+				
+				return prepareWhereFilterValues(filterValues, tableAlias + ".student_id");
+			
+			case FilterField.ATTEMPTS:
+				
+				if (filterValues.get(2).equals("true"))
+				{
+					return " AND " + tableAlias + ".lastAttempt";
+				}
+				else
+				{
+					return " AND " + tableAlias + ".attemptnumber " + filterValues.get(0) + " " + filterValues.get(1);
+				}
+				
+			case FilterField.DATE:
+				
+				return " AND " + tableAlias + ".startDate >= '" + filterValues.get(0) + "' AND " + tableAlias + ".endDate <= '" + filterValues.get(1)
+						+ "'";
+
+			case FilterField.FAILURERATE:
+				
+				return " AND failureRate " + filterValues.get(0);
+			
+			case FilterField.RIGHTEXERCISES:
+				
+				return " AND rightExercises " + filterValues.get(0);
+		}
+		
+		return "";
+	}
+
+	private Object orderByForOrderByField(SortArgument sortArgument)
+	{
+		switch (sortArgument.getField())
+		{
+			case FilterField.TOOL:
+				
+				return "t.code" + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.PROGRAM:
+				
+				return "p.code" + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.SUBJECT:
+				
+				return "s.code" + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.COURSE:
+				
+				return "c.code" + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.COURSEGROUP:
+				
+				return "cg.code" + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.SEMESTER:
+				
+				return " sem.academicyear, sem.number " + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.ASSIGNMENT:
+				
+				return "a.id, a.name" + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.EXERCISE:
+				
+				return "e.id, e.name" + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.SUCCESSRATE:
+				
+				return "successRate" + (sortArgument.isDescending() ? " DESC" : "");
+
+			case FilterField.MAXDURATION:
+				
+				return "maxDuration" + (sortArgument.isDescending() ? " DESC" : "");
+			
+			case FilterField.MAXATTEMPTS:
+				
+				return "maxAttemptNumber" + (sortArgument.isDescending() ? " DESC" : "");
+
+			case FilterField.FAILURERATE:
+				
+				return "failureRate" + (sortArgument.isDescending() ? " DESC" : "");
+				
+			case FilterField.RIGHTEXERCISES:
+				
+				return "rightExercises" + (sortArgument.isDescending() ? " DESC" : "");
+
+			case FilterField.TOTALATTEMPTS:
+				
+				return "totalAttempts" + (sortArgument.isDescending() ? " DESC" : "");
+			
+		}
+		
+		return "";
+	}
+	
+	protected String prepareWhereFilterValues(List<String> filterValues, String columnName)
+	{
+		if (filterValues != null && filterValues.size() > 0)
+		{
+			boolean addNull = filterValues.contains("null") || filterValues.contains("-1");
+			
+			if (addNull)
+			{
+				filterValues.remove("null");
+				filterValues.remove("-1");
+			}
+			
+			HashSet<String> noDuplicates = new HashSet<String>(filterValues);
+
+			String condition = String.join(",", noDuplicates);
+
+			String suffix = "";
+						
+			if (addNull)
+			{
+				if (condition.isEmpty())
+				{
+					suffix = columnName + " IS NULL";
+				}
+				else
+				{
+					suffix = " OR " + columnName + " IS NULL";
+				}
+			}
+			
+			if (!condition.isEmpty())
+			{
+				condition = columnName + " IN (" + condition + ")";
+			}
+			
+			return " AND (" + condition + suffix + ")";
+		}
+		
+		return "";
+	}
+	
+	protected String prepareWhereFilterValues(List<String> filterValues, String... columnNames)
+	{
+		if (filterValues != null && filterValues.size() > 0)
+		{
+			List<String> orList = new ArrayList<String>();
+			
+			for (String s : filterValues)
+			{
+				List<String> andList = new ArrayList<String>();
+
+				String [] columns = s.split(":");
+				
+				int columnIndex = 0;
+				
+				for (String c : columns)
+				{
+					if (c == null || c.equals("null") || c == "-1")
+					{
+						andList.add(columnNames[columnIndex] + " IS NULL");
+					}
+					else
+					{
+						andList.add(columnNames[columnIndex] + " = " + c);
+					}
+					
+					columnIndex ++;
+				}
+				
+				orList.add(String.join(" AND ", andList));
+			}
+			
+			return " AND ((" + String.join(") OR (", orList) + "))";
+		}
+		
+		return "";
+	}
+	
+	@Override
+	public List<D> getReportData(String username, SearchParameters searchParameters) throws Exception
+	{
+		List<D> result = null;
+		
+		try
+		{
+			List<Object[]> data = null;
+			
+			User u = userRepository.getUserByUsername(username);
+			
+			if (u != null)
+			{
+				searchParameters.setFilters(checkFiltersByRole(u, searchParameters.getFilters()));
+				
+				// CONSTRUCT QUERY
+				
+				String query = constructQuery(searchParameters);
+				
+				data = dbHelper.getNativeQueryResult(query);
+			}
+			
+			result = new ArrayList<D>();
+			
+			for (Object[] o : data)
+			{
+				result.add(createItemForRow(o));
+			}
+		}
+		catch (Exception ex)
+		{
+			LogHelper.error(ex);
+			
+			ex.printStackTrace();
+			
+			throw ex;
+		}
+		
+		return result;
+	}
+	
+	protected abstract D createItemForRow(Object[] o);
+	
+	protected Map<String, List<String>> checkFiltersByRole(User u, Map<String, List<String>> originalFilters) throws Exception
+	{
+		// CHECK FILTER LIST BY ROLE
+		
+		Map<String, List<String>> filters = null;
+		
+		if (u.getSelectedRole() == UserRole.SUPERUSER || u.getSelectedRole() == UserRole.ADMIN)
+		{
+			filters = originalFilters;
+		}
+		else
+		{
+			filters = new HashMap<String, List<String>>();
+		
+			if (originalFilters != null)
+			{
+				Set<String> keys = originalFilters.keySet();
+				
+				for (String filter : keys)
+				{
+					filters.put(filter, checkFiltersByRole(u, filter, originalFilters.get(filter)));
+				}
+			}
+			
+			if (u.getSelectedRole() == UserRole.STUDENT)
+			{
+				// ADD FILTER BY STUDENT
+				
+				List<String> student = new ArrayList<String>();
+				
+				student.add(u.getId() + "");
+				
+				filters.put(FilterField.STUDENT, student);
+			}
+		}
+		
+		return filters;
+	}
+	
+	protected List<String> checkFiltersByRole(User user, String filterType, List<String> filters) throws Exception
+	{
+		List<String> newFilters = null;
+		
+		switch (filterType)
+		{
+			case FilterField.TOOL:
+				
+				List<Tool> tools = toolRepository.getToolsList(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(tools, filters);
+				
+				break;
+			
+			case FilterField.PROGRAM:
+				
+				List<Program> programs = programRepository.getProgramsList(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(programs, filters);
+				
+				break;
+			
+			case FilterField.SUBJECT:
+				
+				List<Subject> subjects = subjectRepository.getSubjectsList(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(subjects, filters);
+				
+				break;
+			
+			case FilterField.COURSE:
+				
+				List<Course> courses = courseRepository.getCoursesList(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(courses, filters);
+				
+				break;
+			
+			case FilterField.COURSEGROUP:
+				
+				List<CourseGroup> courseGroups = courseGroupRepository.getCourseGroupsList(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(courseGroups, filters);
+				
+				if (user.getSelectedRole() == UserRole.LECTURER)
+				{
+					newFilters.add("null");
+				}
+				
+				break;
+			
+			case FilterField.SEMESTER:
+				
+				List<Semester> semesters = semesterRepository.getSemestersList(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(semesters, filters);
+				
+				break;
+			
+			case FilterField.ASSIGNMENT:
+				
+				List<Assignment> assignments = assignmentRepository.getAssignmentsList(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(assignments, filters);
+				
+				break;
+			
+			case FilterField.EXERCISE:
+				
+				List<Exercise> exercises = exerciseRepository.getExercisesList(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(exercises, filters);
+				
+				break;
+			
+			case FilterField.COURSE_ASSIGNMENT:
+				
+				Map<Course, List<Assignment>> coursesAssignments = getCoursesWithAssignments(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(coursesAssignments, filters);
+				
+				break;
+
+			case FilterField.TOOL_EXERCISE:
+				
+				Map<Tool, List<Exercise>> toolExercises = getToolsWithExercises(user.getUsername());
+				
+				newFilters = checkFiltersByRoleAux(toolExercises, filters);
+				
+				break;
+			
+			default:
+				
+				newFilters = filters;
+				
+				break;
+		}
+		
+		if (newFilters.size() == 0)
+		{
+			// CANNOT PERMIT EMTY FILTERS - IT MEANS USER HAS NO RIGHT TO GET DATA - WE SET FAKE ID TO ENSURE NO DATA IS SELECTED
+			
+			newFilters.add("-999");
+		}
+		
+		return newFilters;
+	}
+	
+	protected <T extends IIdentifiable, S extends IIdentifiable> List<String> checkFiltersByRoleAux(Map<T, List<S>> items, List<String> filters)
+	{
+		List<String> checkedList = ListUtils.flattenIdList(items);
+		
+		return (filters.size() == 0) ? checkedList : filters.stream().filter(x -> checkedList.contains(x)).collect(Collectors.toList());
+	}
+	
+	protected <T extends IIdentifiable> List<String> checkFiltersByRoleAux(List<T> items, List<String> filters)
+	{
+		List<String> checkedList = items.stream().map(x -> x.getId().toString()).collect(Collectors.toList());
+		
+		return (filters.size() == 0) ? checkedList : filters.stream().filter(x -> checkedList.contains(x)).collect(Collectors.toList());
+	}
+	
+	protected String constructQuery(SearchParameters searchParameters)
+	{
+		StringBuilder select = new StringBuilder();
+		StringBuilder from = new StringBuilder();
+		
+		StringBuilder[] wheres = new StringBuilder[getNumberOfWheres()];
+		
+		for (int i = 0; i < wheres.length; i++)
+		{
+			wheres[i] = new StringBuilder();
+		}
+		
+		StringBuilder groupBy = new StringBuilder();
+		StringBuilder orderBy = new StringBuilder();
+		StringBuilder limit = new StringBuilder();
+		
+		if (searchParameters.getGroupFields() != null)
+		{
+			for (String groupByField : searchParameters.getGroupFields())
+			{
+				select.append(", ");
+				select.append(selectForGroupByField(groupByField));
+				
+				from.append(fromForGroupByField(groupByField));
+				
+				groupBy.append(", ");
+				groupBy.append(groupByForGroupByField(groupByField));
+			}
+			
+			if (groupBy.length() > 0)
+			{
+				groupBy.deleteCharAt(0);
+				groupBy.insert(0, " GROUP BY ");
+			}
+		}
+		
+		if (searchParameters.getFilters() != null)
+		{
+			Set<String> keys = searchParameters.getFilters().keySet();
+			
+			for (String filter : keys)
+			{
+				for (int whereIndex : getWheresToAddFilter(filter))
+				{
+					wheres[whereIndex].append(whereForFilter(filter, searchParameters.getFilters().get(filter), getWhereTableAlias(whereIndex)));
+				}
+			}
+			
+			for (StringBuilder wheresb : wheres)
+			{
+				if (wheresb.length() > 0)
+				{
+					wheresb.delete(0, 4); // DELETE FIRST AND
+					wheresb.insert(0, " WHERE ");
+				}
+			}
+		}
+		
+		if (searchParameters.getSortArguments() != null)
+		{
+			for (SortArgument orderByField : searchParameters.getSortArguments())
+			{
+				orderBy.append(", ");
+				orderBy.append(orderByForOrderByField(orderByField));
+			}
+			
+			if (orderBy.length() > 0)
+			{
+				orderBy.deleteCharAt(0);
+				orderBy.insert(0, " ORDER BY ");
+			}
+		}
+		
+		if (searchParameters.getPage() > 0)
+		{
+			limit.append(" LIMIT ");
+			limit.append(searchParameters.getPageSize());
+			limit.append(" OFFSET ");
+			limit.append(searchParameters.getPageSize() * (searchParameters.getPage() - 1));
+		}
+		
+		return ensambleQuery(select, from, wheres, groupBy, orderBy, limit);
+	}
+	
+	protected String getWhereTableAlias(int whereIndex)
+	{
+		return "dw";
+	}
+	
+	protected int[] getWheresToAddFilter(String filter)
+	{
+		return new int[] { 0 };
+	}
+	
+	protected int getNumberOfWheres()
+	{
+		return 1;
+	}
+	
+	protected abstract String ensambleQuery(StringBuilder select, StringBuilder from, StringBuilder[] wheres, StringBuilder groupBy,
+			StringBuilder orderBy, StringBuilder limit);
+}

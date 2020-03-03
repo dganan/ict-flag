@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;edu.uoc.ictflag.core.web&apos; to &apos;edu.uoc.ictflag.web/src&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.core.web2&apos;&#x0A;- Destination element: &apos;edu.uoc.ictflag.web/src&apos;&#x0A;- Original element: &apos;edu.uoc.ictflag.core.web2/src/edu.uoc.ictflag.core.web&apos;" description="Copy package" destination="=edu.uoc.ictflag.web/src" element1="/src&lt;edu.uoc.ictflag.core.web" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1440964680227" version="1.0"/>
+</session>

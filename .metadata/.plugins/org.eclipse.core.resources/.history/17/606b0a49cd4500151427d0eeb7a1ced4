@@ -1,0 +1,86 @@
+package edu.uoc.ictflag.web.core;
+
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Set;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
+@Named
+@ViewScoped
+public class ValidationHelper implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private Validator validator;
+	
+	public <T> boolean validate(T t)
+	{
+		Set<ConstraintViolation<T>> violations = validator.validate(t);
+		
+		if (violations.size() > 0)
+		{
+			for (ConstraintViolation<T> cv : violations)
+			{
+				
+				String message = getClientId(cv.getPropertyPath().toString().replace('.', '-')
+								
+				FacesContext.getCurrentInstance().addMessage(message),
+						new FacesMessage(FacesMessage.SEVERITY_WARN, cv.getMessage(), null));
+						
+				//				FacesContext.getCurrentInstance().addMessage(null,
+				//						new FacesMessage(FacesMessage.SEVERITY_WARN, Localization.getLocalizedErrorString(cv.getMessage()), null));
+			}
+			
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public String getClientId(String componentId)
+	{
+		FacesContext context = FacesContext.getCurrentInstance();
+		UIViewRoot root = context.getViewRoot();
+		
+		UIComponent c = findComponent(root, componentId);
+		
+		if (c != null)
+		{
+			return c.getClientId(context);
+		}
+		
+		return null;
+	}
+	
+	private UIComponent findComponent(UIComponent c, String id)
+	{
+		if (id.equals(c.getId()))
+		{
+			return c;
+		}
+		
+		Iterator<UIComponent> kids = c.getFacetsAndChildren();
+		
+		while (kids.hasNext())
+		{
+			UIComponent found = findComponent(kids.next(), id);
+			
+			if (found != null)
+			{
+				return found;
+			}
+		}
+		
+		return null;
+	}
+}

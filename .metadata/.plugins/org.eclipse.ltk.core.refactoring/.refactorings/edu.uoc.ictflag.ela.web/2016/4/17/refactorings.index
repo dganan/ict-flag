@@ -1,0 +1,11 @@
+1461560042792	Encapsulate field 'tools'
+1461560046842	Encapsulate field 'selectedTools'
+1461683660880	Delete elements
+1461683664416	Delete element
+1461683671332	Delete element
+1461683687891	Delete elements
+1461683711458	Delete element
+1461684980958	Encapsulate field 'attemptsOptions'
+1461684984628	Encapsulate field 'attempts'
+1461685099677	Rename method 'createTools'
+1461685108123	Rename method 'createGroupByOptions'

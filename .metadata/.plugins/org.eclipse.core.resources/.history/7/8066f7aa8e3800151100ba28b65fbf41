@@ -1,0 +1,51 @@
+package edu.uoc.ictflag.institution.dal;
+
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+
+import edu.uoc.ictflag.core.dal.BaseRepository;
+import edu.uoc.ictflag.institution.model.Program;
+
+@Stateless
+@TransactionAttribute(TransactionAttributeType.SUPPORTS)
+public class ProgramRepository extends InstitutionBaseRepository implements IProgramRepository
+{
+	public List<Program> getProgramsList() throws Exception
+	{
+		List<Program> programs = getQueryResult("SELECT p FROM Program p", Program.class);
+		
+		
+		
+	/*	
+		
+		List<Program> programs = new ArrayList<Program>();
+		
+		for (int i = 1; i < 4; i++)
+		{
+			Program p = new Program();
+			
+			LocalizedString ls = new LocalizedString();
+			ls.setTranslation("es", "Programa " + i);
+			
+			p.setName(ls);
+			
+			programs.add(p);
+			
+			em.persist(p);
+		}
+		
+		*/
+		
+		return programs;
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void createProgram ()
+	{
+		
+		
+	}
+}

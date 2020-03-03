@@ -1,0 +1,10 @@
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/UserRole.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/UserRoleConverter.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/Page.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/Permission.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/SecurePassword.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/UserSecurePassword.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/UserRolePermissions.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/User.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/UserRolePageAccess.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/edu/uoc/ictflag/security/model/PermissionConverter.java

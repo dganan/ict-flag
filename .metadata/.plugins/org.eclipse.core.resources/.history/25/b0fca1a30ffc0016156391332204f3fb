@@ -1,0 +1,57 @@
+package edu.uoc.ictflag.ela.dal;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
+import edu.uoc.ictflag.ela.model.ExercisesReportDataItem;
+import edu.uoc.ictflag.institution.dal.ICourseGroupRepository;
+import edu.uoc.ictflag.institution.dal.ICourseRepository;
+import edu.uoc.ictflag.institution.dal.IProgramRepository;
+import edu.uoc.ictflag.institution.dal.ISemesterRepository;
+import edu.uoc.ictflag.institution.dal.ISubjectRepository;
+import edu.uoc.ictflag.security.dal.IUserRepository;
+
+@Stateless
+@Transactional(TxType.REQUIRED)
+public class ExercisesReportRepository extends ReportRepository<ExercisesReportDataItem> implements IExercisesReportRepository
+{
+	@Inject
+	public ExercisesReportRepository(IUserRepository userRepository, IToolRepository toolRepository, IProgramRepository programRepository, ISubjectRepository subjectRepository, ICourseRepository courseRepository, ICourseGroupRepository courseGroupRepository, IAssignmentRepository assignmentRepository, IExerciseRepository exerciseRepository, ISemesterRepository semesterRepository)
+	{
+		this.userRepository = userRepository;
+		this.toolRepository = toolRepository;
+		this.programRepository = programRepository;
+		this.subjectRepository = subjectRepository;
+		this.courseRepository = courseRepository;
+		this.courseGroupRepository = courseGroupRepository;
+		this.assignmentRepository = assignmentRepository;
+		this.exerciseRepository = exerciseRepository;
+		this.semesterRepository = semesterRepository;
+	}
+	
+	@Override
+	protected ExercisesReportDataItem createItemForRow(Object[] o)
+	{
+		return new ExercisesReportDataItem(o);
+	}
+	
+	@Override
+	protected String ensambleQuery(StringBuilder select, StringBuilder from, StringBuilder[] wheres, StringBuilder groupBy, StringBuilder orderBy,
+			StringBuilder limit)
+	{
+		String q = "SELECT sum(case when outcome = 'R' then 1 else 0 end) as right, sum(case when outcome = 'W' then 1 else 0 end) as wrong, sum(case when outcome = 'T' then 1 else 0 end) as timeout, sum(case when outcome = 'E' then 1 else 0 end) as error, "
+				+ "CAST (sum(case when outcome = 'R' then 1 else 0 end) as float) / count(*) as successRate, "
+				+ "min(attemptnumber) as minAttemptNumber, avg(attemptnumber) as avgAttemptNumber, max(attemptnumber) as maxAttemptNumber, "
+				+ "min(timefromlastattempt_sec) filter (where timefromlastattempt_sec > 0) / 3600.0 as minTimeBetweenAttempts, " // convert to hours
+				+ "avg(timefromlastattempt_sec) filter (where timefromlastattempt_sec > 0) / 3600.0 as avgTimeBetweenAttempts, " // convert to hours
+				+ "max(timefromlastattempt_sec) filter (where timefromlastattempt_sec > 0) / 3600.0 as maxTimeBetweenAttempts, " // convert to hours
+				+ "min(duration_sec) / 60.0 as minDuration, " // convert to minutes
+				+ "avg(duration_sec) filter (where duration_sec > 0) / 60.0 as avgDuration, " // convert to minutes
+				+ "max(duration_sec) / 60.0 as maxDuration " // convert to minutes
+				+ select + " FROM ExercisesDW dw" + from + wheres[0] + groupBy + orderBy + limit + ";";
+		
+		return q;
+	}
+}

@@ -1,0 +1,14 @@
+edu/uoc/ictflag/institution/bll/VLEManager.class
+edu/uoc/ictflag/institution/bll/IInstitutionManager.class
+edu/uoc/ictflag/institution/bll/IToolManager.class
+edu/uoc/ictflag/institution/bll/SubjectManager.class
+edu/uoc/ictflag/institution/bll/ICourseGroupManager.class
+edu/uoc/ictflag/institution/bll/ProgramManager.class
+edu/uoc/ictflag/institution/bll/ISubjectManager.class
+edu/uoc/ictflag/institution/bll/CourseGroupManager.class
+edu/uoc/ictflag/institution/bll/CourseManager.class
+edu/uoc/ictflag/institution/bll/ICourseManager.class
+edu/uoc/ictflag/institution/bll/InstitutionManager.class
+edu/uoc/ictflag/institution/bll/IProgramManager.class
+edu/uoc/ictflag/institution/bll/IVLEManager.class
+edu/uoc/ictflag/institution/bll/ToolManager.class

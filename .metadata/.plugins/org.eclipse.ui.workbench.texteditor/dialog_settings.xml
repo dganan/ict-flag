@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="exercisesReportFixed" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="studentsReportFixed"/>
+			<item value="studentsReportController"/>
+			<item value="dataItem.getGlobalProgress()"/>
+			<item value="studentReportController"/>
+			<item value="StudentsReportDataItem"/>
+			<item value="RecentActivity"/>
+			<item value="getRecentActivity"/>
+			<item value="RecentActivityLast48Hours"/>
+		</list>
+		<list key="replacehistory">
+			<item value="exercisesReportFixed"/>
+			<item value="studentsReportFixedController"/>
+			<item value="globalProgress"/>
+			<item value="studentsReportController"/>
+			<item value="long"/>
+			<item value="exercisesReportFixedController"/>
+			<item value="&amp;apos;"/>
+			<item value="\&apos;"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="324" key="DIALOG_WIDTH"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		<item value="435" key="DIALOG_HEIGHT"/>
+		<item value="1462" key="DIALOG_X_ORIGIN"/>
+		<item value="646" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

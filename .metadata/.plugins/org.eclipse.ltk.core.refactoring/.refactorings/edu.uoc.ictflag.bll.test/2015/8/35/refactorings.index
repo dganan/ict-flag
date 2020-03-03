@@ -1,0 +1,12 @@
+1440914029478	Rename local variable 'programs'
+1440914046293	Rename local variable 'emptyPrograms'
+1440914083761	Rename local variable 'programsPm1'
+1440914104220	Rename local variable 'programsPm2'
+1440914755837	Rename local variable 'authorizationService'
+1440914962754	Rename type 'ProgramServiceTest'
+1440915712511	Extract method 'setupPermissions'
+1440915991134	Rename field 'ps'
+1440916001013	Rename field 'pmanagers'
+1440924092241	Copy compilation unit
+1440924441414	Rename type 'ProgramManagerTest'
+1440924455120	Copy compilation unit

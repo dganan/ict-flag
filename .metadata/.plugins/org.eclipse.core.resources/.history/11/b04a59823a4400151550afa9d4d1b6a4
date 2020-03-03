@@ -1,0 +1,87 @@
+package edu.uoc.ictflag.web.institution;
+
+import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import edu.uoc.ictflag.core.LocalizedString;
+import edu.uoc.ictflag.core.StringUtils;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.institution.bll.IProgramService;
+import edu.uoc.ictflag.institution.model.Program;
+
+@Named
+@ViewScoped
+public class ProgramController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	private String	id;
+	private Program program;
+	
+	@Inject
+	IProgramService programService;
+	
+	public ProgramController()
+	{
+	}
+	
+	@PostConstruct
+	public void Initialize()
+	{
+		Long l = StringUtils.tryParse(id, null);
+		
+		if (l == null)
+		{
+			program = new Program();				
+		}
+		else
+		{
+			try
+			{
+				program = programService.getProgram(l);
+			}
+			catch (Exception e)
+			{
+				LogHelper.error(e);
+			}
+		}
+	}
+	
+	public String getId()
+	{
+		return id;
+	}
+	
+	public void setId(String id)
+	{
+		this.id = id;
+	}
+	
+	public String getName()
+	{
+		if (program.getName() != null)
+		{
+			return program.getName().getTranslation();
+		}
+		
+		return null;
+	}
+
+	public void setName(String name)
+	{
+		LocalizedString ls = new LocalizedString ();
+		
+		ls.setTranslation("en", name);
+		
+		program.setName(ls);
+	}
+	
+	public void save()
+	{
+	
+	}
+}

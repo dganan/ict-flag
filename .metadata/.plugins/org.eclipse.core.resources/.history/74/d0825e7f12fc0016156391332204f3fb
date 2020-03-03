@@ -1,0 +1,273 @@
+en = Inglés
+es = Español
+ca = Catalan
+
+AcademicYear = Año académico
+
+
+Add = Añadir
+Add_all = Añadir todos
+
+Add_New = Añadir
+
+Add_ellipsis = Añadir...
+
+Add_translation = Añadir traducción
+
+Apply = Aplicar
+
+Available_items = Elementos disponibles
+
+Cancel = Cancelar
+
+Code = Código
+
+CourseCannotBeDeletedBecauseDependentCourseGroupsAlreadyExist = El curso no se puede eliminar porque hay grupos asociados a el.
+
+CourseGroups = Grupos
+CourseGroups_List = Lista de grupos
+Courses = Cursos
+Courses_List = Lista de cursos
+
+Delete = Eliminar
+Delete_confirmation = La operación de eliminación no se puede deshacer y puede eliminar otros elementos relacionados. ¿Estás seguro que quieres continuar?
+
+Edit = Editar
+
+Edit_course = Editar curso
+Edit_courseGroup = Editar grupo
+Edit_institution = Datos institución
+Edit_program = Editar programa 
+Edit_subject = Editar asignatura
+Edit_tool = Editar herramienta
+Edit_vle = Editar VLE
+
+Execute = Ejecutar
+
+File = Fichero
+
+Instructor = Instructor
+
+Key = Clave
+
+Language = Lenguaje
+
+Lecturer = Lector
+
+Login = Login
+Login_to_your_account = Accede a tu cuenta
+
+Logout = Cerrar sesión
+
+Main_site_url = Url del sitio principal 
+
+Members = Miembros
+
+Name = Nombre
+
+No_results = Sin resultados.
+No_selected_items = Ningún elemento seleccionado.
+
+Password = Contraseña
+
+Please_enter_correct_username_and_password = Por favor introduzca un nombre de usuario y contraseña correctos.
+
+Process_success = Proceso finalizado correctamente. 
+
+Program_manager = Director de programa
+
+Programs = Programas
+
+Programs_List = Lista de programas
+
+Remove = Eliminar
+Remove_all = Eliminar todos
+
+Role_U = Super usuario
+Role_A = Administrador
+Role_M = Director de programa
+Role_L = Lector
+Role_I = Instructor
+Role_S = Estudiante
+
+Save = Guardar
+Select_ellipsis = Seleccionar...
+
+Selected_items = Elementos seleccionados
+
+Semester = Semestre
+
+Students = Estudiantes
+
+SubjectCannotBeDeletedBecauseDependentCoursesAlreadyExist = La asignatura no se puede eliminar porque hay cursos asociados a ella.
+
+Subject = Asignatura
+Subjects = Asignaturas
+
+Subjects_List = Lista de asignaturas
+
+Tools = Herramientas
+Tools_List = Lista de herramientas
+
+Url = Url
+
+Username = Nombre de usuario
+
+VLEs_List = Lista de VLEs
+VLEs = VLEs
+
+
+# eLA Module
+
+Assignment_assessment = Evaluación de actividades
+
+Attempts = Número de intentos
+AttemptsMax = Número de intentos (max)
+AttemptsAvg = Número de intentos (media)
+AttemptsMin = Número de intentos (min)
+
+TimeBetweenAttempts = Tiempo entre intentos (en horas)
+TimeBetweenAttemptsMax = Tiempo entre intentos (max)
+TimeBetweenAttemptsAvg = Tiempo entre intentos (media)
+TimeBetweenAttemptsMin = Tiempo entre intentos (min)
+
+Date = Fecha
+
+AnyTime = Cualquier fecha
+LastWeek = Última semana
+LastMonth = Último mes
+Interval = Intervalo
+
+StartDate = Fecha inicio
+EndDate = Fecha fin
+
+Duration = Duración (en minutos)
+DurationMax = Duración (max)
+DurationAvg = Duración (media)
+DurationMin = Duración (min)
+
+NumericGrades = Nota numérica
+NumericGradesMax = Nota numérica (max)
+NumericGradesAvg = Nota numérica (media)
+NumericGradesMin = Nota numérica (min)
+
+AlphabeticGrades = Nota alfabética
+
+Count = Recuento
+
+CourseAssignments = Curso / Actividades
+
+Etl_process = Proceso ETL
+
+Exercises_report = Informe ejercicios
+Courses_report = Informe asignaturas 
+Assignments_report = Informe actividades
+Students_report = Informe estudiantes
+
+Filters = Filtros
+GroupBy = Agrupar por
+Outcomes = Resultados
+
+Outcome = Resultado
+Results = Resultados
+
+OnlyLast = Sólo el último
+
+ToolExercises = Herramienta / Ejercicios
+
+Tool = Herramienta
+Total = Total
+Program = Programa
+Subject = Asignatura
+Course = Curso
+CourseGroup = Grupo
+Assignment = Actividad
+Exercise = Ejercicio
+
+UNASSIGNED = SIN ASIGNAR
+
+ShowStackedData = Mostrar datos apilados
+ShowMaxGroups = Máximo nº de grupos
+
+SuccessRate = Tasa de éxito
+
+LowestSuccessRateExercises = Ejercicios con peor tasa de éxito
+LongestDuration = Duración más larga
+HighestNumberOfAttempts = Numero de intentos más alto
+LongestDurationExercises = Ejercicios con duración más larga
+HighestNumberOfAttemptsExercises = Ejercicios con numero de intentos más alto
+
+Right = Correcto
+Wrong = Incorrecto
+Timeout = Timeout
+Error = Error
+
+OnlyLastAttempt = Sólo último intento
+Others = Otros
+
+AssignmentsNumericGrades = Nota numérica actividades
+AssignmentsAlphabeticGrades = Nota alfabètica actividades
+AssignmentsDuration = Duración actividades (en minutos) 
+AssignmentsSuccessRate = Tasa de éxito actividades
+ExercisesOutcomes = Resultados ejercicios
+
+
+ShowAllGroups = Mostrar todos los grupos
+
+ShowMaxExercises = Máximo nº de ejercicios
+ShowAllExercises = Mostrar todos los ejercicios
+
+FailureRate = Tasa de fallo
+HighestFailureRateStudents = Estudiantes con mayor tasa de fallo
+HighestNumberOfAttemptsStudents = Estudiantes con mayor numero total de intentos
+LowestNumberOfRightExercisesStudents = Estudiantes con menos ejercicios correctos
+
+ShowMaxStudents = Máximo nº de estudiantes
+ShowAllStudents = Mostrar todos los estudiantes
+
+NoDataFound = No se han encontrado datos
+
+Student_report = Informe estudiante
+TotalSubmissions = envíos
+TotalExercises = ejercicios ejecutados
+CompletedExercises = ejercicios superados
+CompletedExercises1stTime = ejercicios superados a la primera
+ExperiencePoints = Puntos de experiencia
+		
+PercentageOfStudentsCompletedMoreExercises = de estudiantes han superado más ejercicios
+NumberOfExercisesLeaderboard = Tabla de clasificaciones - Número de ejercicios
+PercentageOfSuccessLeaderboard = Tabla de clasificaciones - % de éxito
+
+Level = Nivel
+TotalStudents = Número de estudiantes
+NumberOfExercises = Número de ejercicios
+PercentageOfSuccess = Porcentaje de éxito
+IncludingYou = (TU INCLUIDO)
+
+PercentageRelativeToAllStudentsMedian = % relativo a la media de todos los estudiantes
+
+YourPerformance = Tu rendimiento
+ToolSummary = Resumen por herramienta
+ReportDate = Fecha del informe
+Suggestions = Sugerencias
+RecentActivity = Activitad reciente
+
+StudentReportSuggestions = Tus compañeros están trabajando con TOOL. ¿Porqué no pruebas a hacer algun otro ejercicio?
+
+RecentActivityLast48Hours = SOLVED_EXERCISES ejercicios completados en las ultimas 48 horas. ¡Bién hecho!
+RecentActivityNone = No hay actividad reciente. ¿Preparado para un nuevo ejercicio?
+
+TendencePositive = ¡Felicidades! has mejorado respecto de ayer.
+TendenceNegative = ¡Cuidado! has empeorado respecto de ayer.
+TendenceZeroWithoutActivity = Sin actividad. Intenta practicar más. ¡Ánimo! 
+TendenceZeroWithActivity = Tuviste el mismo rendimiento respecto de ayer.
+
+GlobalProgressDescription = Esta barra muestra el nº de ejercicios resueltos por todo el grupo y los niveles conseguidos.
+GlobalProgress = Progreso global 
+Level = Nivel
+ExercisesLeft = Faltan EXERCISES ejercicios para completar el nivel!
+NoExercisesLeft_OLD = EXERCISES ejercicios realizados. Nivel completo!
+NoExercisesLeft = Nivel completo!
+
+StudentsReports = Informes estudiantes
+StudentsReportsDescription = Pulse sobre el username del estudiante correspondiente para abrir su informe:

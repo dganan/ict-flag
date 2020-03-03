@@ -1,0 +1,123 @@
+package edu.uoc.ictflag.fakefat;
+
+import java.awt.Container;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+
+import edu.uoc.ictflag.clientlib.java.IctFlagApiClient;
+import edu.uoc.ictflag.ela.model.Feedback;
+
+public class FakeFATMainFrame extends JFrame
+{
+	public static final String host = "http://localhost:8080/edu.uoc.ictflag.web/";
+	public static final String host = "http://gres.uoc.edu:8585/edu.uoc.ictflag.web/";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public FakeFATMainFrame()
+	{
+		initUI();
+	}
+	
+	private void initUI()
+	{
+		JButton activityStartButton = new JButton("Activity start");
+		
+		activityStartButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				IctFlagApiClient.activityStart(, "std1", "FAKEFAT", "P1", "A1", "2015asfsdf-1", "1");
+				//IctFlagApiClient.activityStart(host, "std1", "FAKEFAT", "P1", "A1", "2015asfsdf-1", "1");
+			}
+		});
+		
+		JButton exerciseStartButton = new JButton("Exercise start");
+		
+		exerciseStartButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				IctFlagApiClient.exerciseStart("http://localhost:8080/edu.uoc.ictflag.web/", "std1", "FAKEFAT", "P1", "A1", "2015-1", "1");
+			}
+		});
+
+		JButton exerciseSubmissionButton = new JButton("Exercise submission");
+		
+		exerciseSubmissionButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				IctFlagApiClient.exerciseSubmission("http://localhost:8080/edu.uoc.ictflag.web/", "std1", "FAKEFAT", "P1", "A1", "2015-1", "1",
+						Feedback.RIGHT);
+			}
+		});
+		
+		JButton activityEndButton = new JButton("Activity end");
+		
+		activityEndButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				IctFlagApiClient.activityEnd("http://localhost:8080/edu.uoc.ictflag.web/", "std1", "FAKEFAT", "P1", "A1", "2015-1", "1");
+			}
+		});
+		
+		JButton activityAssessmentButton = new JButton("Activity assessment");
+		
+		activityAssessmentButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				IctFlagApiClient.activityAssessment("http://localhost:8080/edu.uoc.ictflag.web/", "std1", "FAKEFAT", "P1", "A1", "2015-1", "1", 6);
+			}
+		});
+		
+		createLayout(activityStartButton, exerciseStartButton, exerciseSubmissionButton, activityEndButton, activityAssessmentButton);
+		
+		setTitle("Fake FAT");
+		setSize(300, 200);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	private void createLayout(JComponent... arg)
+	{
+		Container pane = getContentPane();
+		BoxLayout gl = new BoxLayout(pane, BoxLayout.PAGE_AXIS);
+		pane.setLayout(gl);
+		
+		//gl.setAutoCreateContainerGaps(true);
+		
+		for (JComponent jc : arg)
+		{
+			pane.add(jc);
+		}
+	}
+	
+	public static void main(String[] args)
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				FakeFATMainFrame ex = new FakeFATMainFrame();
+				ex.setVisible(true);
+			}
+		});
+	}
+}

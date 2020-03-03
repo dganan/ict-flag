@@ -1,0 +1,59 @@
+package edu.uoc.ictflag.web.institution;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.institution.bll.IProgramService;
+import edu.uoc.ictflag.institution.model.Program;
+
+@Named
+@ViewScoped
+public class ProgramsListController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	private List<Program> programsList;
+	
+	@Inject
+	IProgramService programService;
+	
+	public ProgramsListController()
+	{
+	}
+	
+	@PostConstruct
+	public void Initialize()
+	{
+		try
+		{
+			refreshList();
+		}
+		catch (Exception e)
+		{
+			LogHelper.error(e);
+		}
+	}
+	
+	public List<Program> getProgramsList()
+	{
+		return programsList;
+	}
+	
+	public void deleteProgram(long id) throws Exception
+	{
+		programService.deleteProgram(id);
+		
+		refreshList();
+	}
+	
+	private void refreshList()
+	{
+		programsList = programService.getProgramsList();
+	}
+}

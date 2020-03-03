@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd" version="2.2">
+	<application>
+		<locale-config>
+			<default-locale>en</default-locale>
+		    <supported-locale>en</supported-locale>
+		    <supported-locale>es</supported-locale>
+		    <supported-locale>ca</supported-locale>
+		</locale-config>
+	    <resource-handler>
+	    	org.omnifaces.resourcehandler.UnmappedResourceHandler
+<!-- 			edu.uoc.ictflag.web.CustomResourceHandler -->
+	    </resource-handler>
+		<resource-bundle>
+			<base-name>localization.localization</base-name>
+			<var>msg</var>
+		</resource-bundle>
+<!-- 	    <message-bundle>ValidationMessages</message-bundle> -->
+	</application>
+	<factory>
+        <exception-handler-factory>
+            edu.uoc.ictflag.web.IctflagExceptionHandlerFactory
+        </exception-handler-factory>
+	</factory>
+	<navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>private-index</from-outcome>
+            <to-view-id>/private/index</to-view-id>
+            <redirect></redirect>
+        </navigation-case>
+    </navigation-rule>
+
+	<navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/login</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/error</to-view-id>
+            <redirect></redirect>
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>

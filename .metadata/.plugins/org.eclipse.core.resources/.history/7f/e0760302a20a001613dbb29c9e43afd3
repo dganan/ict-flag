@@ -1,0 +1,239 @@
+package edu.uoc.ictflag.ela.web;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
+
+import edu.uoc.ictflag.core.localization.LocalizationController;
+import edu.uoc.ictflag.core.localization.LocalizedItem;
+import edu.uoc.ictflag.core.log.ActivityLog;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.NavigationHelper;
+import edu.uoc.ictflag.core.web.SessionBean;
+import edu.uoc.ictflag.ela.bll.IExercisesReportManager;
+import edu.uoc.ictflag.ela.model.FilterField;
+
+@Named
+@ViewScoped
+public class ExercisesReportController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	IExercisesReportManager exercisesReportManager;
+	
+	// PRIVATE FIELDS 
+	
+	private List<LocalizedItem> tools;
+	private String[] selectedTools;
+	
+	private List<LocalizedItem> groupByOptions;
+	private String[] groupBySelectedOptions;
+	
+	private boolean stackedData;
+	
+	private int maxGroups = 30;
+	
+	private BarChartModel outcomesBarChartModel;
+	
+	// GETTERS AND SETTERS 
+	
+	public List<LocalizedItem> getTools()
+	{
+		return tools;
+	}
+	
+	public void setTools(List<LocalizedItem> tools)
+	{
+		this.tools = tools;
+	}
+	
+	public String[] getSelectedTools()
+	{
+		return selectedTools;
+	}
+	
+	public void setSelectedTools(String[] selectedTools)
+	{
+		this.selectedTools = selectedTools;
+	}
+	
+	public List<LocalizedItem> getGroupByOptions()
+	{
+		return groupByOptions;
+	}
+	
+	public String[] getGroupBySelectedOptions()
+	{
+		return groupBySelectedOptions;
+	}
+	
+	public void setGroupBySelectedOptions(String[] groupBySelectedOptions)
+	{
+		this.groupBySelectedOptions = groupBySelectedOptions;
+	}
+	
+	public BarChartModel getOutcomesBarChartModel()
+	{
+		return outcomesBarChartModel;
+	}
+	
+	public int getMaxGroups()
+	{
+		return maxGroups;
+	}
+	
+	public void setMaxGroups(int maxGroups)
+	{
+		this.maxGroups = maxGroups;
+	}
+	
+	public boolean getStackedData()
+	{
+		return stackedData;
+	}
+	
+	public void setStackedData(boolean stackedData)
+	{
+		this.stackedData = stackedData;
+	}
+	
+	// IMPLEMENTATION
+	
+	@ActivityLog
+	public void initialize() throws Exception
+	{
+		try
+		{
+			//if (!FacesContext.getCurrentInstance().isPostback())
+			{
+				createTools();
+
+				createGroupByOptions();
+				
+				createOutcomesModels();
+			}
+		}
+		catch (Exception e)
+		{
+			LogHelper.error(e);
+			
+			NavigationHelper.redirectTo404();
+		}
+	}
+
+	public void applyFilters() throws Exception
+	{
+	}
+	
+	private void createGroupByOptions()
+	{
+		groupByOptions = new ArrayList<LocalizedItem>();
+		groupByOptions.add(new LocalizedItem(FilterField.TOOL, LocalizationController.getLocalizedString("Tool")));
+		groupByOptions.add(new LocalizedItem(FilterField.PROGRAM, LocalizationController.getLocalizedString("Program")));
+		groupByOptions.add(new LocalizedItem(FilterField.SUBJECT, LocalizationController.getLocalizedString("Subject")));
+		groupByOptions.add(new LocalizedItem(FilterField.COURSE, LocalizationController.getLocalizedString("Course")));
+		groupByOptions.add(new LocalizedItem(FilterField.COURSEGROUP, LocalizationController.getLocalizedString("CourseGroup")));
+		groupByOptions.add(new LocalizedItem(FilterField.ASSIGNMENT, LocalizationController.getLocalizedString("Assignment")));
+		groupByOptions.add(new LocalizedItem(FilterField.EXERCISE, LocalizationController.getLocalizedString("Exercise")));
+	}
+	
+	private void createOutcomesModels() throws Exception
+	{
+		outcomesBarChartModel = new BarChartModel();
+		outcomesBarChartModel.setStacked(stackedData);
+		
+		ChartSeries right = new ChartSeries();
+		right.setLabel("Right");
+		
+		ChartSeries wrong = new ChartSeries();
+		wrong.setLabel("Wrong");
+		
+		ChartSeries timeout = new ChartSeries();
+		timeout.setLabel("Timeout");
+		
+		ChartSeries error = new ChartSeries();
+		error.setLabel("Error");
+		
+		outcomesBarChartModel.addSeries(right);
+		outcomesBarChartModel.addSeries(wrong);
+		outcomesBarChartModel.addSeries(timeout);
+		outcomesBarChartModel.addSeries(error);
+		
+		List<Object[]> outcomesData = exercisesReportManager.getOutcomesData(SessionBean.getUsername(), groupBySelectedOptions);
+		
+		long max = 0;
+		
+		int index = 0;
+		
+		for (Object[] exercise : outcomesData)
+		{
+			String label = LocalizationController.getLocalizedString("Total");
+			
+			String NONE = LocalizationController.getLocalizedString("NONE");
+			
+			if (exercise.length > 4)
+			{
+				label = exercise[4] == null ? NONE : (String) exercise[4];
+				
+				for (int i = 5; i < exercise.length; i++)
+				{
+					if (exercise[i] == null)
+					{
+						label = label + " - " + NONE;
+					}
+					else
+					{
+						label = label + " - " + (String) exercise[i];
+					}
+				}
+			}
+			
+			right.set(label, (Number) exercise[0]);
+			wrong.set(label, (Number) exercise[1]);
+			timeout.set(label, (Number) exercise[2]);
+			error.set(label, (Number) exercise[3]);
+			
+			if (stackedData)
+			{
+				long sum = (long) exercise[0] + (long) exercise[1] + (long) exercise[2] + (long) exercise[3];
+				
+				max = Math.max(max, sum);
+			}
+			else
+			{
+				max = Math.max(max, (long) exercise[0]);
+				max = Math.max(max, (long) exercise[1]);
+				max = Math.max(max, (long) exercise[2]);
+				max = Math.max(max, (long) exercise[3]);
+			}
+			
+			index++;
+			
+			if (index > maxGroups)
+			{
+				break;
+			}
+		}
+		
+		outcomesBarChartModel.setTitle("Outcomes");
+		outcomesBarChartModel.setLegendPosition("ne");
+	         
+		Axis xAxis = outcomesBarChartModel.getAxis(AxisType.X);
+		xAxis.setLabel("Outcome");
+	         
+		Axis yAxis = outcomesBarChartModel.getAxis(AxisType.Y);
+		yAxis.setLabel("#");
+		yAxis.setMin(0);
+		yAxis.setMax(max + 10);
+	}
+}

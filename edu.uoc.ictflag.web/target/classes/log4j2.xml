@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE layout>
+<Configuration status="debug">
+	<Properties>
+		<Property name="log-path">../logs</Property>
+	</Properties>
+
+	<Appenders>
+		<RollingFile name="default-log" fileName="${log-path}/ictflag.log" filePattern="${log-path}/ictflag-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%-5level] ; %d{yyyy-MM-dd HH:mm:ss.SSS} ; %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="performance-log" fileName="${log-path}/ictflag_performance.log" filePattern="${log-path}/ictflag_performance-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%-5level] ; %d{yyyy-MM-dd HH:mm:ss.SSS} ; %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="activity-log" fileName="${log-path}/ictflag_activity.log" filePattern="${log-path}/ictflag_activity-%d{yyyy-MM-dd}.log">
+			<PatternLayout>
+				<pattern>[%-5level] ; %d{yyyy-MM-dd HH:mm:ss.SSS} ; %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="performance-log" level="all" additivity="false">
+			<appender-ref ref="performance-log" level="all" />
+		</Logger>
+		<Logger name="activity-log" level="all" additivity="false">
+			<appender-ref ref="activity-log" level="all" />
+		</Logger>
+		<Root level="all" additivity="false">
+			<appender-ref ref="default-log" />
+		</Root>
+	</Loggers>
+</Configuration>
+
+

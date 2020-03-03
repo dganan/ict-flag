@@ -1,0 +1,223 @@
+package edu.uoc.ictflag.core.dal;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
+
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
+public abstract class BaseRepository
+{
+	protected abstract EntityManager getEntityManager();
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void addEntity(Object o) throws Exception
+	{
+		EntityManager em = getEntityManager();
+		
+		em.persist(o);
+		em.flush();
+	}
+	
+	protected Object getScalarValue(String query) throws Exception
+	{
+		return getScalarValue(query, null);
+	}
+	
+	protected Object getScalarValue(String query, Map<String, Object> parameters) throws Exception
+	{
+		EntityManager em = getEntityManager();
+		
+		Object result = null;
+		
+		query = query.replaceAll(":", "?");
+		
+		Query q = em.createNativeQuery(query);
+		
+		if (parameters != null)
+		{
+			for (String key : parameters.keySet())
+			{
+				Object o = parameters.get(key);
+				
+				if (o instanceof Date)
+				{
+					Date d = (Date) o;
+					
+					q = q.setParameter(key, d, TemporalType.DATE);
+				}
+				else
+				{
+					q = q.setParameter(key, o);
+				}
+			}
+		}
+		
+		result = q.getSingleResult();
+		
+		return result;
+	}
+
+	protected <T> T getFirst(String query, Class<T> c) throws Exception
+	{
+		return getFirst(query, c, null, null);
+	}
+	
+	protected <T> T getFirst(String query, Class<T> c, Map<String, Object> parameters) throws Exception
+	{
+		return getFirst(query, c, parameters, null);
+	}
+
+	protected <T> T getFirst(String query, Class<T> c, Map<String, Object> parameters, Map<String, Object> viewParameters) throws Exception
+	{
+		List<T> list = getQueryResult(query, c, parameters, viewParameters);
+		
+		if (list.size()>0)
+		{
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+
+	protected <T> List<T> getQueryResult(String query, Class<T> c) throws Exception
+	{
+		return getQueryResult(query, c, -1, -1, null);
+	}
+	
+	protected <T> List<T> getQueryResult(String query, Class<T> c, int page, int pageSize) throws Exception
+	{
+		return getQueryResult(query, c, page, pageSize, null);
+	}
+	
+	protected <T> List<T> getQueryResult(String query, Class<T> c, Map<String, Object> parameters) throws Exception
+	{
+		return getQueryResult(query, c, -1, -1, parameters);
+	}
+
+	protected <T> List<T> getQueryResult(String query, Class<T> c, Map<String, Object> parameters, Map<String, Object> viewParameters)
+			throws Exception
+	{
+		return getQueryResult(query, c, -1, -1, parameters, viewParameters);
+	}
+	
+	protected <T> List<T> getQueryResult(String query, Class<T> c, int page, int pageSize, Map<String, Object> parameters) throws Exception
+	{
+		return getQueryResult(query, c, page, pageSize, parameters, null);
+	}
+	
+	protected <T> List<T> getQueryResult(String query, Class<T> c, int page, int pageSize, Map<String, Object> parameters,
+			Map<String, Object> viewParameters) throws Exception
+	{
+		EntityManager em = getEntityManager();
+		
+		Query q = c != null ? em.createQuery(query, c) : em.createQuery(query);
+		
+		if (viewParameters != null)
+		{
+			for (String key : viewParameters.keySet())
+			{
+				Object o = viewParameters.get(key);
+				
+				Query qp = em.createNativeQuery("SET @" + key + " = " + o + ";");
+				
+				qp.executeUpdate();
+			}
+		}
+		
+		if (parameters != null)
+		{
+			for (String key : parameters.keySet())
+			{
+				Object o = parameters.get(key);
+				
+				if (o instanceof Date)
+				{
+					Date d = (Date) o;
+					
+					q = q.setParameter(key, d, TemporalType.DATE);
+				}
+				else
+				{
+					q = q.setParameter(key, o);
+				}
+			}
+		}
+		
+		if (page > 0)
+		{
+			q.setFirstResult((page - 1) * pageSize);
+			q.setMaxResults(pageSize);
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<T> results = q.getResultList();
+		
+		return results;
+	}
+	
+	protected int executeUpdate(String query) throws Exception
+	{
+		return executeUpdate(query, null);
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	protected int executeUpdate(String query, Map<String, Object> parameters) throws Exception
+	{
+		EntityManager em = getEntityManager();
+		
+		int count = -1;
+		
+		query = query.replaceAll(":", "?");
+		
+		Query q = em.createNativeQuery(query);
+		
+		if (parameters != null)
+		{
+			for (String key : parameters.keySet())
+			{
+				Object o = parameters.get(key);
+				
+				if (o instanceof Date)
+				{
+					Date d = (Date) o;
+					
+					q = q.setParameter(key, d, TemporalType.DATE);
+				}
+				else
+				{
+					q = q.setParameter(key, o);
+				}
+			}
+		}
+		
+		count = q.executeUpdate();
+		
+		return count;
+	}
+
+	protected String mapArrayAsParameters(Long[] sensorsids, Map<String, Object> parameters)
+	{
+		String params = "";
+		
+		for (int i = 1; i <= sensorsids.length; i++)
+		{
+			parameters.put(i + "", sensorsids[i - 1]);
+			
+			params = params + ":" + i + ",";
+		}
+		
+		if (sensorsids.length > 0)
+		{
+			params = params.substring(0, params.length() - 1);
+		}
+		
+		return params;
+	}
+}

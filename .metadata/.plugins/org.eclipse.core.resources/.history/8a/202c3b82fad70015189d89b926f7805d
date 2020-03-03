@@ -1,0 +1,373 @@
+package edu.uoc.ictflag.ela.bll;
+
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.ela.dal.IEventDataRepository;
+import edu.uoc.ictflag.ela.model.Action;
+import edu.uoc.ictflag.ela.model.AssignmentData;
+import edu.uoc.ictflag.ela.model.ElementType;
+import edu.uoc.ictflag.ela.model.EventData;
+import edu.uoc.ictflag.ela.model.EventDataRaw;
+import edu.uoc.ictflag.ela.model.ResultType;
+import edu.uoc.ictflag.institution.dal.ICourseRepository;
+import edu.uoc.ictflag.institution.dal.IProgramRepository;
+import edu.uoc.ictflag.institution.dal.ISemesterRepository;
+import edu.uoc.ictflag.institution.dal.ISubjectRepository;
+import edu.uoc.ictflag.institution.dal.IToolRepository;
+import edu.uoc.ictflag.institution.model.Program;
+import edu.uoc.ictflag.institution.model.Semester;
+import edu.uoc.ictflag.institution.model.Subject;
+import edu.uoc.ictflag.institution.model.Tool;
+import edu.uoc.ictflag.security.dal.IUserRepository;
+import edu.uoc.ictflag.security.model.User;
+
+@Stateless
+public class AssignmentDataManager implements IEventDataManager, Serializable
+{
+	protected class CheckEventData
+	{
+		String error;
+		AssignmentData assignmentData;
+	}
+	
+	private static final long serialVersionUID = 1L;
+	
+	IAssignmentDataRepository assignmentDataRepository;
+	ISemesterRepository semesterRepository;
+	IToolRepository toolRepository;
+	IUserRepository userRepository;
+	IProgramRepository programRepository;
+	ISubjectRepository subjectRepository;
+	ICourseRepository courseRepository;
+	
+	@Inject
+	public EventDataManager(IEventDataRepository EventDataRepository, ISemesterRepository semesterRepository, IToolRepository toolRepository, IUserRepository userRepository, IProgramRepository programRepository, ISubjectRepository subjectRepository, ICourseRepository courseRepository)
+	{
+		this.EventDataRepository = EventDataRepository;
+		this.semesterRepository = semesterRepository;
+		this.toolRepository = toolRepository;
+		this.userRepository = userRepository;
+		this.subjectRepository = subjectRepository;
+		this.courseRepository = courseRepository;
+		this.programRepository = programRepository;
+	}
+	
+	void processAssignmentDataRaw(AssignmentDataRaw assignmentDataRaw) throws Exception;
+	
+	List<String> importAssignmentAssessmentData(String importText) throws Exception;
+
+	@Override
+	public void processAssignmentDataRaw(AssignmentDataRaw assignmentDataRaw) throws Exception
+	{
+		CheckEventData cad = checkEventData(assignmentDataRaw);
+		
+		if (cad.error == null)
+		{
+			EventDataRepository.createEventData(cad.eventData);
+		}
+		else
+		{
+			LogHelper.error("Error processing activity data: " + eventDataRaw.toString());
+			
+			LogHelper.error(cad.error);
+		}
+	}
+
+	private CheckEventData checkEventData(EventDataRaw eventDataRaw) throws Exception
+	{
+		CheckEventData cad = new CheckEventData();
+		
+		cad.error = null;
+		
+		cad.eventData = new EventData();
+		
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		cad.eventData.setActivityDate(formatter.parse(eventDataRaw.getTimestamp()));
+		
+		Tool t = checkTool(eventDataRaw.getTool());
+		
+		if (t == null)
+		{
+			cad.error = "Tool '" + eventDataRaw.getTool() + "' does not exist.";
+		}
+		else
+		{
+			if (!eventDataRaw.getToolUUID().equals(t.getUuid()))
+			{
+				cad.error = "Tool key for tool '" + eventDataRaw.getTool() + "' is not valid.";
+			}
+			else
+			{
+				cad.eventData.setTool(t);
+			}
+		}
+		
+		if (cad.error == null)
+		{
+			User u = checkUser(eventDataRaw.getUserId());
+			
+			if (u == null)
+			{
+				cad.error = "User '" + eventDataRaw.getUserId() + "' does not exist.";
+			}
+			else
+			{
+				cad.eventData.setPerson(u);
+			}
+		}
+		
+		if (cad.error == null && eventDataRaw.getProgramCode() != null)
+		{
+			Program p = checkProgram(eventDataRaw.getProgramCode());
+			
+			if (p == null)
+			{
+				cad.error = "Program '" + eventDataRaw.getProgramCode() + "' does not exist.";
+			}
+			else
+			{
+				cad.eventData.setProgram(p);
+			}
+		}	
+		
+		if (cad.error == null && eventDataRaw.getSubjectCode() != null)
+		{
+			Subject s = checkSubject(eventDataRaw.getSubjectCode());
+					
+			if (s == null)
+			{
+				cad.error = "Subject '" + eventDataRaw.getSubjectCode() + "' does not exist.";
+			}
+			else
+			{		
+				cad.eventData.setSubject(s);
+			}
+		}
+				
+		if (cad.error == null && eventDataRaw.getSemester() != null)
+		{
+			Semester se = checkSemester(eventDataRaw.getSemester());
+					
+			if (se == null)
+			{
+				cad.error = "Semester '" + eventDataRaw.getSemester() + "' does not exist.";
+			}
+			else
+			{
+				cad.eventData.setSemester(se);
+			}
+		}
+
+		// NOT CHECKED (TOO MUCH STRICT) 
+		//		if (cad.error == null && cad.eventData.getSubject() != null && cad.eventData.getProgram() != null)
+		//		{
+		//			//Subject not in program
+		//			if (!checkSubjectInProgram(cad.eventData.getSubject(), cad.eventData.getProgram()))
+		//			{
+		//				cad.error = "Subject '" + eventDataRaw.getSubjectCode() + "' not in program '" + eventDataRaw.getProgramCode() + "'";
+		//			}
+		//		}
+		//				
+		//		if (cad.error == null && cad.eventData.getSubject() != null && cad.eventData.getSemester() != null)
+		//		{
+		//			Course course = checkCourse(cad.eventData.getSubject(), cad.eventData.getSemester());
+		//			
+		//			// course does not exist (no course with subject and semester)
+		//			
+		//			if (course == null)
+		//			{
+		//				cad.error = "There is no course for subject '" + eventDataRaw.getSubjectCode() + "' in semester '" + eventDataRaw.getSemester()
+		//						+ "'";
+		//			}
+		//			else
+		//			{
+		//				// student not enrolled in course
+		//				if (!checkUserEnrolled(cad.eventData.getPerson(), course))
+		//				{
+		//					cad.error = "Student '" + eventDataRaw.getUserId() + "' is not enrolled in subject '" + eventDataRaw.getSubjectCode()
+		//							+ "' semester '" + eventDataRaw.getSemester() + "'";
+		//				}
+		//				else
+		//				{
+		//					// tool not related with course ==> must relate in model somehow
+		//					if (!checkToolForCourse(cad.eventData.getTool(), course))
+		//					{
+		//						cad.error = "Tool '" + eventDataRaw.getTool() + "' is not associated with subject '" + eventDataRaw.getSubjectCode()
+		//								+ "' semester '" + eventDataRaw.getSemester() + "'";
+		//					}
+		//				}
+		//			}
+		//		}
+				
+		// check outcome in correct format?
+		// check assessment grade between 0 .. 10?
+				
+		cad.eventData.setAction(Action.fromString(eventDataRaw.getAction()));
+				
+		cad.eventData.setElementType(ElementType.fromString(eventDataRaw.getElementType()));
+		cad.eventData.setElement(eventDataRaw.getElement());
+				
+		cad.eventData.setResultType(ResultType.fromString(eventDataRaw.getResultType()));
+		cad.eventData.setResult(eventDataRaw.getResult());
+		
+		return cad;
+	}
+	
+	public List<String> importActivityAssessmentData(String importText) throws Exception
+	{
+		ArrayList<EventData> listad = new ArrayList<EventData>();
+		
+		List<String> errors = new ArrayList<String>();
+		
+		String[] lines = importText.split("\\r?\\n");
+		
+		int lineindex = 0;
+		
+		for (String line : lines)
+		{
+			lineindex++;
+			
+			String[] parts = line.split("[;,]");
+			
+			if (parts.length != 5 && parts.length != 8)
+			{
+				errors.add("Line " + lineindex + ": Incorrect number of columns.");
+				
+				continue;
+			}
+			
+			EventDataRaw eventDataRaw = new EventDataRaw();
+			
+			eventDataRaw.setAction(Action.ASSIGNMENT_ASSESSMENT.toString());
+			eventDataRaw.setElementType(ElementType.ASSIGNMENT.toString());
+			eventDataRaw.setResultType(ResultType.GRADE.toString());
+			
+			eventDataRaw.setTool(parts[0]);
+			eventDataRaw.setToolUUID(parts[1]);
+			eventDataRaw.setUserId(parts[2]);
+			eventDataRaw.setElement(parts[3]);
+			eventDataRaw.setResult(parts[4]);
+			
+			if (parts.length == 7)
+			{
+				eventDataRaw.setProgramCode(parts[5]);
+				eventDataRaw.setSubjectCode(parts[6]);
+				eventDataRaw.setSemester(parts[7]);
+			}
+			
+			CheckEventData cad = checkEventData(eventDataRaw);
+			
+			if (cad.error != null)
+			{
+				errors.add("Line " + lineindex + ": " + cad.error);
+			}
+			
+			if (errors.size() == 0)
+			{
+				listad.add(cad.eventData);
+			}
+		}
+		
+		if (errors.size() == 0)
+		{
+			for (EventData ad : listad)
+			{
+				EventDataRepository.createEventData(ad);
+			}
+		}
+		else
+		{
+			errors.add(0, "No rows were inserted due to the following errors:");
+		}
+		
+		return errors;
+	}
+	
+	private Tool checkTool(String tool) throws Exception
+	{
+		return toolRepository.getToolByCode(tool);
+	}
+	
+	private User checkUser(String user) throws Exception
+	{
+		User u = userRepository.getUserByUsername(user);
+		
+		if (u == null)
+		{
+			u = userRepository.getUserByEmail(user);
+		}
+		
+		return u;
+	}
+	
+	private Program checkProgram(String program) throws Exception
+	{
+		return programRepository.getProgramByCode(program);
+	}
+	
+	private Subject checkSubject(String subject) throws Exception
+	{
+		return subjectRepository.getSubjectByCode(subject);
+	}
+
+	private Semester checkSemester(String semester) throws Exception
+	{
+		Semester s = null;
+		
+		String[] parts = semester.split("-");
+		
+		if (parts.length == 2)
+		{
+			try
+			{
+				int academicYear = Integer.parseInt(parts[0]);
+				int number = Integer.parseInt(parts[1]);
+				
+				s = semesterRepository.getSemester(academicYear, number);
+			}
+			catch (Exception ex)
+			{
+				// Number format
+			}
+		}
+		
+		if (s == null)
+		{
+			s = semesterRepository.getSemesterByDate(new Date());
+		}
+		
+		return s;
+	}
+	
+	//	private boolean checkSubjectInProgram(Subject subject, Program program)
+	//	{
+	//		return program.getSubjects().contains(subject);
+	//	}
+	//	
+	//	private Course checkCourse(Subject subject, Semester semester)
+	//	{
+	//		return courseRepository.getCourse(subject, semester);
+	//	}
+	//	
+	//	private boolean checkUserEnrolled(User person, Course course)
+	//	{
+	//		// NOT CHECKED
+	//		return true;
+	//	}
+	//	
+	//	private boolean checkToolForCourse(Tool tool, Course course)
+	//	{
+	//		// NOT CHECKED
+	//		return false;
+	//	}
+}

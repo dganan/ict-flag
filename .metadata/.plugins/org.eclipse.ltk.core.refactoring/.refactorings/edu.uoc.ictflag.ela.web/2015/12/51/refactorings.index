@@ -1,0 +1,9 @@
+1450520907628	Encapsulate field 'uploadedFile'
+1450537775232	Rename resource 'localization_ca.properties'
+1450537787385	Rename resource 'localization_es.properties'
+1450537801823	Rename resource 'localization_en.properties'
+1450540035598	Rename resource 'localization-ela_es.properties'
+1450540044194	Rename resource 'localization-ela_ca.properties'
+1450540053758	Rename resource 'localization-ela_en.properties'
+1450543223446	Delete element
+1450545361221	Encapsulate field 'success'

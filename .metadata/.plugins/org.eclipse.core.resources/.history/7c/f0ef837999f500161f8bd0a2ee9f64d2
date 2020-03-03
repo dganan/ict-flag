@@ -1,0 +1,366 @@
+package edu.uoc.ictflag.ela.dal;
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.NavigationHelper;
+import edu.uoc.ictflag.ela.model.StudentReportDataForToolItem;
+import edu.uoc.ictflag.ela.model.StudentReportDataItem;
+import edu.uoc.ictflag.ela.model.StudentReportDataSemaphore;
+import edu.uoc.ictflag.security.dal.IUserRepository;
+import edu.uoc.ictflag.security.model.User;
+
+@Stateless
+@Transactional(TxType.REQUIRED)
+public class StudentReportRepository extends ELABaseRepository implements IStudentReportRepository
+{
+	private static String semesterFilter = " AND semester_id = 21 "; // 20 = 2016-2, 21 = 2016-1 
+	
+	@Inject
+	private IUserRepository userRepository;
+	
+	@Override
+	public StudentReportDataItem getReportData(String username) throws Exception
+	{
+		StudentReportDataItem reportData = new StudentReportDataItem ();
+		
+		try
+		{
+			User u = userRepository.getUserByUsername(username);
+			
+			// DEJO PREPARADO ESTO PARA PONER LA ULTIMA CONEXION, PERO EL PROBLEMA ES QUE ESTA ULTIMA CONEXION 
+			// SE ACTUALIZA AL ENTRAR EN EL SISTEMA, POR LO QUE SIEMPRE SERÁ LA FECHA DE HOY Y TODOS LOS CALCULOS SALDRAN MAL
+			// HABRIA QUE GUARDAR DOS FECHAS DE VISITA (LAS DOS ULTIMAS) AUNQUE AUN ASI SI SE ENTRA MÁS DE UNA VEZ AL DIA DARIA PROBLEMAS
+			Date lastConnection = null; // u.getLastVisit();
+			
+			if (lastConnection == null)
+			{
+				Calendar cal = Calendar.getInstance();
+				
+				cal.add(Calendar.DATE, -1);
+				
+				lastConnection = cal.getTime();
+			}
+			
+			reportData.setDataForVerilUOC(getReportDataForTool(username, "VERILUOC", lastConnection));
+			reportData.setDataForVerilCirc(getReportDataForTool(username, "VERILCIRC", lastConnection));
+			reportData.setDataForKeMap(getReportDataForTool(username, "KEMAP", lastConnection));
+			reportData.setDataForVerilChart(getReportDataForTool(username, "VERILCHART", lastConnection));
+			
+			long recentExercises = (long) dbHelper
+					.getScalarValueNative(
+							"select count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+									+ username + "' AND T.code = 'VERILUOC' AND EDW.outcome = 'R' AND enddate >= (current_date - interval '3 days')"
+									+ semesterFilter,
+							null);
+			
+			long exercisesYesterday = (long) dbHelper
+					.getScalarValueNative(
+							"select count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+									+ username + "' AND T.code = 'VERILUOC' AND EDW.outcome = 'R' AND enddate >= (current_date - interval '1 days')"
+									+ semesterFilter,
+							null);
+			
+			reportData.setRecentExercises(recentExercises);
+			reportData.setExercisesYesterday(exercisesYesterday);
+			
+			//			// FAKE DATA
+			//			StudentReportDataForToolItem a = new StudentReportDataForToolItem();
+			//			a.setTotalSubmissions(20);
+			//			a.setTotalSubmissionsPercentage(45);
+			//			a.setTotalExercises(10);
+			//			a.setTotalExercisesPercentage(40);
+			//			a.setCompletedExercises(9);
+			//			a.setCompletedExercisesPercentage(60);
+			//			a.setCompletedExercisesSemaphore(StudentReportDataSemaphore.Green);
+			//			a.setCompletedExercisesTendence(1);
+			//			
+			//			reportData.setDataForVerilUOC(a);
+			//			
+			//			a = new StudentReportDataForToolItem();
+			//			a.setTotalSubmissions(25);
+			//			a.setTotalSubmissionsPercentage(60);
+			//			a.setTotalExercises(15);
+			//			a.setTotalExercisesPercentage(60);
+			//			a.setCompletedExercises(10);
+			//			a.setCompletedExercisesPercentage(35);
+			//			a.setCompletedExercisesSemaphore(StudentReportDataSemaphore.Orange);
+			//			a.setCompletedExercisesTendence(0);
+			//			
+			//			reportData.setDataForVerilCirc(a);
+			//			
+			//			a = new StudentReportDataForToolItem();
+			//			a.setTotalSubmissions(20);
+			//			a.setTotalSubmissionsPercentage(45);
+			//			a.setTotalExercises(10);
+			//			a.setTotalExercisesPercentage(40);
+			//			a.setCompletedExercises(9);
+			//			a.setCompletedExercisesPercentage(60);
+			//			a.setCompletedExercisesSemaphore(StudentReportDataSemaphore.Green);
+			//			a.setCompletedExercisesTendence(1);
+			//			
+			//			reportData.setDataForVerilUOC(a);
+			//			
+			//			a = new StudentReportDataForToolItem();
+			//			a.setTotalSubmissions(4);
+			//			a.setTotalSubmissionsPercentage(20);
+			//			a.setTotalExercises(5);
+			//			a.setTotalExercisesPercentage(10);
+			//			a.setCompletedExercises(3);
+			//			a.setCompletedExercisesPercentage(20);
+			//			a.setCompletedExercisesSemaphore(StudentReportDataSemaphore.Red);
+			//			a.setCompletedExercisesTendence(-1);
+			//			
+			//			reportData.setDataForKeMap(a);
+			//			
+			//			a = new StudentReportDataForToolItem();
+			//			a.setTotalSubmissions(29);
+			//			a.setTotalSubmissionsPercentage(67);
+			//			a.setTotalExercises(18);
+			//			a.setTotalExercisesPercentage(50);
+			//			a.setCompletedExercises(14);
+			//			a.setCompletedExercisesPercentage(80);
+			//			a.setCompletedExercisesSemaphore(StudentReportDataSemaphore.Green);
+			//			a.setCompletedExercisesTendence(0);
+			//			
+			//			reportData.setDataForVerilChart(a);
+			//			
+			//			reportData.setRecentExercises(12);
+			//			reportData.setExercisesYesterday(0);
+		}
+		catch (Exception e)
+		{
+			LogHelper.error(e);
+			
+			NavigationHelper.redirectTo404();
+		}
+		
+		return reportData;
+	}
+	
+	// PERCENTAGE CALCULATIONS MADE RESPECT MEDIAN (ALLOW PERCENTAGES GREATER THAN 100%)  
+	
+	private StudentReportDataForToolItem getReportDataForTool(String username, String tool, Date lastConnection) throws Exception
+	{
+		StudentReportDataForToolItem dataForTool = new StudentReportDataForToolItem();
+		
+		// TOTAL SUBMISSIONS
+		
+		long totalSubmissions = (long) dbHelper.getScalarValueNative(
+				"select count(*) as total_submissions from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+						+ username + "' AND T.code = '" + tool + "'" + semesterFilter,
+				null);
+		
+		dataForTool.setTotalSubmissions(totalSubmissions);
+		
+		long totalSubmissionsMedian = ((BigDecimal) dbHelper.getScalarValueNative(
+				"select coalesce(avg(total_submissions), 0) from (select distinct count(*) as total_submissions from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where T.code = '"
+						+ tool + "'" + semesterFilter + " group by U.username order by total_submissions) AS TOTAL_SUBMISSIONS",
+				null)).longValue();
+		
+		long totalSubmissionsPercentage = totalSubmissionsMedian == 0 ? 100 : (totalSubmissions * 100) / totalSubmissionsMedian;
+		
+		dataForTool.setTotalSubmissionsPercentage(totalSubmissionsPercentage);
+		
+		// TOTAL EXERCISES
+		
+		long totalExercises = (long) dbHelper.getScalarValueNative(
+				"select count(distinct exercise_id) as total_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+						+ username + "' AND T.code = '" + tool + "'" + semesterFilter,
+				null);
+		
+		dataForTool.setTotalExercises(totalExercises);
+		
+		long totalExercisesMedian = ((BigDecimal) dbHelper.getScalarValueNative(
+				"select coalesce(avg(total_exercises), 0) from (select distinct count(distinct exercise_id) as total_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where T.code = '"
+						+ tool + "'" + semesterFilter + " group by U.username order by total_exercises) AS TOTAL_EXERCISES",
+				null)).longValue();
+		
+		long totalExercisesPercentage = totalExercisesMedian == 0 ? 100 : (totalExercises * 100) / totalExercisesMedian;
+		
+		dataForTool.setTotalExercisesPercentage(totalExercisesPercentage);
+		
+		// COMPLETED EXERCISES
+		
+		long completedExercises = (long) dbHelper.getScalarValueNative(
+				"select count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+						+ username + "' AND T.code = '" + tool + "' AND EDW.outcome = 'R'" + semesterFilter,
+				null);
+		
+		dataForTool.setCompletedExercises(completedExercises);
+		
+		long completedExercisesMedian = ((BigDecimal) dbHelper.getScalarValueNative(
+				"select coalesce(avg(completed_exercises), 0) from (select distinct count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where T.code = '"
+						+ tool + "' AND EDW.outcome = 'R'" + semesterFilter
+						+ " group by U.username order by completed_exercises) AS COMPLETED_EXERCISES",
+				null)).longValue();
+		
+		long completedExercisesPercentage = completedExercisesMedian == 0 ? 100 : (completedExercises * 100) / completedExercisesMedian;
+		
+		dataForTool.setCompletedExercisesPercentage(completedExercisesPercentage);
+		dataForTool.setCompletedExercisesSemaphore(getSemaphoreFromPercentage(completedExercisesPercentage));
+		
+		// COMPLETED EXERCISES TENDENCE
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		long completedExercisesYesterday = (long) dbHelper
+				.getScalarValueNative(
+						"select count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+								+ username + "' AND T.code = '" + tool + "' AND EDW.outcome = 'R' AND enddate <= '"
+								+ dateFormat.format(lastConnection) + "'" + semesterFilter,
+						null);
+		
+		long completedExercisesYesterdayMedian = ((BigDecimal) dbHelper.getScalarValueNative(
+				"select coalesce(avg(completed_exercises), 0) from (select distinct count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where T.code = '"
+						+ tool
+						+ "' AND EDW.outcome = 'R' AND enddate <= '" + dateFormat.format(lastConnection) + "'" + semesterFilter
+						+ " group by U.username order by completed_exercises) AS COMPLETED_EXERCISES",
+				null)).longValue();
+		
+		long completedExercisesPercentageYesterday = completedExercisesYesterdayMedian == 0 ? 100
+				: (completedExercisesYesterday * 100) / completedExercisesYesterdayMedian;
+		
+		StudentReportDataSemaphore yesterdaySemaphore = getSemaphoreFromPercentage(completedExercisesPercentageYesterday);
+		
+		dataForTool.setCompletedExercisesTendence(getSemaphoreTendence(yesterdaySemaphore, dataForTool.getCompletedExercisesSemaphore()));
+		
+		return dataForTool;
+	}
+	
+	// PERCENTAGE CALCULATIONS MADE BY LAYERS (CLASSIFY STUDENTS INTO LAYERS WITH THE SAME VALUE OF THE INDICATOR, ORDER LAYERS CONVENIENTLY AND ASSIGN % TO EACH LAYER)  
+	
+	private StudentReportDataForToolItem getReportDataForTool_PercentageByLayer(String username, String tool) throws Exception
+	{
+		StudentReportDataForToolItem dataForTool = new StudentReportDataForToolItem();
+		
+		// TOTAL SUBMISSIONS
+		
+		long totalSubmissions = (long) dbHelper.getScalarValueNative(
+				"select count(*) as total_submissions from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+						+ username + "' AND T.code = '" + tool + "'" + semesterFilter,
+				null);
+		
+		dataForTool.setTotalSubmissions(totalSubmissions);
+		
+		List<Integer> totalSubmissionsRanking = dbHelper.getNativeQueryResult(
+				"select distinct count(*) as total_submissions from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where T.code = '"
+						+ tool + "'" + semesterFilter + " group by U.username order by total_submissions",
+				Integer.class);
+		
+		int indexTotalSubmissions = Math.max(0, totalSubmissionsRanking.indexOf(totalSubmissions));
+		int countTotalSubmissions = Math.max(1, totalSubmissionsRanking.size());
+		
+		long totalSubmissionsPercentage = (indexTotalSubmissions * 100) / countTotalSubmissions;
+		
+		dataForTool.setTotalSubmissionsPercentage(totalSubmissionsPercentage);
+		
+		// TOTAL EXERCISES
+		
+		long totalExercises = (long) dbHelper.getScalarValueNative(
+				"select count(distinct exercise_id) as total_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+						+ username + "' AND T.code = '" + tool + "'" + semesterFilter,
+				null);
+		
+		dataForTool.setTotalExercises(totalExercises);
+		
+		List<Integer> totalExercisesRanking = dbHelper.getNativeQueryResult(
+				"select distinct count(distinct exercise_id) as total_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where T.code = '"
+						+ tool + "'" + semesterFilter + " group by U.username order by total_exercises",
+				Integer.class);
+		
+		int indexTotalExercises = Math.max(0, totalExercisesRanking.indexOf(totalExercises));
+		int countTotalExercises = Math.max(1, totalExercisesRanking.size());
+		
+		long totalExercisesPercentage = (indexTotalExercises * 100) / countTotalExercises;
+		
+		dataForTool.setTotalExercisesPercentage(totalExercisesPercentage);
+		
+		// COMPLETED EXERCISES
+		
+		long completedExercises = (long) dbHelper.getScalarValueNative(
+				"select count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+						+ username + "' AND T.code = '" + tool + "' AND EDW.outcome = 'R'" + semesterFilter,
+				null);
+		
+		dataForTool.setCompletedExercises(completedExercises);
+		
+		List<Integer> completedExercisesRanking = dbHelper.getNativeQueryResult(
+				"select distinct count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where T.code = '"
+						+ tool + "' AND EDW.outcome = 'R'" + semesterFilter + " group by U.username order by completed_exercises",
+				Integer.class);
+		
+		int indexCompletedExercises = Math.max(0, completedExercisesRanking.indexOf(completedExercises));
+		int countCompletedExercises = Math.max(1, completedExercisesRanking.size());
+		
+		long completedExercisesPercentage = (indexCompletedExercises * 100) / countCompletedExercises;
+		
+		dataForTool.setCompletedExercisesPercentage(completedExercisesPercentage);
+		dataForTool.setCompletedExercisesSemaphore(getSemaphoreFromPercentage(completedExercisesPercentage));
+		
+		// COMPLETED EXERCISES TENDENCE
+		
+		long completedExercisesYesterday = (long) dbHelper.getScalarValueNative(
+				"select count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where U.username = '"
+						+ username + "' AND T.code = '" + tool + "' AND EDW.outcome = 'R' AND enddate >= (current_date - interval '1 day')"
+						+ semesterFilter,
+				null);
+		
+		List<Integer> completedExercisesYesterdayRanking = dbHelper.getNativeQueryResult(
+				"select distinct count(distinct exercise_id) as completed_exercises from ExercisesDW EDW JOIN Users U ON EDW.student_id = U.id JOIN tool T ON EDW.tool_id = T.id where T.code = '"
+						+ tool
+						+ "' AND EDW.outcome = 'R' AND enddate >= (current_date - interval '1 day')" + semesterFilter
+						+ " group by U.username order by completed_exercises",
+				Integer.class);
+		
+		int indexCompletedExercisesYesterday = Math.max(0, completedExercisesYesterdayRanking.indexOf(completedExercisesYesterday));
+		int countCompletedExercisesYesterday = Math.max(1, completedExercisesYesterdayRanking.size());
+		
+		long completedExercisesPercentageYesterday = (indexCompletedExercisesYesterday * 100) / countCompletedExercisesYesterday;
+		
+		StudentReportDataSemaphore yesterdaySemaphore = getSemaphoreFromPercentage(completedExercisesPercentageYesterday);
+		
+		dataForTool.setCompletedExercisesTendence(getSemaphoreTendence(yesterdaySemaphore, dataForTool.getCompletedExercisesSemaphore()));
+		
+		return dataForTool;
+	}
+	
+	public int getSemaphoreTendence(StudentReportDataSemaphore yesterday, StudentReportDataSemaphore today)
+	{
+		if (yesterday == today)
+		{
+			return 0;
+		}
+		else if (yesterday == StudentReportDataSemaphore.Green
+				|| (yesterday == StudentReportDataSemaphore.Orange && today == StudentReportDataSemaphore.Red))
+		{
+			return -1;
+		}
+		
+		return 1;
+	}
+	
+	public StudentReportDataSemaphore getSemaphoreFromPercentage(long percentage)
+	{
+		if (percentage >= 50)
+		{
+			return StudentReportDataSemaphore.Green;
+		}
+		else if (percentage >= 25)
+		{
+			return StudentReportDataSemaphore.Orange;
+		}
+		
+		return StudentReportDataSemaphore.Red;
+	}
+}
+

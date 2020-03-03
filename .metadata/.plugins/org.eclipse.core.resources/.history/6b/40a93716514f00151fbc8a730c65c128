@@ -1,0 +1,72 @@
+<ui:composition template="/WEB-INF/templates/masterpage.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a="http://xmlns.jcp.org/jsf/passthrough" xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="head-title">ICT-FLAG Login</ui:define>
+
+	<ui:define name="styles">
+
+		<h:outputStylesheet name="./assets/global/plugins/select2/select2.css" />
+		<h:outputStylesheet name="./assets/admin/pages/css/login-soft.css" />
+
+	</ui:define>
+
+	<ui:define name="scripts">
+
+		<h:outputScript name="./assets/global/scripts/metronic.js" type="text/javascript" />
+		<h:outputScript name="./assets/admin/layout/scripts/layout.js" type="text/javascript" />
+		<h:outputScript name="./assets/admin/pages/scripts/login-soft.js" type="text/javascript" />
+
+	</ui:define>
+
+	<ui:define name="title"></ui:define>
+
+	<ui:define name="breadcrumb"></ui:define>
+
+	<ui:define name="content">
+
+		<div class="login">
+			<div class="login_background">
+				<div class="content">
+					<h:form id="login_form" onkeypress="if (event.keyCode == 13) $('.submit').click();"> 
+
+						<!-- BEGIN LOGIN FORM -->
+						<h3 class="form-title">#{msg.Login_to_your_account}</h3>
+						<div class="alert alert-danger display-hide">
+							<button class="close" data-close="alert"></button>
+						</div>
+						<div class="form-group">
+							<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+							<label class="control-label visible-ie8 visible-ie9">#{msg.Username}</label>
+							<div class="input-icon">
+								<i class="fa fa-user"></i>
+								<h:inputText class="form-control placeholder-no-fix" id="username" value="#{loginController.username}" autocomplete="off" a:placeholder="#{msg.Username}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label visible-ie8 visible-ie9">#{msg.Password}</label>
+							<div class="input-icon">
+								<i class="fa fa-lock"></i>
+								<h:inputSecret class="form-control placeholder-no-fix" id="password" value="#{loginController.password}" autocomplete="off" a:placeholder="#{msg.Password}" />
+							</div>
+						</div>
+						<div class="form-actions">
+							<div class="img-login-button">
+								<i class="m-icon-swapright m-icon-white pull-right"></i>
+								<h:commandButton class="btn blue pull-right submit" value="#{msg.Login}" action="#{loginController.validateUsernamePassword}" />
+							</div>
+						</div>
+						<!-- END LOGIN FORM -->
+
+					</h:form>
+				</div>
+			</div>
+
+			<h:panelGroup rendered="#{not empty facesContext.messageList}">
+				<div class="alert alert-danger">
+					<i class="fa-lg fa fa-warning"></i>
+					<h:messages id="msg1" layout="table" globalOnly="true" showDetail="true" showSummary="false" />
+				</div>
+			</h:panelGroup>
+		</div>
+	</ui:define>
+</ui:composition>

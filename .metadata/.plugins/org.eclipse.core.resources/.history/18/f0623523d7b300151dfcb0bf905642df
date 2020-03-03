@@ -1,0 +1,9 @@
+package edu.uoc.ictflag.ela.web;
+
+public class PentahoHelper
+{
+	public static String GetPentahoUrl()
+	{
+	
+	}
+}

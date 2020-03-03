@@ -1,0 +1,26 @@
+1439220889057	Move 3 resources to 'pages'
+1439222567694	Move 3 resources to 'WebContent'
+1439222570950	Delete element
+1439222580809	Delete element
+1439225339891	Rename resource 'masterpage.xhtml'
+1439232230339	Copy files
+1439232300323	Copy files
+1439232309750	Delete elements
+1439232694987	Move 2 resources to 'WebContent'
+1439232758765	Move 4 resources to 'public'
+1439240138246	Delete element
+1439374946034	Move 'index.xhtml' to 'WebContent'
+1439382898001	Move 2 resources to 'WebContent'
+1439382905247	Delete elements
+1439382908503	Move 'login.xhtml' to 'WebContent'
+1439382911252	Delete element
+1439382953221	Rename resource 'privatemaster.xhtml'
+1439382958778	Delete element
+1439395161447	Rename resource 'logoICT-FLAG.png'
+1439395216236	Delete elements
+1439395428375	Delete element
+1439641821290	Rename resource 'EditProgram'
+1439641849092	Delete element
+1439643303804	Rename type 'ProgramController'
+1439654311168	Copy compilation unit
+1439654950646	Encapsulate field 'id'

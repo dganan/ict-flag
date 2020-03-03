@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;Tool.java&apos; to &apos;edu.uoc.ictflag.ela.model/src/edu.uoc.ictflag.ela.model&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.institution.model&apos;&#x0A;- Destination element: &apos;edu.uoc.ictflag.ela.model/src/edu.uoc.ictflag.ela.model&apos;&#x0A;- Original element: &apos;edu.uoc.ictflag.institution.model.Tool.java&apos;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="=edu.uoc.ictflag.ela.model/src&lt;edu.uoc.ictflag.ela.model" element1="/src&lt;edu.uoc.ictflag.institution.model{Tool.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1466267402366" units="1" version="1.0"/>
+</session>

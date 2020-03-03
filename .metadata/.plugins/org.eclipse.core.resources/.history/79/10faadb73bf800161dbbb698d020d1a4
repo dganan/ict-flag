@@ -1,0 +1,27 @@
+package edu.uoc.ictflag.ela.web;
+
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import edu.uoc.ictflag.core.localization.LocalizationController;
+import edu.uoc.ictflag.core.log.ActivityLog;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.NavigationHelper;
+import edu.uoc.ictflag.core.web.SessionBean;
+import edu.uoc.ictflag.ela.bll.IStudentReportManager;
+import edu.uoc.ictflag.ela.model.StudentReportDataItem;
+import edu.uoc.ictflag.ela.model.StudentReportDataSemaphore;
+
+@Named
+@ViewScoped
+public class StudentReportByNameController extends StudentReportController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+}

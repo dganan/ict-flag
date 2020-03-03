@@ -1,0 +1,33 @@
+1440530852503	Copy compilation unit
+1440915042690	Rename field 'programService'
+1440915076028	Rename field 'authorizationService'
+1440915086217	Rename field 'authorizationService'
+1440915092017	Rename field 'authenticationService'
+1440919507528	Rename method 'getUserName'
+1440933528818	Copy compilation unit
+1440933700575	Delete element
+1440933706655	Copy compilation units
+1440934139047	Rename package 'edu.uoc.ictflag.web.core'
+1440934152817	Rename package 'edu.uoc.ictflag.web.institution'
+1440934168891	Rename package 'edu.uoc.ictflag.web.security'
+1440934314134	Copy compilation unit
+1440934674561	Delete elements
+1440940736093	Move compilation units
+1440940892553	Move compilation units
+1440940915912	Move compilation units
+1440940921936	Delete elements
+1440960193869	Copy folder
+1440960200774	Delete element
+1440961029030	Copy file
+1440961036750	Delete element
+1440962206921	Delete elements
+1440964538867	Move 'login.xhtml' to 'WebContent'
+1440966065295	Copy package
+1440968612254	Copy package
+1440968832465	Copy package
+1440968835978	Delete element
+1440968849871	Delete element
+1440970960927	Copy folder
+1440970966784	Delete elements
+1440975598733	Copy file
+1440978271356	Rename type 'CustomResourceResolver'

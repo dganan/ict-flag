@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="edu.uoc.ictflag.institution.web">
+        <wb-resource deploy-path="/" source-path="/src" tag="defaultRootSource"/>
+        <property name="context-root" value="edu.uoc.ictflag.institution.web"/>
+        <property name="java-output-path" value="/edu.uoc.ictflag.institution.web/target/classes"/>
+    </wb-module>
+</project-modules>

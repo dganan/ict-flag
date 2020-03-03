@@ -1,0 +1,7 @@
+1444513107958	Move compilation unit
+1444513142269	Copy compilation unit
+1444513341735	Copy compilation unit
+1444518319886	Rename type 'SearchArguments'
+1444521191898	Rename local variable 'searchArguments'
+1444523782319	Extract method 'addQueryParameters'
+1444523869093	Extract method 'addQueryViewParameters'

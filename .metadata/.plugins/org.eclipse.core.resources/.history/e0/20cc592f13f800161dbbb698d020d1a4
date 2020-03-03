@@ -1,0 +1,45 @@
+package edu.uoc.ictflag.ela.dal;
+
+import java.util.List;
+import java.util.Map;
+
+import edu.uoc.ictflag.core.dal.SearchParameters;
+import edu.uoc.ictflag.ela.model.Assignment;
+import edu.uoc.ictflag.ela.model.Exercise;
+import edu.uoc.ictflag.ela.model.ReportDataItem;
+import edu.uoc.ictflag.ela.model.StudentReportDataItem;
+import edu.uoc.ictflag.ela.model.Tool;
+import edu.uoc.ictflag.institution.model.Course;
+import edu.uoc.ictflag.institution.model.CourseGroup;
+import edu.uoc.ictflag.institution.model.Program;
+import edu.uoc.ictflag.institution.model.Semester;
+import edu.uoc.ictflag.institution.model.Subject;
+
+public interface IReportRepository<D extends ReportDataItem>
+{
+	List<Tool> getTools(String username) throws Exception;
+	
+	List<Program> getPrograms(String username) throws Exception;
+	
+	List<Subject> getSubjects(String username) throws Exception;
+	
+	List<Course> getCourses(String username) throws Exception;
+	
+	List<CourseGroup> getCourseGroups(String username) throws Exception;
+	
+	Map<Tool, List<Exercise>> getToolsWithExercises(String username) throws Exception;
+	
+	int getMaxNumberOfAttempts(String username) throws Exception;
+	
+	List<Semester> getSemesters(String username) throws Exception;
+	
+	Map<Course, List<Assignment>> getCoursesWithAssignments(String username) throws Exception;
+	
+	List<Exercise> getExercises(String username) throws Exception;
+	
+	List<Assignment> getAssignments(String username) throws Exception;
+	
+	List<D> getReportData(String username, SearchParameters searchParameters) throws Exception;
+
+	List<StudentReportDataItem> getStudentsData() throws Exception;
+}

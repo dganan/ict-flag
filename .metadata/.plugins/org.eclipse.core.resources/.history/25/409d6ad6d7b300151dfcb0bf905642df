@@ -1,0 +1,61 @@
+package edu.uoc.ictflag.ela.web;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+
+public class PentahoHelper
+{
+	private static String pentahoHost = "http://localhost:8686";
+	private static String ictflagHost = "https://localhost:8585";
+	
+	public static String GetHeaders(String reportName) throws Exception
+	{
+		String url = pentahoHost + "/pentaho/plugin/pentaho-cdf-dd/api/renderer/getHeaders?solution=&path=/public&file=" + reportName
+				+ ".wcdf&userid=admin&password=password&root=root=" + ictflagHost + "&inferScheme=false";
+				
+		return getUrlContent(url);
+	}
+	
+	public static String Getcontent(String reportName) throws Exception
+	{
+		String url = pentahoHost + "/pentaho/plugin/pentaho-cdf-dd/api/renderer/getHeaders?solution=&path=/public&file=" + reportName
+				+ ".wcdf&userid=admin&password=password&root=root=" + ictflagHost + "&inferScheme=false";
+				
+		return getUrlContent(url);
+	}
+	
+
+	private static String getUrlContent(String stringUrl) throws Exception
+	{
+		// Prepare request
+		
+		URL url = new URL(stringUrl);
+		URLConnection urlConnection = url.openConnection();
+		
+		//		if (user != null && password != null)
+		//		{
+		//			String userpass = user + ":" + password;
+		//			String basicAuth = "Basic " + new String(Base64.encodeToString(userpass.getBytes(), false));
+		//			
+		//			urlConnection.setRequestProperty("Authorization", basicAuth);
+		//		}
+		
+		// Read url
+		
+		BufferedReader urlbr = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+		
+		StringBuilder urlContent = new StringBuilder();
+		String currentContentLine;
+		
+		while ((currentContentLine = urlbr.readLine()) != null)
+		{
+			urlContent.append(currentContentLine);
+		}
+		
+		urlbr.close();
+		
+		return urlContent.toString();
+	}
+}

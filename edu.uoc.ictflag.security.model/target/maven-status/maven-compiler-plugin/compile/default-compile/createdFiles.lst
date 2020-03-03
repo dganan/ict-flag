@@ -1,0 +1,12 @@
+edu/uoc/ictflag/security/model/UserRolePermissions.class
+edu/uoc/ictflag/security/model/Page.class
+edu/uoc/ictflag/security/model/UserRole.class
+edu/uoc/ictflag/security/model/Permission.class
+edu/uoc/ictflag/security/model/Permission$1.class
+edu/uoc/ictflag/security/model/UserRoleConverter.class
+edu/uoc/ictflag/security/model/User.class
+edu/uoc/ictflag/security/model/PermissionConverter.class
+edu/uoc/ictflag/security/model/SecurePassword.class
+edu/uoc/ictflag/security/model/UserRole$1.class
+edu/uoc/ictflag/security/model/UserSecurePassword.class
+edu/uoc/ictflag/security/model/UserRolePageAccess.class

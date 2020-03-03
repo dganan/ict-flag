@@ -1,0 +1,127 @@
+package edu.uoc.ictflag.ela.dal;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.ejb.Stateless;
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
+import edu.uoc.ictflag.core.localization.LocalizedString;
+import edu.uoc.ictflag.core.model.IIdentifiable;
+import edu.uoc.ictflag.institution.dal.ICourseGroupRepository;
+import edu.uoc.ictflag.institution.dal.ICourseRepository;
+import edu.uoc.ictflag.institution.dal.IProgramRepository;
+import edu.uoc.ictflag.institution.dal.ISemesterRepository;
+import edu.uoc.ictflag.institution.dal.ISubjectRepository;
+import edu.uoc.ictflag.institution.dal.IToolRepository;
+import edu.uoc.ictflag.institution.model.Program;
+import edu.uoc.ictflag.institution.model.Subject;
+import edu.uoc.ictflag.security.dal.IUserRepository;
+import edu.uoc.ictflag.security.dal.PasswordHasher;
+import edu.uoc.ictflag.security.model.SecurePassword;
+import edu.uoc.ictflag.security.model.User;
+import edu.uoc.ictflag.security.model.UserRole;
+import edu.uoc.ictflag.security.model.UserSecurePassword;
+
+@Stateless
+@Transactional(TxType.REQUIRED)
+public abstract class ELADataBaseRepository extends ELABaseRepository
+{
+	protected IToolRepository toolRepository;
+	protected IUserRepository userRepository;
+	protected IProgramRepository programRepository;
+	protected ISubjectRepository subjectRepository;
+	protected ISemesterRepository semesterRepository;
+	protected ICourseRepository courseRepository;
+	protected ICourseGroupRepository courseGroupRepository;
+	
+	protected User getStudent(String user) throws Exception
+	{
+		User u = userRepository.getUserByUsername(user);
+		
+		if (u == null)
+		{
+			u = userRepository.getUserByEmail(user);
+		}
+		
+		return u;
+	}
+	
+	protected User fixUpStudent(String user) throws Exception
+	{
+		User u = new User();
+			
+		u.setUsername(user);
+		u.setName(user);
+			
+		List<UserRole> roles = new ArrayList<UserRole>();
+		roles.add(UserRole.STUDENT);
+		u.setRoles(roles);
+			
+		userRepository.createOrUpdateUser(u);
+		
+		em.getTransaction().commit();
+		em.flush();
+		
+		SecurePassword sp = PasswordHasher.generateSecurePassword();
+			
+		UserSecurePassword usp = new UserSecurePassword();
+		usp.setUserId(u.getId());
+		usp.setPassword(sp);
+			
+		dbHelper.addEntity(usp);
+		
+		em.flush();
+		
+		return u;
+	}
+	
+	protected Subject fixUpSubject(Program p, String subject) throws Exception
+	{
+		Subject s = new Subject();
+		
+		s.setCode(subject);
+		s.setName(LocalizedString.fromStringFormat("en#" + subject));
+		
+		dbHelper.addEntity(s);
+		
+		dbHelper.flush();
+		
+		if (p != null)
+		{
+			p.getSubjects().add(s);
+			
+			dbHelper.updateEntity(p);
+		}
+		
+		return s;
+	}
+	
+	protected void addParameterSafely(StringBuilder sb, Map<String, Object> parameters, String parameterName, IIdentifiable value, boolean addAnd)
+	{
+		if (value == null)
+		{
+			sb.append("d." + parameterName + (addAnd ? " IS NULL AND " : " IS NULL "));
+		}
+		else
+		{
+			parameters.put(parameterName, value.getId());
+			sb.append("d." + parameterName + ".id = :" + parameterName + (addAnd ? " AND " : " "));
+		}
+	}
+	
+	protected void addParameterSafely(StringBuilder sb, Map<String, Object> parameters, String parameterName, String value, boolean addAnd)
+	{
+		if (value == null)
+		{
+			sb.append("d." + parameterName + (addAnd ? " IS NULL AND " : " IS NULL "));
+		}
+		else
+		{
+			parameters.put(parameterName, value);
+			sb.append("d." + parameterName + " = :" + parameterName + (addAnd ? " AND " : " "));
+		}
+	}
+}

@@ -1,0 +1,801 @@
+package edu.uoc.ictflag.ela.web;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+
+import org.primefaces.model.CheckboxTreeNode;
+import org.primefaces.model.TreeNode;
+
+import edu.com.ictflag.security.bll.IUserManager;
+import edu.uoc.ictflag.core.ListUtils;
+import edu.uoc.ictflag.core.localization.LocalizationController;
+import edu.uoc.ictflag.core.localization.LocalizedItem;
+import edu.uoc.ictflag.core.model.INameable;
+import edu.uoc.ictflag.core.web.SessionBean;
+import edu.uoc.ictflag.ela.bll.IReportManager;
+import edu.uoc.ictflag.ela.model.Assignment;
+import edu.uoc.ictflag.ela.model.FilterField;
+import edu.uoc.ictflag.ela.model.ReportDataItem;
+import edu.uoc.ictflag.ela.model.Tool;
+import edu.uoc.ictflag.institution.model.Course;
+import edu.uoc.ictflag.institution.model.CourseGroup;
+import edu.uoc.ictflag.institution.model.Program;
+import edu.uoc.ictflag.institution.model.Semester;
+import edu.uoc.ictflag.institution.model.Subject;
+import edu.uoc.ictflag.security.model.User;
+
+public abstract class ReportController<T extends ReportDataItem>
+{
+	IReportManager reportManager;
+	IUserManager userManager;
+	
+	protected List<LocalizedItem> tools;
+	protected String[] selectedTools;
+	
+	protected List<LocalizedItem> programs;
+	protected String[] selectedPrograms;
+	
+	protected List<LocalizedItem> subjects;
+	protected String[] selectedSubjects;
+	
+	protected List<LocalizedItem> courseGroups;
+	protected String[] selectedCourseGroups;
+	
+	protected List<LocalizedItem> semesters;
+	protected String[] selectedSemesters;
+	
+	protected TreeNode coursesAssignmentsTree;
+	protected TreeNode[] selectedCoursesAssignmentsNodes;
+	protected Map<String, List<String>> selectedCoursesAssignments;
+	protected int totalCoursesAssignmentsCount;
+	
+	protected List<LocalizedItem> dateFilterOptions;
+	protected String selectedDateFilterOption;
+	
+	protected Date intervalStartDate;
+	protected Date intervalEndDate;
+	
+	protected int maxAttempts;
+	protected int attempts;
+	protected String attemptsOperation;
+	protected boolean onlyLastAttempt;
+	
+	protected List<LocalizedItem> groupByOptions;
+	protected String[] groupBySelectedOptions;
+	
+	protected boolean stackedData;
+	
+	protected int maxGroups = 30;
+	
+	protected long maxNumberOfOutcomes;
+	protected long maxNumberOfAttempts;
+	protected long maxNumericGrade;
+	protected double maxTimeBetweenAttempts;
+	protected double maxDuration;
+
+	protected List<T> dataTableModel;
+	
+	public List<LocalizedItem> getGroupByOptions()
+	{
+		return groupByOptions;
+	}
+	
+	public String[] getGroupBySelectedOptions()
+	{
+		return groupBySelectedOptions;
+	}
+	
+	public void setGroupBySelectedOptions(String[] groupBySelectedOptions)
+	{
+		this.groupBySelectedOptions = groupBySelectedOptions;
+	}
+	
+	public List<LocalizedItem> getTools()
+	{
+		return tools;
+	}
+	
+	public void setTools(List<LocalizedItem> tools)
+	{
+		this.tools = tools;
+	}
+	
+	public String[] getSelectedTools()
+	{
+		return selectedTools;
+	}
+	
+	public void setSelectedTools(String[] selectedTools)
+	{
+		this.selectedTools = selectedTools;
+	}
+	
+	public List<LocalizedItem> getPrograms()
+	{
+		return programs;
+	}
+	
+	public void setPrograms(List<LocalizedItem> programs)
+	{
+		this.programs = programs;
+	}
+	
+	public String[] getSelectedPrograms()
+	{
+		return selectedPrograms;
+	}
+	
+	public void setSelectedPrograms(String[] selectedPrograms)
+	{
+		this.selectedPrograms = selectedPrograms;
+	}
+	
+	public List<LocalizedItem> getSubjects()
+	{
+		return subjects;
+	}
+	
+	public void setSubjects(List<LocalizedItem> subjects)
+	{
+		this.subjects = subjects;
+	}
+	
+	public String[] getSelectedSubjects()
+	{
+		return selectedSubjects;
+	}
+	
+	public void setSelectedSubjects(String[] selectedSubjects)
+	{
+		this.selectedSubjects = selectedSubjects;
+	}
+	
+	public List<LocalizedItem> getSemesters()
+	{
+		return semesters;
+	}
+	
+	public void setSemesters(List<LocalizedItem> semesters)
+	{
+		this.semesters = semesters;
+	}
+	
+	public String[] getSelectedSemesters()
+	{
+		return selectedSemesters;
+	}
+	
+	public void setSelectedSemesters(String[] selectedSemesters)
+	{
+		this.selectedSemesters = selectedSemesters;
+	}
+	
+	public List<LocalizedItem> getCourseGroups()
+	{
+		return courseGroups;
+	}
+	
+	public void setCourseGroups(List<LocalizedItem> courseGroups)
+	{
+		this.courseGroups = courseGroups;
+	}
+	
+	public String[] getSelectedCourseGroups()
+	{
+		return selectedCourseGroups;
+	}
+	
+	public void setSelectedCourseGroups(String[] selectedCourseGroups)
+	{
+		this.selectedCourseGroups = selectedCourseGroups;
+	}
+	
+	public TreeNode getCoursesAssignmentsTree()
+	{
+		return coursesAssignmentsTree;
+	}
+	
+	public void setCoursesAssignmentsTree(TreeNode coursesAssignmentsTree)
+	{
+		this.coursesAssignmentsTree = coursesAssignmentsTree;
+	}
+	
+	public TreeNode[] getSelectedCoursesAssignmentsNodes()
+	{
+		return selectedCoursesAssignmentsNodes;
+	}
+	
+	public void setSelectedCoursesAssignmentsNodes(TreeNode[] selectedCoursesAssignmentsNodes)
+	{
+		this.selectedCoursesAssignmentsNodes = selectedCoursesAssignmentsNodes;
+	}
+	
+	public String getSelectedDateFilterOption()
+	{
+		return selectedDateFilterOption;
+	}
+	
+	public void setSelectedDateFilterOption(String selectedDateFilterOption)
+	{
+		this.selectedDateFilterOption = selectedDateFilterOption;
+	}
+	
+	public List<LocalizedItem> getDateFilterOptions()
+	{
+		return dateFilterOptions;
+	}
+	
+	public void setDateFilterOptions(List<LocalizedItem> dateFilterOptions)
+	{
+		this.dateFilterOptions = dateFilterOptions;
+	}
+	
+	public Date getIntervalStartDate()
+	{
+		return intervalStartDate;
+	}
+	
+	public void setIntervalStartDate(Date intervalStartDate)
+	{
+		this.intervalStartDate = intervalStartDate;
+	}
+	
+	public Date getIntervalEndDate()
+	{
+		return intervalEndDate;
+	}
+	
+	public void setIntervalEndDate(Date intervalEndDate)
+	{
+		this.intervalEndDate = intervalEndDate;
+	}
+	
+	public int getMaxGroups()
+	{
+		return maxGroups;
+	}
+	
+	public void setMaxGroups(int maxGroups)
+	{
+		this.maxGroups = maxGroups;
+	}
+	
+	public boolean getStackedData()
+	{
+		return stackedData;
+	}
+	
+	public void setStackedData(boolean stackedData)
+	{
+		this.stackedData = stackedData;
+	}
+	
+	public int getMaxAttempts()
+	{
+		return maxAttempts;
+	}
+	
+	public void setMaxAttempts(int maxAttempts)
+	{
+		this.maxAttempts = maxAttempts;
+	}
+	
+	public int getAttempts()
+	{
+		return attempts;
+	}
+	
+	public void setAttempts(int attempts)
+	{
+		this.attempts = attempts;
+	}
+	
+	public String getAttemptsOperation()
+	{
+		return attemptsOperation;
+	}
+	
+	public void setAttemptsOperation(String attemptsOperation)
+	{
+		this.attemptsOperation = attemptsOperation;
+	}
+	
+	public boolean getOnlyLastAttempt()
+	{
+		return onlyLastAttempt;
+	}
+	
+	public void setOnlyLastAttempt(boolean onlyLastAttempt)
+	{
+		this.onlyLastAttempt = onlyLastAttempt;
+	}
+	
+	protected void setupTools() throws Exception
+	{
+		List<Tool> toolsList = reportManager.getTools(SessionBean.getUsername());
+		
+		tools = new ArrayList<LocalizedItem>();
+		
+		selectedTools = setupHelper(toolsList, tools, selectedTools);
+	}
+	
+	protected void setupPrograms() throws Exception
+	{
+		List<Program> programsList = reportManager.getPrograms(SessionBean.getUsername());
+		
+		programs = new ArrayList<LocalizedItem>();
+		
+		selectedPrograms = setupHelper(programsList, programs, selectedPrograms);
+	}
+	
+	protected void setupSubjects() throws Exception
+	{
+		List<Subject> subjectsList = reportManager.getSubjects(SessionBean.getUsername());
+		
+		subjects = new ArrayList<LocalizedItem>();
+		
+		selectedSubjects = setupHelper(subjectsList, subjects, selectedSubjects);
+	}
+	
+	protected void setupCourseGroups() throws Exception
+	{
+		List<CourseGroup> courseGroupsList = reportManager.getCourseGroups(SessionBean.getUsername());
+		
+		courseGroups = new ArrayList<LocalizedItem>();
+		
+		selectedCourseGroups = setupHelper(courseGroupsList, courseGroups, selectedCourseGroups);
+	}
+	
+	protected void setupSemesters() throws Exception
+	{
+		List<Semester> semestersList = reportManager.getSemesters(SessionBean.getUsername());
+		
+		semesters = new ArrayList<LocalizedItem>();
+		
+		selectedSemesters = setupHelper(semestersList, semesters, selectedSemesters);
+	}
+	
+	protected <N extends INameable> String[] setupHelper(List<N> list, List<LocalizedItem> localizedItems, String[] selectedItems) throws Exception
+	{
+		boolean selectAll = !FacesContext.getCurrentInstance().isPostback() || selectedItems.length == 0;
+		
+		if (selectAll)
+		{
+			selectedItems = new String[list.size()];
+		}
+		
+		int index = 0;
+		
+		for (N t : list)
+		{
+			if (t == null)
+			{
+				localizedItems.add(new LocalizedItem("null", LocalizationController.getLocalizedString("UNASSIGNED")));
+				
+				if (selectAll)
+				{
+					selectedItems[index] = "null";
+				}
+			}
+			else
+			{
+				localizedItems.add(new LocalizedItem(t.getId().toString(), t.getName().getTranslation()));
+				
+				if (selectAll)
+				{
+					selectedItems[index] = t.getId().toString();
+				}
+			}
+			
+			index++;
+		}
+		
+		sortLocalizedList(localizedItems);
+		
+		return selectedItems;
+	}
+	
+	protected void sortLocalizedList(List<LocalizedItem> list)
+	{
+		Collections.sort(list, new Comparator<LocalizedItem>()
+		{
+			@Override
+			public int compare(LocalizedItem o1, LocalizedItem o2)
+			{
+				if (o1.getValue() == null) return -1;
+				if (o2.getValue() == null) return 1;
+				else return o1.getDisplayName().compareTo(o2.getDisplayName());
+			}
+		});
+	}
+	
+	protected void setupCoursesAssignments() throws Exception
+	{
+		if (selectedCoursesAssignmentsNodes == null)
+		{
+			selectedCoursesAssignmentsNodes = new TreeNode[0];
+		}
+		
+		// CALCULATE SELECTED ASSIGNMENTS 		
+		
+		selectedCoursesAssignments = new HashMap<String, List<String>>();
+		
+		for (TreeNode tn : selectedCoursesAssignmentsNodes)
+		{
+			if (tn.getData() instanceof Assignment)
+			{
+				String course = ((Course) tn.getParent().getData()).getId() + "";
+				String assignment = ((Assignment) tn.getData()).getId() + "";
+				
+				List<String> assignments = null;
+				
+				if (!selectedCoursesAssignments.containsKey(course))
+				{
+					assignments = new ArrayList<String>();
+					selectedCoursesAssignments.put(course, assignments);
+				}
+				else
+				{
+					assignments = selectedCoursesAssignments.get(course);
+				}
+				
+				assignments.add(assignment);
+			}
+		}
+		
+		// GET COURSES / ASSIGNMENTS 		
+		
+		coursesAssignmentsTree = new CheckboxTreeNode("Courses", null);
+		
+		Map<Course, List<Assignment>> courseAssignmentsList = reportManager.getCoursesWithAssignments(SessionBean.getUsername());
+		
+		totalCoursesAssignmentsCount = 0;
+		
+		boolean selectAll = !FacesContext.getCurrentInstance().isPostback() || selectedCoursesAssignmentsNodes.length == 0;
+		
+		for (Course course : courseAssignmentsList.keySet())
+		{
+			List<Assignment> assignments = courseAssignmentsList.get(course);
+			
+			if (course == null)
+			{
+				course = new Course(); // NONE COURSE
+				course.setCode(LocalizationController.getLocalizedString("UNASSIGNED"));
+				course.setId(null);
+			}
+			
+			CheckboxTreeNode tnode = new CheckboxTreeNode(course, coursesAssignmentsTree);
+			
+			int childSelected = 0;
+			
+			List<String> selectedAssignments = selectedCoursesAssignments.get(course.getId() + "");
+			
+			for (Assignment assignment : assignments)
+			{
+				if (assignment == null)
+				{
+					assignment = new Assignment(); // NONE ASSIGNMENT
+					assignment.setName(LocalizationController.getLocalizedString("UNASSIGNED"));
+					assignment.setCourse(course);
+					assignment.setId(null);
+				}
+				
+				TreeNode enode = new CheckboxTreeNode(assignment, tnode);
+				
+				boolean selected = selectAll || (selectedAssignments != null && selectedAssignments.contains("" + assignment.getId()));
+				
+				enode.setSelected(selected);
+				
+				childSelected = selected ? childSelected + 1 : childSelected;
+				
+				totalCoursesAssignmentsCount++;
+			}
+			
+			if (selectAll || childSelected == assignments.size())
+			{
+				tnode.setSelected(true);
+			}
+			else if (childSelected > 0)
+			{
+				tnode.setPartialSelected(true);
+			}
+		}
+	}
+	
+	protected void setupAttempts() throws Exception
+	{
+		maxAttempts = reportManager.getMaxNumberOfAttempts(SessionBean.getUsername());
+		if (!FacesContext.getCurrentInstance().isPostback())
+		{
+			attemptsOperation = "<=";
+			attempts = maxAttempts;
+		}
+	}
+	
+	protected void setupDateFilterOptions()
+	{
+		if (!FacesContext.getCurrentInstance().isPostback())
+		{
+			selectedDateFilterOption = "AnyTime";
+			intervalStartDate = new Date();
+			intervalEndDate = new Date();
+		}
+		
+		dateFilterOptions = new ArrayList<LocalizedItem>();
+		dateFilterOptions.add(new LocalizedItem("AnyTime", LocalizationController.getLocalizedString("AnyTime")));
+		dateFilterOptions.add(new LocalizedItem("LastWeek", LocalizationController.getLocalizedString("LastWeek")));
+		dateFilterOptions.add(new LocalizedItem("LastMonth", LocalizationController.getLocalizedString("LastMonth")));
+		dateFilterOptions.add(new LocalizedItem("Interval", LocalizationController.getLocalizedString("Interval")));
+	}
+	
+	protected abstract List<String> getGroupOptions();
+	
+	protected void setupGroupByOptions() throws Exception
+	{
+		groupByOptions = new ArrayList<LocalizedItem>();
+		
+		getGroupOptions().stream().forEach(x -> groupByOptions.add(new LocalizedItem(x, LocalizationController.getLocalizedString(x))));
+		
+		User user = userManager.getUser(SessionBean.getUsername());
+		
+		// PRE-PROCESS filter and group by list
+		switch (user.getSelectedRole())
+		{
+			case SUPERUSER:
+			case ADMIN:
+				
+				break;
+			
+			case PROGRAM_MANAGER:
+				
+				groupBySelectedOptions = new String[] { FilterField.PROGRAM, FilterField.SUBJECT };
+				
+				break;
+			
+			case LECTURER:
+				
+				groupBySelectedOptions = new String[] { FilterField.PROGRAM, FilterField.SUBJECT, FilterField.COURSE };
+				
+				break;
+			
+			case INSTRUCTOR:
+			case STUDENT:
+				
+				groupBySelectedOptions = new String[] { FilterField.PROGRAM, FilterField.SUBJECT, FilterField.COURSE, FilterField.COURSEGROUP };
+				
+				break;
+			
+			default:
+				
+				break;
+		}
+	}
+	
+	protected String groupByOptionToDataTableLabel(String groupByOption)
+	{
+		switch (groupByOption)
+		{
+			case FilterField.TOOL:
+				
+				return LocalizationController.getLocalizedString("Tool");
+			
+			case FilterField.PROGRAM:
+				
+				return LocalizationController.getLocalizedString("Program");
+			
+			case FilterField.SUBJECT:
+				
+				return LocalizationController.getLocalizedString("Subject");
+			
+			case FilterField.COURSE:
+				
+				return LocalizationController.getLocalizedString("Course");
+			
+			case FilterField.COURSEGROUP:
+				
+				return LocalizationController.getLocalizedString("CourseGroup");
+			
+			case FilterField.ASSIGNMENT:
+				
+				return LocalizationController.getLocalizedString("Assignment");
+			
+			case FilterField.EXERCISE:
+				
+				return LocalizationController.getLocalizedString("Exercise");
+			
+			case FilterField.SEMESTER:
+				
+				return LocalizationController.getLocalizedString("Semester");
+		}
+		
+		return "";
+	}
+	
+	protected void setupCharts() throws Exception
+	{
+		// TABLE PRE CONFIGURATION
+		
+		dataTableModel = new ArrayList<T>();
+		
+		// CHARTS PRE CONFIGURATION
+		
+		chartsPreConfiguration();
+		
+		// APPLY FILTERS, GET DATA 
+		
+		List<T> data = setupFiltersAndGetData();
+		
+		// DO CALCULATIONS AND SETUP CHART SERIES		
+		
+		int index = 0;
+		
+		for (T dataItem : data)
+		{
+			calculateDataItemLabel(dataItem);
+			
+			if (index <= maxGroups) // DRAW THE GROUP IN GRAPHS ONLY IF NOT EXCEDES THE FILTER 
+			{
+				setupDataInCharts(dataItem);
+			}
+			
+			dataTableModel.add(dataItem);
+			
+			index++;
+		}
+		
+		chartsPostConfiguration(data);
+	}
+	
+	protected abstract void chartsPreConfiguration();
+	
+	protected void calculateDataItemLabel(T dataItem)
+	{
+		String chartLabel = LocalizationController.getLocalizedString("Total");
+		String tableLabel = LocalizationController.getLocalizedString("Total");
+		
+		String NONE = LocalizationController.getLocalizedString("UNASSIGNED");
+		
+		String[] groupByFields = dataItem.getGroupByFields();
+		
+		if (groupByFields != null && groupByFields.length > 0)
+		{
+			chartLabel = groupByFields[0] == null ? NONE : groupByFields[0];
+			
+			tableLabel = groupByOptionToDataTableLabel(groupBySelectedOptions[0]) + ": " + (groupByFields[0] == null ? NONE : groupByFields[0]);
+			
+			for (int i = 1; i < groupByFields.length; i++)
+			{
+				chartLabel = chartLabel + " - " + (groupByFields[i] == null ? NONE : groupByFields[i]);
+				
+				tableLabel = tableLabel + "\n" + groupByOptionToDataTableLabel(groupBySelectedOptions[i]) + ": "
+						+ (groupByFields[i] == null ? NONE : groupByFields[i]);
+			}
+		}
+		
+		dataItem.setChartLabel(chartLabel);
+		dataItem.setTableLabel(tableLabel);
+	}
+	
+	protected abstract void setupDataInCharts(T dataItem);
+	
+	protected abstract void chartsPostConfiguration(List<T> data);
+	
+	private List<T> setupFiltersAndGetData() throws Exception
+	{
+		Map<String, String[]> filters = new HashMap<String, String[]>();
+		
+		if (selectedTools.length != tools.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.TOOL, selectedTools);
+		}
+		else
+		{
+			filters.put(FilterField.TOOL, new String[0]);
+		}
+		
+		if (selectedPrograms.length != programs.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.PROGRAM, selectedPrograms);
+		}
+		else
+		{
+			filters.put(FilterField.PROGRAM, new String[0]);
+		}
+		
+		if (selectedSubjects.length != subjects.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.SUBJECT, selectedSubjects);
+		}
+		else
+		{
+			filters.put(FilterField.SUBJECT, new String[0]);
+		}
+		
+		//		if (selectedCourses.size() != totalCoursesCount) // NOT ALL SELECTED
+		//		{
+		//			filters.put(FilterField.COURSE, selectedCourses.toArray(new String[0]));
+		//		}
+		//		else
+		//		{
+		//			filters.put(FilterField.COURSE, new String[0]);
+		//		}
+		
+		if (selectedCourseGroups.length != courseGroups.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.COURSEGROUP, selectedCourseGroups);
+		}
+		else
+		{
+			filters.put(FilterField.COURSEGROUP, new String[0]);
+		}
+		
+		if (selectedSemesters.length != semesters.size()) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.SEMESTER, selectedSemesters);
+		}
+		else
+		{
+			filters.put(FilterField.SEMESTER, new String[0]);
+		}
+		
+		List<String> coursesAssignments = ListUtils.flattenStringList(selectedCoursesAssignments);
+		
+		if (coursesAssignments.size() != totalCoursesAssignmentsCount) // NOT ALL SELECTED
+		{
+			filters.put(FilterField.COURSE_ASSIGNMENT, coursesAssignments.toArray(new String[0]));
+		}
+		else
+		{
+			filters.put(FilterField.COURSE_ASSIGNMENT, new String[0]);
+		}
+		
+		if (!selectedDateFilterOption.equals("AnyTime")) // NOT ANY TIME SELECTED
+		{
+			String startDate = "";
+			String endDate = "";
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+			
+			if (selectedDateFilterOption.equals("LastWeek"))
+			{
+				endDate = dateFormat.format(cal.getTime());
+				
+				cal.add(Calendar.DATE, -7);
+				
+				startDate = dateFormat.format(cal.getTime());
+			}
+			else if (selectedDateFilterOption.equals("LastMonth"))
+			{
+				endDate = dateFormat.format(cal.getTime());
+				
+				cal.add(Calendar.MONTH, -1);
+				
+				startDate = dateFormat.format(cal.getTime());
+			}
+			else if (selectedDateFilterOption.equals("Interval"))
+			{
+				startDate = dateFormat.format(intervalStartDate);
+				endDate = dateFormat.format(intervalEndDate);
+			}
+			
+			filters.put(FilterField.DATE, new String[] { startDate, endDate });
+		}
+		
+		// filters.put(FilterField.ATTEMPTS, new String[] { attemptsOperation, "" + attempts, "" + onlyLastAttempt });
+		
+		return filters;
+	}
+	
+	protected abstract List<T> getData(Map<String, String[]> filters) throws Exception;
+}

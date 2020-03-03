@@ -1,0 +1,7 @@
+package edu.uoc.ictflag.institution.model;
+
+public class InstitutionValidationErrors
+{
+	public static final String SubjectCannotBeDeletedBecauseDependentCoursesAlreadyExist = "SubjectCannotBeDeletedBecauseDependentCoursesAlreadyExist";
+	public static final String CourseCannotBeDeletedBecauseDependentCourseGroupsAlreadyExist = "CourseCannotBeDeletedBecauseDependentCourseGroupsAlreadyExist";
+}

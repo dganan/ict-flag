@@ -1,0 +1,63 @@
+<ui:composition template="../WEB-INF/templates/masterpage.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:o="http://omnifaces.org/ui" xmlns:ictflag="http://java.sun.com/jsf/composite/ictflag">
+
+	<f:metadata>
+		<f:viewAction action="#{institutionController.initialize}"/>
+	</f:metadata>
+
+	<ui:define name="head-title">ICT-FLAG #{msg.Edit_institution}</ui:define>
+
+	<ui:define name="title">#{msg.Edit_institution}</ui:define>
+
+	<ui:define name="breadcrumb"></ui:define>
+
+	<ui:define name="content">
+		<div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-edit"></i>
+					#{msg.Edit_institution}
+				</div>
+			</div>
+			<div class="portlet-body form">
+
+				<o:form class="form-horizontal" includeRequestParams="true">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="control-label col-md-3">
+								#{msg.Name}
+								<span class="required" aria-required="true"> * </span>
+							</label>
+							<div class="col-md-4">
+								<ictflag:localizedStringEditor propertyName="institution-name" localizedString="#{institutionController.institution.name}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">
+								#{msg.Main_site_url}
+								<span class="required" aria-required="true"> * </span>
+							</label>
+							<div class="col-md-4">
+								<ictflag:stringEditor propertyName="institution-mainSiteUrl" stringValue="#{institutionController.institution.mainSiteUrl}" />
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<div class="img-fa-right-button">
+									<h:commandButton class="btn blue submit" value="#{msg.Save}" action="#{institutionController.save}" />
+									<i class="fa fa-save white"></i>
+								</div>
+								<div class="img-fa-right-button">
+									<h:link class="btn default" value="#{msg.Cancel}" outcome="/private/index.xhtml" />
+									<i class="fa fa-times"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</o:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

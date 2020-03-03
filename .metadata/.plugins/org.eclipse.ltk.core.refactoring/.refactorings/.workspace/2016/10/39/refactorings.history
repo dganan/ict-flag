@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Copy of edu.uoc.ictflag.helpers.PilotConfiguration&apos; to &apos;edu.uoc.ictflag.helpers.PilotConfiguration&apos;" description="Rename resource &apos;Copy of edu.uoc.ictflag.helpers.PilotConfiguration&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/Copy of edu.uoc.ictflag.helpers.PilotConfiguration" name="edu.uoc.ictflag.helpers.PilotConfiguration" stamp="1475340193043" updateReferences="true"/>
+</session>

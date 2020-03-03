@@ -1,0 +1,166 @@
+package edu.uoc.ictflag.ela.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import edu.uoc.ictflag.core.model.ColumnTypes;
+import edu.uoc.ictflag.core.model.IIdentifiable;
+import edu.uoc.ictflag.institution.model.Program;
+import edu.uoc.ictflag.institution.model.Semester;
+import edu.uoc.ictflag.institution.model.Subject;
+import edu.uoc.ictflag.institution.model.Tool;
+import edu.uoc.ictflag.security.model.User;
+
+@Entity
+@Table(name = "DW_ExerciseData")
+public class ExerciseData implements Serializable, IIdentifiable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Long id;
+	
+	private Tool tool;
+	
+	private User person;
+	
+	private Program program;
+	
+	private Subject subject;
+	
+	private Semester semester;
+	
+	@Column(columnDefinition = ColumnTypes.TEXT_COLUMN)
+	private String exercise;
+	
+	@Column(columnDefinition = ColumnTypes.TEXT_COLUMN)
+	private String result;
+
+	private long duration_sec;
+	private long timeFromLastAttempt_sec;	
+
+	private int attemptNumber;	
+
+	public ExerciseData()
+	{
+	}
+	
+	public Long getId()
+	{
+		return id;
+	}
+	
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+	
+	public Tool getTool()
+	{
+		return tool;
+	}
+	
+	public void setTool(Tool tool)
+	{
+		this.tool = tool;
+	}
+	
+	public User getPerson()
+	{
+		return person;
+	}
+	
+	public void setPerson(User person)
+	{
+		this.person = person;
+	}
+	
+	public Program getProgram()
+	{
+		return program;
+	}
+	
+	public void setProgram(Program program)
+	{
+		this.program = program;
+	}
+	
+	public Subject getSubject()
+	{
+		return subject;
+	}
+	
+	public void setSubject(Subject subject)
+	{
+		this.subject = subject;
+	}
+	
+	public Semester getSemester()
+	{
+		return semester;
+	}
+	
+	public void setSemester(Semester semester)
+	{
+		this.semester = semester;
+	}
+	
+	public String getExercise()
+	{
+		return exercise;
+	}
+	
+	public void setExercise(String exercise)
+	{
+		this.exercise = exercise;
+	}
+	
+	public String getResult()
+	{
+		return result;
+	}
+	
+	public void setResult(String result)
+	{
+		this.result = result;
+	}
+	
+	public long getDuration_sec()
+	{
+		return duration_sec;
+	}
+	
+	public void setDuration_sec(long duration_sec)
+	{
+		this.duration_sec = duration_sec;
+	}
+	
+	public long getTimeFromLastAttempt_sec()
+	{
+		return timeFromLastAttempt_sec;
+	}
+	
+	public void setTimeFromLastAttempt_sec(long timeFromLastAttempt_sec)
+	{
+		this.timeFromLastAttempt_sec = timeFromLastAttempt_sec;
+	}
+	
+	public int getAttemptNumber()
+	{
+		return attemptNumber;
+	}
+	
+	public void setAttemptNumber(int attemptNumber)
+	{
+		this.attemptNumber = attemptNumber;
+	}
+	
+	
+}

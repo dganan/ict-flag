@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="conditionHistory">
+		<item value="2" key="conditionHistoryEntryCount"/>
+		<item value="this.rolesStr == null || EnumListHelper.fromString(this.rolesStr, UserRole.class) == null" key="conditionHistoryEntry_0"/>
+		<item value="dbData == null" key="conditionHistoryEntry_1"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.debug.ui.ExpressionInformationControlCreator$ExpressionInformationControl">
+		<item value="736" key="SashWeightTree"/>
+		<item value="263" key="SashWeightDetails"/>
+		<item value="706" key="WIDTH"/>
+		<item value="210" key="HEIGHT"/>
+	</section>
+	<section name="org.eclipse.jdt.debug.ui.MAIN_METHOD_SELECTION_DIALOG">
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode&gt;=edu.uoc.ictflag.helpers.SetupHelper/src&amp;lt;edu.uoc.ictflag.helpers.SetupHelper{SetupHelper.java[SetupHelper&lt;/infoNode&gt;&#x0A;&lt;infoNode&gt;=edu.uoc.ictflag.helpers.DBConfigurator/src&amp;lt;edu.uoc.ictflag.helpers.DBConfigurator{DBConfigurator.java[DBConfigurator&lt;/infoNode&gt;&#x0A;&lt;infoNode&gt;=edu.uoc.ictflag.helpers.PilotConfiguration/src&amp;lt;edu.uoc.ictflag.helpers.PilotConfiguration{PilotConfiguration.java[PilotConfiguration&lt;/infoNode&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="663" key="DIALOG_X_ORIGIN"/>
+			<item value="243" key="DIALOG_Y_ORIGIN"/>
+		</section>
+	</section>
+</section>

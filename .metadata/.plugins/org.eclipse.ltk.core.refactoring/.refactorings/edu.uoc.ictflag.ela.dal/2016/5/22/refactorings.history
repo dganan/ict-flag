@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 2 elements to &apos;edu.uoc.ictflag.ela.dal.ExercisesReportRepository.java&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.ela.dal&apos;&#x0A;- Destination element: &apos;edu.uoc.ictflag.ela.dal.ExercisesReportRepository.java&apos;&#x0A;- Original elements:&#x0A;     edu.uoc.ictflag.ela.dal.IExercisesReportRepository.java&#x0A;     edu.uoc.ictflag.ela.dal.ExercisesReportRepository.java" description="Copy compilation units" destination="/src&lt;edu.uoc.ictflag.ela.dal{ExercisesReportRepository.java" element1="/src&lt;edu.uoc.ictflag.ela.dal{IExercisesReportRepository.java" element2="/src&lt;edu.uoc.ictflag.ela.dal{ExercisesReportRepository.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1464622386706" units="2" version="1.0"/>
+</session>

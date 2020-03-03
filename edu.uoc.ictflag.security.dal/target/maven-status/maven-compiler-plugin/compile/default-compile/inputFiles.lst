@@ -1,0 +1,6 @@
+/home/david/ICTFLAG/edu.uoc.ictflag.security.dal/src/edu/uoc/ictflag/security/dal/PasswordHasher.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.dal/src/edu/uoc/ictflag/security/dal/SecurityBaseRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.dal/src/edu/uoc/ictflag/security/dal/AuthorizationRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.dal/src/edu/uoc/ictflag/security/dal/IAuthorizationRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.dal/src/edu/uoc/ictflag/security/dal/IUserRepository.java
+/home/david/ICTFLAG/edu.uoc.ictflag.security.dal/src/edu/uoc/ictflag/security/dal/UserRepository.java

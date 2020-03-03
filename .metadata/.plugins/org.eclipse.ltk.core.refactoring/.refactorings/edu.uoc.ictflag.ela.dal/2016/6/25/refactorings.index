@@ -1,0 +1,9 @@
+1466494044045	Copy compilation units
+1466494377974	Copy compilation unit
+1466494454200	Copy compilation unit
+1466497089397	Rename local variable 'outcomesData'
+1466621836140	Delete elements
+1466622013031	Extract method 'checkFiltersByRole'
+1466622496471	Extract method 'constructQuery'
+1466622966187	Extract method 'ensambleQuery'
+1466871621558	Delete element

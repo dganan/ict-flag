@@ -1,0 +1,6 @@
+<h:form>
+    <h3>Grid Layout</h3>
+    <p:selectManyCheckbox id="grid" value="#{studentsReportController.selectedCities}" layout="grid" columns="3">
+        <f:selectItems value="#{studentsReportController.cities}" var="city" itemLabel="#{city}" itemValue="#{city}" />
+    </p:selectManyCheckbox>
+</h:form>

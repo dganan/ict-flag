@@ -1,0 +1,5 @@
+1440528716660	Copy compilation units
+1440851497607	Rename type 'IProgramService'
+1440851511964	Rename type 'ProgramService'
+1440914984497	Rename field 'authorizationService'
+1440914995742	Rename local variable 'authorizationService'

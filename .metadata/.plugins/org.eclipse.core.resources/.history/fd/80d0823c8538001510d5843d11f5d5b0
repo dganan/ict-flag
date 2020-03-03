@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14382688048090" configfile="/edu.uoc.ictflag.web/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" id="pf143845141714612" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf143845141714613" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin.xhtml" id="pf143845141714714" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf143845141714613" path="/admin.xhtml"/>
+  <links id="pf143845141714613" target="pf143845141714714" source="pf143845141714612" outcome="admin"/>
+</pageflow:Pageflow>

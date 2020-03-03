@@ -1,0 +1,564 @@
+<ui:composition template="../WEB-INF/templates/masterpage.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:ictflag="http://java.sun.com/jsf/composite/ictflag" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{assignmentsReportController.initialize}" onPostback="true" />
+	</f:metadata>
+
+	<ui:define name="head-title">ICT-FLAG #{msg.Assignments_report}</ui:define>
+
+	<ui:define name="title">#{msg.Assignments_report}</ui:define>
+
+	<ui:define name="breadcrumb"></ui:define>
+
+	<ui:define name="content">
+
+		<div class="portlet box yellow">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-filter"></i>
+					#{msg.Filters}
+				</div>
+				<div class="tools">
+					<a href="javascript:;" class="expand"></a>
+				</div>
+			</div>
+			<div class="portlet-body form" style="display:none"> 
+
+				<div class="row" style="padding: 10px 15px">
+					<h:form>
+
+						<div class="col-md-2">
+
+							<div>
+								<h4>#{msg.Program}</h4>
+
+								<p:selectManyMenu id="programsMenu" value="#{assignmentsReportController.selectedPrograms}" filter="true" filterMatchMode="contains" showCheckbox="true"
+									style="width:100%;height:125px;overflow-y:scroll;">
+									<f:selectItems value="#{assignmentsReportController.programs}" var="program" itemLabel="#{program.displayName}" itemValue="#{program.value}" />
+								</p:selectManyMenu>
+
+							</div>
+							<div style="height: 10px" />
+							<div>
+								<h4>#{msg.Subject}</h4>
+
+								<p:selectManyMenu id="subjectsMenu" value="#{assignmentsReportController.selectedSubjects}" filter="true" filterMatchMode="contains" showCheckbox="true"
+									style="width:100%;height:125px;overflow-y:scroll;">
+									<f:selectItems value="#{assignmentsReportController.subjects}" var="subject" itemLabel="#{subject.displayName}" itemValue="#{subject.value}" />
+								</p:selectManyMenu>
+							</div>
+
+						</div>
+						<div class="col-md-2">
+
+							<h4>#{msg.CourseAssignments}</h4>
+
+							<div style="width: 100%; height: 300px">
+								<p:tree value="#{assignmentsReportController.coursesAssignmentsTree}" var="node" selectionMode="checkbox"
+									selection="#{assignmentsReportController.selectedCoursesAssignmentsNodes}" style="width:100%;height:100%;overflow-y:scroll;overflow-x:hidden;background:white">
+									<p:treeNode>
+										<h:outputText value="#{node.toString()}" />
+									</p:treeNode>
+								</p:tree>
+							</div>
+
+						</div>
+						<div class="col-md-2">
+
+
+							<div>
+								<h4>#{msg.Semester}</h4>
+
+								<p:selectManyMenu id="semestersMenu" value="#{assignmentsReportController.selectedSemesters}" filter="true" filterMatchMode="contains" showCheckbox="true"
+									style="width:100%;height:125px;overflow-y:scroll;">
+									<f:selectItems value="#{assignmentsReportController.semesters}" var="semester" itemLabel="#{semester.displayName}" itemValue="#{semester.value}" />
+								</p:selectManyMenu>
+
+							</div>
+							<div style="height: 10px" />
+
+							<div>
+								<h4>#{msg.CourseGroup}</h4>
+
+								<p:selectManyMenu id="courseGroupsMenu" value="#{assignmentsReportController.selectedCourseGroups}" filter="true" filterMatchMode="contains" showCheckbox="true"
+									style="width:100%;height:125px;overflow-y:scroll;">
+									<f:selectItems value="#{assignmentsReportController.courseGroups}" var="courseGroup" itemLabel="#{courseGroup.displayName}" itemValue="#{courseGroup.value}" />
+								</p:selectManyMenu>
+							</div>
+						</div>
+
+						<div class="col-md-2">
+
+							<div>
+
+								<h4>#{msg.Date}</h4>
+
+								<div id="dateSelector">
+								<p:selectOneMenu id="city" value="#{assignmentsReportController.selectedDateFilterOption}" style="width:100%">
+									<f:selectItems value="#{assignmentsReportController.dateFilterOptions}" var="dateFilterOption" itemLabel="#{dateFilterOption.displayName}"
+										itemValue="#{dateFilterOption.value}" />
+								</p:selectOneMenu>
+								</div>
+								
+								<div id="intervalDates">
+
+								<div style="clear: both; height: 10px" />
+
+								<h:outputText value="#{msg.StartDate}" />
+								<div style="clear: both; height: 3px" />
+								<p:calendar value="#{assignmentsReportController.intervalStartDate}" mode="popup" styleClass="calendar-full-width" />
+
+								<div style="clear: both; height: 10px" />
+
+								<h:outputText value="#{msg.EndDate}" />
+								<div style="clear: both; height: 3px" />
+								<p:calendar value="#{assignmentsReportController.intervalEndDate}" mode="popup" styleClass="calendar-full-width" />
+								</div>
+							</div>
+
+							<div style="height: 10px" />
+
+							<div>
+	           					<h4>#{msg.Attempts}</h4>
+								<div id="attemptsNumber">
+						            <p:selectOneMenu id="attemptsOperation" styleClass="combo" size="3" value="#{assignmentsReportController.attemptsOperation}" style="width:50px;margin-right:10px;float:left;margin-bottom:5px">
+						    			<f:selectItem itemLabel="&lt;=" itemValue="&lt;=" />
+						    			<f:selectItem itemLabel="=" itemValue="=" />
+						    			<f:selectItem itemLabel="&gt;=" itemValue="&gt;=" />
+						            </p:selectOneMenu>
+							        <p:spinner value="#{assignmentsReportController.attempts}" min="1" max="#{assignmentsReportController.maxAttempts}" size="3" style="margin-right:15px;"/>
+								</div>
+								<div style="margin-top: 8px" id="onlyLastAttempt">
+								    <p:selectBooleanCheckbox value="#{assignmentsReportController.onlyLastAttempt}" style="margin-right:5px"/>
+									<h:outputText value="#{msg.OnlyLastAttempt}" />
+								</div>
+							</div>
+
+						</div>
+						<div class="col-md-2">
+
+							<h4>#{msg.Tool}</h4>
+
+							<p:selectManyMenu id="toolsMenu" value="#{assignmentsReportController.selectedTools}" filter="true" filterMatchMode="contains" showCheckbox="true"
+								style="width:100%;height:125px;overflow-y:scroll;">
+								<f:selectItems value="#{assignmentsReportController.tools}" var="tool" itemLabel="#{tool.displayName}" itemValue="#{tool.value}" />
+							</p:selectManyMenu>
+						</div>
+						<div class="col-md-2">
+
+							<div>
+								<h4>#{msg.GroupBy}</h4>
+								<p:selectManyCheckbox id="groupFieldsOptions" value="#{assignmentsReportController.groupFieldsSelectedOptions}" layout="grid" columns="2"
+									style="border-collapse:separate;border-spacing:5px 0px;width:100%">
+									<f:selectItems value="#{assignmentsReportController.groupFieldsOptions}" var="groupFieldsOption" itemLabel="#{groupFieldsOption.displayName}"
+										itemValue="#{groupFieldsOption.value}" style="margin-right:5px" />
+								</p:selectManyCheckbox>
+							</div>
+
+							<div style="height: 10px" />
+
+							<div>
+								<h4>#{msg.Others}</h4>
+								<p:selectBooleanCheckbox value="#{assignmentsReportController.stackedData}" style="float:left;margin-right:5px;margin-bottom:5px" />
+								<h:outputText value="#{msg.ShowStackedData}" />
+
+								<div style="margin-top:8px" id="showMaxGroups">
+								<h:outputText value="#{msg.ShowMaxGroups}" style="float:left;margin-right:10px;margin-top:5px; line-height:25px" />
+								<p:spinner value="#{assignmentsReportController.maxGroups}" min="1" max="1000" size="3" style="margin-top:5px" />
+								</div>
+
+								<div style="margin-top:8px" id="showAllGroups">
+
+								<p:selectBooleanCheckbox value="#{assignmentsReportController.showAllGroups}" style="float:left;margin-right:5px;margin-bottom:5px" />
+								<h:outputText value="#{msg.ShowAllGroups}" />
+								</div>
+								
+								<div style="margin-top:8px" id="showMaxExercises">
+								<h:outputText value="#{msg.ShowMaxExercises}" style="float:left;margin-right:10px;margin-top:5px; line-height:25px" />
+								<p:spinner value="#{assignmentsReportController.maxExercises}" min="1" max="1000" size="3" style="margin-top:5px" />
+								</div>
+
+								<div style="margin-top:8px" id="showAllExercises">
+								<p:selectBooleanCheckbox value="#{assignmentsReportController.showAllExercises}" style="float:left;margin-right:5px;margin-bottom:5px" />
+								<h:outputText value="#{msg.ShowAllExercises}" />
+								</div>
+								
+							</div>
+							<div style="height: 30px" />
+
+							<div style="text-align: right;">
+								<div class="img-fa-right-button">
+									<h:commandButton class="btn blue submit" value="#{msg.Apply}" action="#{assignmentsReportController.applyFilters}">
+									</h:commandButton>
+									<i class="fa fa-filter white"></i>
+								</div>
+
+							</div>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</div>
+		<div class="portlet box green">
+			<div class="portlet-title">
+				<div class="caption">
+					<i class="fa fa-bar-chart"></i>
+					#{msg.Results}
+				</div>
+			</div>
+			<div class="portlet-body form">
+
+				<div class="row">
+					<div class="col-md-6">
+						<h3 style="text-align:center">#{msg.AlphabeticGrades}</h3>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{assignmentsReportController.canShowCharts}">
+							<p:chart type="bar" model="#{assignmentsReportController.alphabeticGradesBarChartModel}" style="height:500px;min-width:#{assignmentsReportController.alphabeticGradesBarChartMinWidth}px" responsive="true" />
+						</p:panel>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{!assignmentsReportController.canShowCharts}">
+							<div style="height: 500px; text-align: center; padding-top: 150px;">
+								<h3 style="font-size: 18pt; color: red; font-weight: bold;">#{msg.NoDataFound}</h3>
+							</div>
+						</p:panel>
+					</div>
+					<div class="col-md-6">
+						<h3 style="text-align:center">#{msg.NumericGrades}</h3>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{assignmentsReportController.canShowCharts}">
+							<p:chart type="bar" model="#{assignmentsReportController.numericGradesBarChartModel}" style="height:500px;min-width:#{assignmentsReportController.numericGradesBarChartMinWidth}px" responsive="true" />
+						</p:panel>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{!assignmentsReportController.canShowCharts}">
+							<div style="height: 500px; text-align: center; padding-top: 150px;">
+								<h3 style="font-size: 18pt; color: red; font-weight: bold;">#{msg.NoDataFound}</h3>
+							</div>
+						</p:panel>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<h3 style="text-align:center">#{msg.SuccessRate}</h3>
+						<p:panel style="border:none;background:white; overflow-x:visible;overflow-y:auto;height:530px;margin:10px" rendered="#{assignmentsReportController.canShowCharts}">
+							<p:chart type="bar" model="#{assignmentsReportController.successRateBarChartModel}" style="margin-left:10px;margin-right:10px;min-height:#{assignmentsReportController.successRateBarChartMinHeight}px" responsive="true" />
+						</p:panel>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{!assignmentsReportController.canShowCharts}">
+							<div style="height: 500px; text-align: center; padding-top: 150px;">
+								<h3 style="font-size: 18pt; color: red; font-weight: bold;">#{msg.NoDataFound}</h3>
+							</div>
+						</p:panel>
+					</div>
+					<div class="col-md-6">
+						<h3 style="text-align:center">#{msg.Duration}</h3>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{assignmentsReportController.canShowCharts}">
+							<p:chart type="bar" model="#{assignmentsReportController.durationBarChartModel}" style="height:500px;min-width:#{assignmentsReportController.durationBarChartMinWidth}px" responsive="true" />
+						</p:panel>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{!assignmentsReportController.canShowCharts}">
+							<div style="height: 500px; text-align: center; padding-top: 150px;">
+								<h3 style="font-size: 18pt; color: red; font-weight: bold;">#{msg.NoDataFound}</h3>
+							</div>
+						</p:panel>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<h3 style="text-align:center">#{msg.Outcomes}</h3>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{assignmentsReportController.canShowCharts}">
+							<p:chart type="bar" model="#{assignmentsReportController.outcomesBarChartModel}" style="height:500px;min-width:#{assignmentsReportController.outcomesBarChartMinWidth}px" responsive="true" />
+						</p:panel>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{!assignmentsReportController.canShowCharts}">
+							<div style="height: 500px; text-align: center; padding-top: 150px;">
+								<h3 style="font-size: 18pt; color: red; font-weight: bold;">#{msg.NoDataFound}</h3>
+							</div>
+						</p:panel>
+					</div>
+					<div class="col-md-6">
+						<h3 style="text-align:center">#{msg.LowestSuccessRateExercises}</h3>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{assignmentsReportController.canShowLowestSuccessRateBarChart}">
+							<p:chart type="bar" model="#{assignmentsReportController.lowestSuccessRateBarChartModel}" style="height:500px;min-width:#{assignmentsReportController.lowestSuccessRateBarChartMinWidth}px" responsive="true" />
+						</p:panel>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{!assignmentsReportController.canShowLowestSuccessRateBarChart}">
+							<div style="height: 500px; text-align: center; padding-top: 150px;">
+								<h3 style="font-size: 18pt; color: red; font-weight: bold;">#{msg.NoDataFound}</h3>
+							</div>
+						</p:panel>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<h3 style="text-align:center">#{msg.LongestDurationExercises}</h3>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{assignmentsReportController.canShowLongestDurationBarChart}">
+							<p:chart type="bar" model="#{assignmentsReportController.longestDurationBarChartModel}" style="height:500px;min-width:#{assignmentsReportController.longestDurationBarChartMinWidth}px" responsive="true" />
+						</p:panel>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{!assignmentsReportController.canShowLongestDurationBarChart}">
+							<div style="height: 500px; text-align: center; padding-top: 150px;">
+								<h3 style="font-size: 18pt; color: red; font-weight: bold;">#{msg.NoDataFound}</h3>
+							</div>
+						</p:panel>
+					</div>
+					<div class="col-md-6">
+						<h3 style="text-align:center">#{msg.HighestNumberOfAttemptsExercises}</h3>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{assignmentsReportController.canShowLongestDurationBarChart}">
+							<p:chart type="bar" model="#{assignmentsReportController.highestNumberOfAttemptsBarChartModel}" style="height:500px;min-width:#{assignmentsReportController.highestNumberOfAttemptsBarChartMinWidth}px" responsive="true" />
+						</p:panel>
+						<p:panel style="border:none;background:white; overflow-x:auto;margin:10px;" rendered="#{!assignmentsReportController.canShowLongestDurationBarChart}">
+							<div style="height: 500px; text-align: center; padding-top: 150px;">
+								<h3 style="font-size: 18pt; color: red; font-weight: bold;">#{msg.NoDataFound}</h3>
+							</div>
+						</p:panel>
+					</div>
+				</div>
+				<div class="row">
+					<p:panel style="border:none;margin:5px 20px;background:white">
+						<h:form>
+							<p:dataTable id="assignmentsTable" var="data" value="#{assignmentsReportController.dataTableModel}" paginator="true" paginatorTemplate="{Exporters}">
+
+								<f:facet name="{Exporters}">
+									<h:commandLink>
+										<p:graphicImage name="./assets/ictflag/img/excel.png" width="24" />
+										<p:dataExporter type="xls" target="assignmentsTable" fileName="assignments" />
+									</h:commandLink>
+
+									<h:commandLink>
+										<p:graphicImage name="./assets/ictflag/img/pdf.png" width="24" />
+										<p:dataExporter type="pdf" target="assignmentsTable" fileName="assignments" />
+									</h:commandLink>
+
+									<h:commandLink>
+										<p:graphicImage name="./assets/ictflag/img/csv.png" width="24" />
+										<p:dataExporter type="csv" target="assignmentsTable" fileName="assignments" />
+									</h:commandLink>
+								</f:facet>
+
+								<p:column headerText="" sortBy="#{data.tableLabel}">
+									<h:outputText value="#{data.tableLabel}" escape="false" />
+								</p:column>
+
+								<p:column headerText="#{msg.Count}" sortBy="#{data.groupCount}">
+									<h:outputText value="#{data.groupCount}" escape="false" />
+								</p:column>
+
+								<p:column headerText="#{msg.NumericGradesMin}" sortBy="#{data.minNumericGrade}">
+									<h:outputText value="#{data.minNumericGrade}" escape="false">
+										<f:convertNumber pattern="0.#" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.NumericGradesAvg}" sortBy="#{data.avgNumericGrade}">
+									<h:outputText value="#{data.avgNumericGrade}" escape="false">
+										<f:convertNumber pattern="0.#" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.NumericGradesMax}" sortBy="#{data.maxNumericGrade}">
+									<h:outputText value="#{data.maxNumericGrade}" escape="false">
+										<f:convertNumber pattern="0.#" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.Right}" sortBy="#{data.rightPercentage}">
+									<h:outputText value="#{data.rightPercentage}" escape="false" >
+										<f:convertNumber pattern="0.##%" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.Wrong}" sortBy="#{data.wrongPercentage}">
+									<h:outputText value="#{data.wrongPercentage}" escape="false" >
+										<f:convertNumber pattern="0.##%" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.Timeout}" sortBy="#{data.timeoutPercentage}">
+									<h:outputText value="#{data.timeoutPercentage}" escape="false" >
+										<f:convertNumber pattern="0.##%" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.Error}" sortBy="#{data.errorPercentage}">
+									<h:outputText value="#{data.errorPercentage}" escape="false" >
+										<f:convertNumber pattern="0.##%" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.SuccessRate}" sortBy="#{data.successRate}">
+									<h:outputText value="#{data.successRate}" escape="false">
+										<f:convertNumber pattern="0.##%" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.AttemptsMin}" sortBy="#{data.minAttempts}">
+									<h:outputText value="#{data.minAttempts}" escape="false">
+										<f:convertNumber pattern="0" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.AttemptsAvg}" sortBy="#{data.avgAttempts}">
+									<h:outputText value="#{data.avgAttempts}" escape="false">
+										<f:convertNumber pattern="0.##" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.AttemptsMax}" sortBy="#{data.maxAttempts}">
+									<h:outputText value="#{data.maxAttempts}" escape="false">
+										<f:convertNumber pattern="0" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.TimeBetweenAttemptsMin}" sortBy="#{data.minTimeBetweenAttempts}">
+									<h:outputText value="#{data.minTimeBetweenAttempts}" escape="false">
+										<f:convertNumber pattern="0.##h" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.TimeBetweenAttemptsAvg}" sortBy="#{data.avgTimeBetweenAttempts}">
+									<h:outputText value="#{data.avgTimeBetweenAttempts}" escape="false">
+										<f:convertNumber pattern="0.##h" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.TimeBetweenAttemptsMax}" sortBy="#{data.maxTimeBetweenAttempts}">
+									<h:outputText value="#{data.maxTimeBetweenAttempts}" escape="false">
+										<f:convertNumber pattern="0.##h" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.DurationMin}" sortBy="#{data.minDuration}">
+									<h:outputText value="#{data.minDuration}" escape="false">
+										<f:convertNumber pattern="0.##''" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.DurationAvg}" sortBy="#{data.avgDuration}">
+									<h:outputText value="#{data.avgDuration}" escape="false">
+										<f:convertNumber pattern="0.##''" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="#{msg.DurationMax}" sortBy="#{data.maxDuration}">
+									<h:outputText value="#{data.maxDuration}" escape="false">
+										<f:convertNumber pattern="0.##''" />
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+						</h:form>
+					</p:panel>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+	
+	<ui:define name="scripts">
+	
+		<style type="text/css">
+		
+			.jqplot-point-label { 
+		  		padding: 1px 3px;
+		    	font-weight:bold;
+		    	font-size:10pt;
+			}
+	 
+		</style>
+	       
+		<script type="text/javascript">
+
+			function verticalChartExtender()
+			{
+				this.cfg.highlighter.show = false;
+	
+		    	this.cfg.seriesDefaults.pointLabels.show = true;
+		    	this.cfg.seriesDefaults.pointLabels.location = 'n';
+		    	this.cfg.seriesDefaults.pointLabels.ypadding = 5;
+			}
+	
+			function horizontalChartExtender()
+			{
+				this.cfg.highlighter.show = false;
+	
+		    	this.cfg.seriesDefaults.pointLabels.show = true;
+		    	this.cfg.seriesDefaults.pointLabels.location = 'e';
+		    	this.cfg.seriesDefaults.pointLabels.xpadding = 10;
+			}
+
+			jQuery(document).ready (function() 
+			{
+				jQuery("#showAllGroups").find("input").change (function () 
+						{
+							setupMaxGroups (jQuery(this).is (':checked'));
+						});
+
+				jQuery("#showAllExercises").find("input").change (function () 
+						{
+							setupMaxExercises (jQuery(this).is (':checked'));
+						});
+
+				jQuery("#onlyLastAttempt").find("input").change (function () 
+						{
+							setupOnlyLastAttempt(jQuery(this).is (':checked'));
+						});
+		
+				jQuery("#dateSelector").find("select").change (function () 
+						{
+							var interval = jQuery(this).find("option:selected").val() == "Interval";
+					
+							setupIntervalDates(interval);
+						});
+
+				
+				setupMaxGroups (jQuery("#showAllGroups").find("input").is (':checked'));
+				setupMaxExercises (jQuery("#showAllExercises").find("input").is (':checked'));
+				setupOnlyLastAttempt(jQuery("#onlyLastAttempt").find("input").is (':checked'));
+				setupIntervalDates(jQuery("#dateSelector").find("select option:selected").val() == "Interval");
+			});
+			
+			function setupMaxGroups(disableMaxGroups)
+			{
+				if(disableMaxGroups)
+				{
+					jQuery("#showMaxGroups").hide();						
+				}
+				else 
+				{
+					jQuery("#showMaxGroups").show();						
+				}
+			}
+
+			function setupMaxExercises(disableMaxExercises)
+			{
+				if(disableMaxExercises)
+				{
+					jQuery("#showMaxExercises").hide();						
+				}
+				else 
+				{
+					jQuery("#showMaxExercises").show();						
+				}
+			}
+
+			function setupOnlyLastAttempt(disableAttemptsNumber)
+			{
+				if(disableAttemptsNumber)
+				{
+					jQuery("#attemptsNumber").hide();						
+				}
+				else 
+				{
+					jQuery("#attemptsNumber").show();						
+				}
+			}
+			
+			function setupIntervalDates (showIntervalDates)
+			{
+				if(showIntervalDates)
+				{
+					jQuery("#intervalDates").show();						
+				}
+				else 
+				{
+					jQuery("#intervalDates").hide();						
+				}
+			}
+
+		</script> 
+	
+	</ui:define>
+</ui:composition>

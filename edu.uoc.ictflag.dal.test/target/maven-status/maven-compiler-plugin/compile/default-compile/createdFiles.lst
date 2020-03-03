@@ -1,0 +1,7 @@
+edu/uoc/ictflag/institution/dal/test/SubjectRepositoryTest.class
+edu/uoc/ictflag/security/dal/test/UserRepositoryTest.class
+edu/uoc/ictflag/security/dal/test/AuthorizationRepositoryTest.class
+edu/uoc/ictflag/institution/dal/test/CourseGroupRepositoryTest.class
+edu/uoc/ictflag/dal/test/DBTestHelper.class
+edu/uoc/ictflag/institution/dal/test/ProgramRepositoryTest.class
+edu/uoc/ictflag/institution/dal/test/CourseRepositoryTest.class

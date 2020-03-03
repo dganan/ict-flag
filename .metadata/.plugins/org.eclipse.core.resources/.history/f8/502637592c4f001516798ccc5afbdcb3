@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14382688048090" configfile="/edu.uoc.ictflag.institution.web2/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="pages/login.xhtml" x="338" y="370" id="pf14392220699170" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf14392220699171" inlinks="pf14392220699172" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/private/index.xhtml" x="554" y="370" id="pf14392220699173" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14392220699171" path="/private/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="144" y="384" id="pf14392220699174" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf14392220699172 pf14394756319590" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="public/*" x="122" y="178" id="pf14393673096525" referenceLink="//@navigationRule.2/@fromViewId|" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="public/error.xhtml" x="106" y="516" id="pf14393673096527" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf14394756319590" path="/error.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="private/*" x="122" y="948" id="pf14393673096528" referenceLink="//@navigationRule.3/@fromViewId|" path="/private/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="private/error.xhtml" x="122" y="1333" id="pf143936730965210" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" path="/private/error.xhtml"/>
+  <links id="pf14392220699171" target="pf14392220699173" source="pf14392220699170"/>
+  <links id="pf14392220699172" target="pf14392220699170" source="pf14392220699174"/>
+  <links id="pf14394756319590" target="pf14393673096527" source="pf14392220699174"/>
+</pageflow:Pageflow>

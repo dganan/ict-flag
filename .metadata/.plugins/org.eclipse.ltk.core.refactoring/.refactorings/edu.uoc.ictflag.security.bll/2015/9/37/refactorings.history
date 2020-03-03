@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;PasswordHasher.java&apos; to &apos;edu.uoc.ictflag.security.dal/src/edu.uoc.ictflag.security.dal&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.security.bll&apos;&#x0A;- Destination element: &apos;edu.uoc.ictflag.security.dal/src/edu.uoc.ictflag.security.dal&apos;&#x0A;- Original element: &apos;edu.com.ictflag.security.bll.PasswordHasher.java&apos;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="=edu.uoc.ictflag.security.dal/src&lt;edu.uoc.ictflag.security.dal" element1="/src&lt;edu.com.ictflag.security.bll{PasswordHasher.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1441945939729" units="1" version="1.0"/>
+</session>

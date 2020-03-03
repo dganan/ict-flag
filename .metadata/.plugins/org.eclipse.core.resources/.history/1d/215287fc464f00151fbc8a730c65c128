@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+<body>
+	<ui:composition>
+
+		<h:form id="header_form">
+
+			<!-- BEGIN HEADER -->
+			<div class="page-header md-shadow-z-1-i navbar navbar-fixed-top">
+				<!-- BEGIN HEADER INNER -->
+				<div class="page-header-inner">
+					<!-- BEGIN LOGO -->
+					<div class="page-logo">
+						<h:link outcome="index">
+							<h:graphicImage name="./assets/ictflag/img/logo-ICT-FLAG-small.png" alt="logo" class="logo-default" />
+						</h:link>
+						<div class="menu-toggler sidebar-toggler">
+							<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+						</div>
+					</div>
+					<!-- END LOGO -->
+
+					<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+					<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse"> </a>
+					<!-- END RESPONSIVE MENU TOGGLER -->
+
+					<!-- BEGIN PAGE TOP -->
+					<div class="page-top">
+						<!-- BEGIN TOP NAVIGATION MENU -->
+						<div class="top-menu">
+							<ul class="nav navbar-nav pull-right">
+								<li class="separator hide"></li>
+
+								<!-- BEGIN LANGUAGE BAR -->
+								<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+
+								<li class="dropdown dropdown-language">
+
+									<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+
+										<h:graphicImage name="./assets/global/img/flags/${localization.currentLanguage}.png" />
+										<span class="langname"> ${localization.currentLanguage} </span>
+
+										<i class="fa fa-angle-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+
+										<ui:repeat value="#{localization.supportedLanguages}" var="item">
+											<li>
+												<h:commandLink action="#{localization.changeLocale(item)}">
+													<h:graphicImage name="./assets/global/img/flags/${item}.png" />
+													<h:outputText value="#{msg[item]}" />
+												</h:commandLink>
+											</li>
+										</ui:repeat>
+
+									</ul>
+								</li>
+
+								<!-- END LANGUAGE BAR -->
+
+								<!-- BEGIN USER LOGIN DROPDOWN -->
+								<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+
+								<li class="dropdown dropdown-user">
+
+									<h:panelGroup rendered="#{not loginController.userLogged}">
+
+										<h:link outcome="login" class="loggedout dropdown-toggle">
+											<i class="icon-key"></i>
+											<span class="username username-hide-on-mobile"> #{msg.Login} </span>
+										</h:link>
+										
+									</h:panelGroup>
+
+									<h:panelGroup rendered="#{loginController.userLogged}">
+										<a href="javascript:;" class="loggedin dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+											<span class="username username-hide-on-mobile"> #{loginController.username} </span>
+											<!-- DOC: Do not remove below empty space(&#160;) as its purposely used -->
+											<h:graphicImage alt="" class="img-circle" name="./assets/admin/layout4/img/avatar.png" />
+										</a>
+										<ul class="dropdown-menu dropdown-menu-default">
+											<li>
+												<h:commandLink action="#{loginController.logout}" value="">
+													<i class="icon-key"></i>
+												#{msg.Logout}
+											</h:commandLink>
+											</li>
+										</ul>
+									</h:panelGroup>
+								</li>
+
+								<li class="dropdown dropdown-user"></li>
+								<!-- END USER LOGIN DROPDOWN -->
+							</ul>
+						</div>
+						<!-- END TOP NAVIGATION MENU -->
+					</div>
+
+					<!-- END PAGE TOP -->
+				</div>
+				<!-- END HEADER INNER -->
+			</div>
+			<!-- END HEADER -->
+
+		</h:form>
+
+	</ui:composition>
+</body>
+</html>

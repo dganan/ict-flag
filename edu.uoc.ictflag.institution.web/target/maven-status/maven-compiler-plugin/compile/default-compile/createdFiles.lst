@@ -1,0 +1,15 @@
+edu/uoc/ictflag/institution/web/ToolController.class
+edu/uoc/ictflag/institution/web/SubjectController.class
+edu/uoc/ictflag/institution/web/CoursesListController.class
+edu/uoc/ictflag/institution/web/LazyUserDataModel.class
+edu/uoc/ictflag/institution/web/CourseController.class
+edu/uoc/ictflag/institution/web/CourseGroupController.class
+edu/uoc/ictflag/institution/web/InstitutionController.class
+edu/uoc/ictflag/institution/web/InstitutionConstants.class
+edu/uoc/ictflag/institution/web/SubjectsListController.class
+edu/uoc/ictflag/institution/web/CourseGroupsListController.class
+edu/uoc/ictflag/institution/web/VLEController.class
+edu/uoc/ictflag/institution/web/VLEsListController.class
+edu/uoc/ictflag/institution/web/ProgramsListController.class
+edu/uoc/ictflag/institution/web/ProgramController.class
+edu/uoc/ictflag/institution/web/ToolsListController.class

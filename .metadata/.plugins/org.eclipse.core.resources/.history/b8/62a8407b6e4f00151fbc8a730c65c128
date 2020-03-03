@@ -1,0 +1,39 @@
+en = Inglés
+es = Español
+ca = Catalan
+
+Add_New = Añadir
+
+Add_translation = Añadir traducción
+
+Cancel = Cancelar
+
+Delete = Eliminar
+Delete_confirmation = La operación de eliminación no se puede deshacer y puede eliminar otros elementos relacionados. ¿Estás seguro que quieres continuar?
+
+Edit = Editar
+
+Edit_program = Editar programa 
+
+Incorrect_username_and_password = Nombre de usuario o contraseña incorrectos.
+
+Login = Login
+Login_to_your_account = Accede a tu cuenta
+
+Logout = Cerrar sesión
+
+Name = Nombre
+
+Password = Contraseña
+
+Please_enter_correct_username_and_password = Por favor introduzca un nombre de usuario y contraseña correctos.
+
+Programs = Programas
+
+Programs_List = Lista de programas
+
+Save = Guardar
+
+Username = Nombre de usuario
+
+

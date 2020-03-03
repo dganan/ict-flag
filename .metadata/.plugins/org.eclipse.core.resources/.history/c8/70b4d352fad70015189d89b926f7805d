@@ -1,0 +1,12 @@
+package edu.uoc.ictflag.ela.bll;
+
+import java.util.List;
+
+import edu.uoc.ictflag.ela.model.EventDataRaw;
+
+public interface IAssignmentDataManager
+{
+	void createEventData(EventDataRaw dataRaw) throws Exception;
+	
+	List<String> importActivityAssessmentData(String importText) throws Exception;
+}

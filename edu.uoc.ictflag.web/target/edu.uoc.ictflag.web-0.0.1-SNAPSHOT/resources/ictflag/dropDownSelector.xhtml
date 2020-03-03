@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+
+<composite:interface>
+	<composite:attribute name="propertyName" type="java.lang.String" required="true"></composite:attribute>
+	<composite:attribute name="availableValues" type="java.util.List" required="true"></composite:attribute>
+	<composite:attribute name="propertyValue" type="java.lang.Object" required="true"></composite:attribute>
+	<composite:attribute name="converter" type="javax.faces.convert.Converter" required="true"></composite:attribute>
+</composite:interface>
+
+<composite:implementation>
+
+	<h:selectOneMenu id="#{cc.attrs.propertyName}" value="#{cc.attrs.propertyValue}" class="form-control select2me"
+		data-placeholder="#{msg.Select_ellipsis}" converter="#{cc.attrs.converter}">
+		<f:selectItem itemLabel="#{msg.Select_ellipsis}" noSelectionOption="true"/>
+		<f:selectItems value="#{cc.attrs.availableValues}" var="item" itemValue="#{item}" itemLabel="#{localizationController.translate(item.name)}" />
+	</h:selectOneMenu>
+	<h:message for="#{cc.attrs.propertyName}" class="help-block has-error" />
+
+</composite:implementation>
+
+</html>
+

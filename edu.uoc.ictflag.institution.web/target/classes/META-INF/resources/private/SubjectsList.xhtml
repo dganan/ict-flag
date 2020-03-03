@@ -1,0 +1,72 @@
+<ui:composition template="../WEB-INF/templates/masterpage.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:ictflag="http://java.sun.com/jsf/composite/ictflag">
+
+	<ui:define name="head-title">ICT-FLAG #{msg.Subjects_List}</ui:define>
+
+	<ui:define name="title">#{msg.Subjects_List}</ui:define>
+
+	<ui:define name="breadcrumb"></ui:define>
+
+	<ui:define name="content">
+
+		<h:form>
+
+			<!-- BEGIN EXAMPLE TABLE PORTLET-->
+			<div class="portlet box green">
+				<div class="portlet-title">
+					<div class="caption">#{msg.Subjects}</div>
+				</div>
+				<div class="portlet-body">
+
+					<div class="table-toolbar">
+						<div class="row">
+							<div class="col-md-6">
+								<h:panelGroup rendered="#{authorizationController.userCanEdit('institution', 'Subject')}" class="btn-group">
+									<div class="img-fa-right-button">
+										<h:link class="btn blue" value="#{msg.Add_New}" outcome="EditSubject" />
+										<i class="fa fa-plus white"></i>
+									</div>
+								</h:panelGroup>
+							</div>
+						</div>
+					</div>
+				
+					<table class="table table-striped table-hover table-bordered">
+						<thead>
+							<tr>
+								<th>#{msg.Code}</th>
+								<th>#{msg.Name}</th>
+								<th><h:outputText value = "#{msg.Edit}" rendered="#{authorizationController.userCanEdit('institution', 'Subject')}" /></th>
+								<th><h:outputText value = "#{msg.Delete}" rendered="#{authorizationController.userCanDelete('institution', 'Subject')}" /></th>
+							</tr>
+						</thead>
+						<tbody>
+							<ui:repeat value="#{subjectsListController.subjectsList}" var="item">
+								<tr>
+									<td>#{item.code}</td>
+									<td>#{localizationController.translate(item.name)}</td>
+									<td>
+										<h:link class="edit" value="#{msg.Edit}" outcome="EditSubject" rendered="#{authorizationController.userCanEdit('institution', 'Subject')}">
+											<f:param name="id" value="#{item.id}" />
+										</h:link>
+									</td>
+									<td>
+										<h:commandLink class="delete" value="#{msg.Delete}" onclick="if (! confirm('#{msg.Delete_confirmation}') ) { return false;}; return true; "
+											action="#{subjectsListController.deleteSubject(item.id)}" rendered="#{authorizationController.userCanDelete('institution', 'Subject')}">
+											<f:param name="faces-redirect" value="true" />
+										</h:commandLink>
+									</td>
+								</tr>
+							</ui:repeat>
+						</tbody>
+					</table>
+
+					<ictflag:showWarnings />
+
+				</div>
+			</div>
+			<!-- END EXAMPLE TABLE PORTLET-->
+
+		</h:form>
+	</ui:define>
+</ui:composition>

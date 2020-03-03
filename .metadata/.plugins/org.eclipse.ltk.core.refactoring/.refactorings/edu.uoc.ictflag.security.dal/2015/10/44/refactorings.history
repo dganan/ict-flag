@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;edu.uoc.ictflag.security.dal.IUserRepository.getUser(...)&apos; to &apos;getUserByUsername&apos;&#x0A;- Original project: &apos;edu.uoc.ictflag.security.dal&apos;&#x0A;- Original element: &apos;edu.uoc.ictflag.security.dal.IUserRepository.getUser(...)&apos;&#x0A;- Renamed element: &apos;edu.uoc.ictflag.security.dal.IUserRepository.getUserByUsername(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;getUser&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;edu.uoc.ictflag.security.dal{IUserRepository.java[IUserRepository~getUser~QString;" name="getUserByUsername" references="true" stamp="1446292775287" version="1.0"/>
+</session>

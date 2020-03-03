@@ -1,0 +1,756 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.core:edu.uoc.ictflag.core:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.core/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 2 resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 28 source files to /home/david/ICTFLAG/edu.uoc.ictflag.core/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.core/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.core/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.core/target/edu.uoc.ictflag.core-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.core/target/edu.uoc.ictflag.core-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/core/edu.uoc.ictflag.core/0.0.1-SNAPSHOT/edu.uoc.ictflag.core-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3 seconds
+[INFO] Finished at: Thu Oct 01 23:06:06 CEST 2015
+[INFO] Final Memory: 31M/335M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.security.model:edu.uoc.ictflag.security.model:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.security.model/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 11 source files to /home/david/ICTFLAG/edu.uoc.ictflag.security.model/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.security.model/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.security.model/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.security.model/target/edu.uoc.ictflag.security.model-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.security.model/target/edu.uoc.ictflag.security.model-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/security/model/edu.uoc.ictflag.security.model/0.0.1-SNAPSHOT/edu.uoc.ictflag.security.model-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:09 CEST 2015
+[INFO] Final Memory: 32M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.institution.model:edu.uoc.ictflag.institution.model:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.institution.model/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 8 source files to /home/david/ICTFLAG/edu.uoc.ictflag.institution.model/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.institution.model/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.institution.model/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.institution.model/target/edu.uoc.ictflag.institution.model-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.institution.model/target/edu.uoc.ictflag.institution.model-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/institution/model/edu.uoc.ictflag.institution.model/0.0.1-SNAPSHOT/edu.uoc.ictflag.institution.model-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:12 CEST 2015
+[INFO] Final Memory: 31M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.gamification.model:edu.uoc.ictflag.gamification.model:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.gamification.model/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 1 source file to /home/david/ICTFLAG/edu.uoc.ictflag.gamification.model/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.gamification.model/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.gamification.model/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.gamification.model/target/edu.uoc.ictflag.gamification.model-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.gamification.model/target/edu.uoc.ictflag.gamification.model-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/gamification/model/edu.uoc.ictflag.gamification.model/0.0.1-SNAPSHOT/edu.uoc.ictflag.gamification.model-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:15 CEST 2015
+[INFO] Final Memory: 30M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.security.dal:edu.uoc.ictflag.security.dal:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.security.dal/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 2 resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 6 source files to /home/david/ICTFLAG/edu.uoc.ictflag.security.dal/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.security.dal/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.security.dal/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.security.dal/target/edu.uoc.ictflag.security.dal-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.security.dal/target/edu.uoc.ictflag.security.dal-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/security/dal/edu.uoc.ictflag.security.dal/0.0.1-SNAPSHOT/edu.uoc.ictflag.security.dal-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:18 CEST 2015
+[INFO] Final Memory: 30M/334M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.institution.dal:edu.uoc.ictflag.institution.dal:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.institution.dal/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 2 resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 13 source files to /home/david/ICTFLAG/edu.uoc.ictflag.institution.dal/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.institution.dal/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.institution.dal/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.institution.dal/target/edu.uoc.ictflag.institution.dal-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.institution.dal/target/edu.uoc.ictflag.institution.dal-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/institution/dal/edu.uoc.ictflag.institution.dal/0.0.1-SNAPSHOT/edu.uoc.ictflag.institution.dal-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:21 CEST 2015
+[INFO] Final Memory: 31M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.security.bll:edu.uoc.ictflag.security.bll:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.security.bll/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 2 resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 6 source files to /home/david/ICTFLAG/edu.uoc.ictflag.security.bll/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.security.bll/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.security.bll/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.security.bll/target/edu.uoc.ictflag.security.bll-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.security.bll/target/edu.uoc.ictflag.security.bll-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/security/bll/edu.uoc.ictflag.security.bll/0.0.1-SNAPSHOT/edu.uoc.ictflag.security.bll-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:24 CEST 2015
+[INFO] Final Memory: 31M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.institution.bll:edu.uoc.ictflag.institution.bll:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.institution.bll/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 2 resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 12 source files to /home/david/ICTFLAG/edu.uoc.ictflag.institution.bll/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.institution.bll/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.institution.bll/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.institution.bll/target/edu.uoc.ictflag.institution.bll-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.institution.bll/target/edu.uoc.ictflag.institution.bll-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/institution/bll/edu.uoc.ictflag.institution.bll/0.0.1-SNAPSHOT/edu.uoc.ictflag.institution.bll-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:27 CEST 2015
+[INFO] Final Memory: 32M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.security.web:edu.uoc.ictflag.security.web:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.security.web/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.security.web/src/main/resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Nothing to compile - all classes are up to date
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.security.web/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.security.web/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.security.web/target/edu.uoc.ictflag.security.web-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.security.web/target/edu.uoc.ictflag.security.web-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/security/web/edu.uoc.ictflag.security.web/0.0.1-SNAPSHOT/edu.uoc.ictflag.security.web-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1 second
+[INFO] Finished at: Thu Oct 01 23:06:29 CEST 2015
+[INFO] Final Memory: 24M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.institution.web:edu.uoc.ictflag.institution.web:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.institution.web/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.institution.web/src/main/resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 12 source files to /home/david/ICTFLAG/edu.uoc.ictflag.institution.web/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.institution.web/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.institution.web/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.institution.web/target/edu.uoc.ictflag.institution.web-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.institution.web/target/edu.uoc.ictflag.institution.web-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/institution/web/edu.uoc.ictflag.institution.web/0.0.1-SNAPSHOT/edu.uoc.ictflag.institution.web-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:32 CEST 2015
+[INFO] Final Memory: 33M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.web:edu.uoc.ictflag.web:war:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.web/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.web/src/main/resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 8 source files to /home/david/ICTFLAG/edu.uoc.ictflag.web/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.web/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.web/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [war:war {execution: default-war}]
+[INFO] Packaging webapp
+[INFO] Assembling webapp [edu.uoc.ictflag.web] in [/home/david/ICTFLAG/edu.uoc.ictflag.web/target/edu.uoc.ictflag.web-0.0.1-SNAPSHOT]
+[INFO] Processing war project
+[INFO] Copying webapp resources [/home/david/ICTFLAG/edu.uoc.ictflag.web/WebContent]
+[INFO] Webapp assembled in [122 msecs]
+[INFO] Building war: /home/david/ICTFLAG/edu.uoc.ictflag.web/target/edu.uoc.ictflag.web-0.0.1-SNAPSHOT.war
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.web/target/edu.uoc.ictflag.web-0.0.1-SNAPSHOT.war to /home/david/.m2/repository/edu/uoc/ictflag/web/edu.uoc.ictflag.web/0.0.1-SNAPSHOT/edu.uoc.ictflag.web-0.0.1-SNAPSHOT.war
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3 seconds
+[INFO] Finished at: Thu Oct 01 23:06:36 CEST 2015
+[INFO] Final Memory: 42M/529M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.setup.core:edu.uoc.ictflag.setup.core:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.setup.core/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.setup.core/src/main/resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 1 source file to /home/david/ICTFLAG/edu.uoc.ictflag.setup.core/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.setup.core/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.setup.core/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.setup.core/target/edu.uoc.ictflag.setup.core-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.setup.core/target/edu.uoc.ictflag.setup.core-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/setup/core/edu.uoc.ictflag.setup.core/0.0.1-SNAPSHOT/edu.uoc.ictflag.setup.core-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:39 CEST 2015
+[INFO] Final Memory: 31M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.helpers.DBConfigurator:edu.uoc.ictflag.helpers.DBConfigurator:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.helpers.DBConfigurator/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 1 source file to /home/david/ICTFLAG/edu.uoc.ictflag.helpers.DBConfigurator/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.helpers.DBConfigurator/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.helpers.DBConfigurator/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.helpers.DBConfigurator/target/edu.uoc.ictflag.helpers.DBConfigurator-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.helpers.DBConfigurator/target/edu.uoc.ictflag.helpers.DBConfigurator-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/helpers/DBConfigurator/edu.uoc.ictflag.helpers.DBConfigurator/0.0.1-SNAPSHOT/edu.uoc.ictflag.helpers.DBConfigurator-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:42 CEST 2015
+[INFO] Final Memory: 31M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.core.test:edu.uoc.ictflag.core.test:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.core.test/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.core.test/src/main/resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 1 source file to /home/david/ICTFLAG/edu.uoc.ictflag.core.test/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.core.test/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.core.test/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.core.test/target/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.core.test/target/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/core/test/edu.uoc.ictflag.core.test/0.0.1-SNAPSHOT/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:45 CEST 2015
+[INFO] Final Memory: 32M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.core.test:edu.uoc.ictflag.core.test:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.web.test/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.web.test/src/main/resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 3 source files to /home/david/ICTFLAG/edu.uoc.ictflag.web.test/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.web.test/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.web.test/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.web.test/target/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.web.test/target/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/core/test/edu.uoc.ictflag.core.test/0.0.1-SNAPSHOT/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:49 CEST 2015
+[INFO] Final Memory: 33M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.core.test:edu.uoc.ictflag.core.test:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.bll.test/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.bll.test/src/main/resources
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 4 source files to /home/david/ICTFLAG/edu.uoc.ictflag.bll.test/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.bll.test/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.bll.test/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.bll.test/target/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.bll.test/target/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/core/test/edu.uoc.ictflag.core.test/0.0.1-SNAPSHOT/edu.uoc.ictflag.core.test-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:52 CEST 2015
+[INFO] Final Memory: 29M/324M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag.helpers.DBConfigurator:edu.uoc.ictflag.helpers.DBConfigurator:jar:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag.dal.test/target
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] [compiler:compile {execution: default-compile}]
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 7 source files to /home/david/ICTFLAG/edu.uoc.ictflag.dal.test/target/classes
+[INFO] [resources:testResources {execution: default-testResources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag.dal.test/src/test/resources
+[INFO] [compiler:testCompile {execution: default-testCompile}]
+[INFO] No sources to compile
+[INFO] [surefire:test {execution: default-test}]
+[INFO] No tests to run.
+[INFO] Surefire report directory: /home/david/ICTFLAG/edu.uoc.ictflag.dal.test/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] [jar:jar {execution: default-jar}]
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag.dal.test/target/edu.uoc.ictflag.helpers.DBConfigurator-0.0.1-SNAPSHOT.jar
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag.dal.test/target/edu.uoc.ictflag.helpers.DBConfigurator-0.0.1-SNAPSHOT.jar to /home/david/.m2/repository/edu/uoc/ictflag/helpers/DBConfigurator/edu.uoc.ictflag.helpers.DBConfigurator/0.0.1-SNAPSHOT/edu.uoc.ictflag.helpers.DBConfigurator-0.0.1-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2 seconds
+[INFO] Finished at: Thu Oct 01 23:06:55 CEST 2015
+[INFO] Final Memory: 33M/323M
+[INFO] ------------------------------------------------------------------------
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Unnamed - edu.uoc.ictflag:edu.uoc.ictflag:ear:0.0.1-SNAPSHOT
+[INFO]    task-segment: [clean, install]
+[INFO] ------------------------------------------------------------------------
+[INFO] [clean:clean {execution: default-clean}]
+[INFO] Deleting /home/david/ICTFLAG/edu.uoc.ictflag/target
+[INFO] [ear:generate-application-xml {execution: default-generate-application-xml}]
+[INFO] [resources:resources {execution: default-resources}]
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/david/ICTFLAG/edu.uoc.ictflag/src/main/resources
+[INFO] [ear:ear {execution: default-ear}]
+[INFO] Copying artifact [war:edu.uoc.ictflag.web:edu.uoc.ictflag.web:0.0.1-SNAPSHOT] to [edu.uoc.ictflag.web.war]
+[INFO] Copying artifact [jar:edu.uoc.ictflag.core:edu.uoc.ictflag.core:0.0.1-SNAPSHOT] to [lib/edu.uoc.ictflag.core-0.0.1-SNAPSHOT.jar]
+[INFO] Copying artifact [jar:org.apache.logging.log4j:log4j-api:2.3] to [lib/log4j-api-2.3.jar]
+[INFO] Copying artifact [jar:org.apache.logging.log4j:log4j-core:2.3] to [lib/log4j-core-2.3.jar]
+[INFO] Copying artifact [jar:org.apache.logging.log4j:log4j-web:2.3] to [lib/log4j-web-2.3.jar]
+[INFO] Copying artifact [jar:org.modelmapper:modelmapper:0.7.4] to [lib/modelmapper-0.7.4.jar]
+[INFO] Copying artifact [jar:edu.uoc.ictflag.institution.model:edu.uoc.ictflag.institution.model:0.0.1-SNAPSHOT] to [lib/edu.uoc.ictflag.institution.model-0.0.1-SNAPSHOT.jar]
+[INFO] Copying artifact [jar:edu.uoc.ictflag.institution.bll:edu.uoc.ictflag.institution.bll:0.0.1-SNAPSHOT] to [lib/edu.uoc.ictflag.institution.bll-0.0.1-SNAPSHOT.jar]
+[INFO] Copying artifact [jar:edu.uoc.ictflag.institution.dal:edu.uoc.ictflag.institution.dal:0.0.1-SNAPSHOT] to [lib/edu.uoc.ictflag.institution.dal-0.0.1-SNAPSHOT.jar]
+[INFO] Copying artifact [jar:edu.uoc.ictflag.security.model:edu.uoc.ictflag.security.model:0.0.1-SNAPSHOT] to [lib/edu.uoc.ictflag.security.model-0.0.1-SNAPSHOT.jar]
+[INFO] Copying artifact [jar:edu.uoc.ictflag.security.bll:edu.uoc.ictflag.security.bll:0.0.1-SNAPSHOT] to [lib/edu.uoc.ictflag.security.bll-0.0.1-SNAPSHOT.jar]
+[INFO] Copying artifact [jar:edu.uoc.ictflag.security.dal:edu.uoc.ictflag.security.dal:0.0.1-SNAPSHOT] to [lib/edu.uoc.ictflag.security.dal-0.0.1-SNAPSHOT.jar]
+[INFO] Copying artifact [jar:org.omnifaces:omnifaces:2.1] to [lib/omnifaces-2.1.jar]
+[INFO] Copying artifact [jar:org.primefaces:primefaces:5.2] to [lib/primefaces-5.2.jar]
+[INFO] Copy ear sources to /home/david/ICTFLAG/edu.uoc.ictflag/target/edu.uoc.ictflag-0.0.1-SNAPSHOT
+[INFO] Could not find manifest file: /home/david/ICTFLAG/edu.uoc.ictflag/target/edu.uoc.ictflag-0.0.1-SNAPSHOT/META-INF/MANIFEST.MF - Generating one
+[INFO] Building jar: /home/david/ICTFLAG/edu.uoc.ictflag/target/edu.uoc.ictflag-0.0.1-SNAPSHOT.ear
+[INFO] [install:install {execution: default-install}]
+[INFO] Installing /home/david/ICTFLAG/edu.uoc.ictflag/target/edu.uoc.ictflag-0.0.1-SNAPSHOT.ear to /home/david/.m2/repository/edu/uoc/ictflag/edu.uoc.ictflag/0.0.1-SNAPSHOT/edu.uoc.ictflag-0.0.1-SNAPSHOT.ear
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1 second
+[INFO] Finished at: Thu Oct 01 23:06:57 CEST 2015
+[INFO] Final Memory: 21M/323M
+[INFO] ------------------------------------------------------------------------

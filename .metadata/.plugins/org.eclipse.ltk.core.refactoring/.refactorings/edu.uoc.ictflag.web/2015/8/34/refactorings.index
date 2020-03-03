@@ -1,0 +1,31 @@
+1439811686106	Copy package
+1439811749403	Delete element
+1439811845962	Copy file
+1439828900423	Move file
+1439828974331	Delete element
+1439831645295	Copy compilation unit
+1439831650782	Copy compilation unit
+1439831656324	Delete element
+1439833236187	Delete element
+1439833241756	Delete element
+1439908424390	Move compilation unit
+1439909771265	Rename method 'getResourceBundleString'
+1439909784743	Rename method 'getResourceBundleString'
+1439909839568	Move files
+1439909847491	Delete element
+1439912835476	Delete element
+1439917277457	Move files
+1439920177694	Move 'ictflag.js' to 'js'
+1439920305703	Rename resource 'js'
+1440019828936	Rename resource 'localizedStringEditor'
+1440019838590	Delete element
+1440025539049	Move 'LocalizedStringEditor.xhtml' to 'ictflag'
+1440026044949	Rename resource 'LocalizedStringEditor.xhtml'
+1440027582051	Move 'ictflag' to 'WebContent'
+1440031168647	Delete element
+1440031214405	Rename resource 'tags'
+1440031222133	Move 'localizedStringEditor.xhtml' to 'components'
+1440031225617	Delete element
+1440031393644	Move 'components' to 'WebContent'
+1440031831121	Delete element
+1440032077245	Delete element

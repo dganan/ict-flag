@@ -1,0 +1,39 @@
+package edu.uoc.ictflag.institution.bll.test;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import edu.uoc.ictflag.institution.bll.ProgramService;
+import edu.uoc.ictflag.institution.dal.IProgramRepository;
+
+@RunWith(MockitoJUnitRunner.class)
+public class ProgramServiceTest
+{
+	@Mock
+	IProgramRepository programRepository;
+	
+	@Test
+	public void getProgramsListTest()
+	{
+		ProgramService ps = new ProgramService (programRepository);
+		
+		List<Program> lp = ps.getProgramsList();
+	}
+
+	@Test
+	public void deleteProgramTest()
+	{
+	}
+	
+	@Test
+	public void getProgramTest()
+	{
+	}
+	
+	@Test
+	public void createOrUpdateProgramTest()
+	{
+	}
+}

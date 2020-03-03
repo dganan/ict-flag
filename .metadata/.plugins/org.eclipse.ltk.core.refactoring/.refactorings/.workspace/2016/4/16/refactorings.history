@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;edu.uoc.ictflag.reports.ela&apos; to &apos;edu.uoc.ictflag.ela.reports&apos;" description="Rename resource &apos;edu.uoc.ictflag.reports.ela&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/edu.uoc.ictflag.reports.ela" name="edu.uoc.ictflag.ela.reports" stamp="1461335066507" updateReferences="true"/>
+</session>

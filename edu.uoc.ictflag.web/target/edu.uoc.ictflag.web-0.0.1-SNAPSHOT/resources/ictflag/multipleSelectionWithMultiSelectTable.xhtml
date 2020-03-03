@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite" xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+	<composite:attribute name="listener" type="edu.uoc.ictflag.core.IMultipleSelectionListener" required="true"></composite:attribute>
+	<composite:attribute name="propertyName" type="java.lang.String" required="true"></composite:attribute>
+	<composite:attribute name="sourceValues" type="java.util.List" required="true"></composite:attribute>
+	<composite:attribute name="selectedValues" type="java.util.List" required="true"></composite:attribute>
+	<!-- 	<composite:attribute name="propertyValues" type="org.primefaces.model.DualListModel" required="true"></composite:attribute> -->
+	<composite:attribute name="converter" type="edu.uoc.ictflag.core.IIdentifiableConverter" required="true"></composite:attribute>
+</composite:interface>
+
+<composite:implementation>
+
+	<p:dataTable var="item" value="#{cc.attrs.sourceValues}" style="margin-bottom:0">
+
+		<p:ajax event="rowSelectCheckbox" listener="#{cc.attrs.listener.onRowSelectCheckbox}" update=":#{cc.clientId}:#{cc.attrs.propertyName}-selected" />
+		<p:ajax event="rowUnselectCheckbox" listener="#{cc.attrs.listener.onRowUnselectCheckbox}" update=":#{cc.clientId}:#{cc.attrs.propertyName}-selected" />
+
+		<p:ajax event="rowSelect" listener="#{cc.attrs.listener.onRowSelect}" update=":#{cc.clientId}:#{cc.attrs.propertyName}-selected" />
+		<p:ajax event="rowUnselect" listener="#{cc.attrs.listener.onRowUnselect}" update=":#{cc.clientId}:#{cc.attrs.propertyName}-selected" />
+
+		<p:column selectionMode="multiple" style="width:40px;text-align:center" />
+
+		<p:column headerText="#{msg.Available_items}">
+			<h:outputText value="#{item.toString()}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<p:outputPanel id="#{cc.attrs.propertyName}-selected" style="float:right; margin-left:10px">
+		<p:dataList value="#{cc.attrs.selectedValues}" var="item" type="ordered">
+			<div class="img-fa-only-button float-right">
+				<h:commandButton class="btn transparent submit" value="" action="#{cc.attrs.listener.unselectItem(item.id)}" />
+				<i class="fa fa-times"></i>
+			</div>
+        	#{item.toString()}
+    	</p:dataList>
+	</p:outputPanel>
+
+	<!-- 	<p:pickList class="form-control placeholder-no-fix" id="#{cc.attrs.propertyName}" value="#{cc.attrs.propertyValues}" var="item" itemLabel="#{localizationController.translate(item.name)}" itemValue="#{item}" -->
+	<!-- 		converter="#{cc.attrs.converter}" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" responsive="true" addLabel="#{msg.Add}" addAllLabel="#{msg.Add_all}" removeLabel="#{msg.Remove}" removeAllLabel="#{msg.Remove_all}"> -->
+
+	<!-- 		<f:facet name="sourceCaption">#{msg.Available_items}</f:facet> -->
+	<!-- 		<f:facet name="targetCaption">#{msg.Selected_items}</f:facet> -->
+
+	<!-- 	</p:pickList> -->
+
+	<div>
+		<h:message for="#{cc.attrs.propertyName}" class="has-error help-block" />
+	</div>
+
+</composite:implementation>
+
+</html>
+

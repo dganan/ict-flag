@@ -1,0 +1,142 @@
+package edu.uoc.ictflag.core.dal;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
+
+public abstract class BaseRepository {
+
+	protected static <T> List<T> getQueryResult (String query, Class<T> c)
+	{
+		return getQueryResult(query, c, null);
+	}
+
+	protected static <T> List<T> getQueryResult (String query, Class<T> c, Map<String, Object> parameters)
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("FastPrk Assembly");
+
+		EntityManager em = emf.createEntityManager();
+
+		em.getTransaction().begin();
+		
+		Query q = c != null ? em.createQuery(query, c) : em.createQuery(query);
+
+		if (parameters != null)
+		{
+			for (String key : parameters.keySet())
+			{
+				Object o = parameters.get(key);
+				
+				if (o instanceof Date)
+				{
+					Date d = (Date)o;
+					
+					q = q.setParameter(key, d, TemporalType.DATE);
+				}
+				else
+				{
+					q = q.setParameter(key, o);
+				}
+			}
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<T> results = q.getResultList();
+		
+		em.getTransaction().commit();
+		
+		em.close();
+		emf.close();
+		
+		return results;
+	}
+
+	protected static int executeUpdate (String query, Map<String, Object> parameters)
+	{
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("FastPrk Assembly");
+
+		EntityManager em = emf.createEntityManager();
+
+		em.getTransaction().begin();
+		
+		Query q = em.createQuery(query);
+
+		if (parameters != null)
+		{
+			for (String key : parameters.keySet())
+			{
+				Object o = parameters.get(key);
+				
+				if (o instanceof Date)
+				{
+					Date d = (Date)o;
+					
+					q = q.setParameter(key, d, TemporalType.DATE);
+				}
+				else
+				{
+					q = q.setParameter(key, o);
+				}
+			}
+		}
+		
+		int count = q.executeUpdate();
+		
+		em.getTransaction().commit();
+		
+		em.close();
+		emf.close();
+		
+		return count;
+	}
+	
+	protected static int executeNativeUpdate (String query, Map<String, Object> parameters) throws Exception
+	{
+		int count = -1;
+		
+			EntityManagerFactory emf = Persistence.createEntityManagerFactory("FastPrk Assembly");
+
+			EntityManager em = emf.createEntityManager();
+	
+			em.getTransaction().begin();
+			
+			query = query.replaceAll(":", "?");
+	
+			Query q = em.createNativeQuery(query);
+	
+			if (parameters != null)
+			{
+				for (String key : parameters.keySet())
+				{
+					Object o = parameters.get(key);
+					
+					if (o instanceof Date)
+					{
+						Date d = (Date)o;
+						
+						q = q.setParameter(key, d, TemporalType.DATE);
+					}
+					else
+					{
+						q = q.setParameter(key, o);
+					}
+				}
+			}
+			
+			count = q.executeUpdate();
+
+			em.getTransaction().commit();
+			
+			em.close();
+			emf.close();
+			
+		return count;
+	}
+}
+

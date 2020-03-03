@@ -1,0 +1,152 @@
+package edu.uoc.ictflag.institution.web;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.validation.Valid;
+
+import edu.uoc.ictflag.core.IIdentifiableConverter;
+import edu.uoc.ictflag.core.StringUtils;
+import edu.uoc.ictflag.core.log.LogHelper;
+import edu.uoc.ictflag.core.web.NavigationHelper;
+import edu.uoc.ictflag.core.web.SessionBean;
+import edu.uoc.ictflag.core.web.URLHelper;
+import edu.uoc.ictflag.core.web.ValidationHelper;
+import edu.uoc.ictflag.institution.bll.ICourseGroupManager;
+import edu.uoc.ictflag.institution.model.CourseGroup;
+import edu.uoc.ictflag.security.model.User;
+
+@Named
+@ViewScoped
+public class CourseGroupController implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	@Valid
+	private CourseGroup courseGroup;
+	
+	private List<User> instructors;
+	private List<User> courseGroupMembers;
+	private List<User> availableCourseGroupMembers;
+		
+	private DualListModel<User> courseGroupMembersDualModel;
+	
+	private IIdentifiableConverter<User> instructorConverter;
+	//	private IIdentifiableConverter<CourseGroupMember> courseGroupMemberConverter;
+	
+	@Inject
+	ValidationHelper validationHelper;
+	
+	@Inject
+	URLHelper urlHelper;
+	
+	@Inject
+	ICourseGroupManager courseGroupManager;
+	
+	//	@Inject
+	//	ICourseGroupMemberManager courseGroupMemberManager;
+	
+	public CourseGroupController()
+	{
+	}
+	
+	public void initialize() throws Exception
+	{
+		try
+		{
+			if (!FacesContext.getCurrentInstance().isPostback())
+			{
+				String id = urlHelper.getQueryAttribute("id");
+				
+				Long l = StringUtils.tryParse(id, null);
+				
+				if (l == null)
+				{
+					courseGroup = new CourseGroup();
+				}
+				else
+				{
+					courseGroup = courseGroupManager.getCourseGroup(SessionBean.getUsername(), l);
+				}
+				
+				instructors = courseGroupManager.getInstructors(SessionBean.getUsername());
+				
+				//				courseGroupMembers = courseGroupMemberManager.getCourseGroupMembersList(SessionBean.getUsername());
+				//				
+				//				availableCourseGroupMembers = new ArrayList<CourseGroupMember>(courseGroupMembers);
+				//				
+				//				for (CourseGroupMember s : courseGroup.getMembers())
+				//				{
+				//					availableCourseGroupMembers.remove(s);
+				//				}
+				
+				instructorConverter = new IIdentifiableConverter<User>(instructors);
+				//				courseGroupMemberConverter = new IIdentifiableConverter<CourseGroupMember>(courseGroupMembers);
+				//				
+				//				courseGroupMembersDualModel = new DualListModel<CourseGroupMember>();
+				//				
+				//				courseGroupMembersDualModel.setSource(availableCourseGroupMembers);
+				//				courseGroupMembersDualModel.setTarget(new ArrayList<CourseGroupMember>(courseGroup.getMembers()));
+			}
+		}
+		catch (Exception e)
+		{
+			LogHelper.error(e);
+			
+			NavigationHelper.redirectTo404();
+		}
+	}
+	
+	public CourseGroup getCourseGroup()
+	{
+		return courseGroup;
+	}
+	
+	public void setCourseGroup(CourseGroup courseGroup)
+	{
+		this.courseGroup = courseGroup;
+	}
+	
+	public List<User> getCourseGroupManagers()
+	{
+		return instructors;
+	}
+	
+	//	public DualListModel<CourseGroupMember> getCourseGroupMembersDualModel()
+	//	{
+	//		return courseGroupMembersDualModel;
+	//	}
+	//	
+	//	public void setCourseGroupMembersDualModel(DualListModel<CourseGroupMember> dlm)
+	//	{
+	//		courseGroupMembersDualModel = dlm;
+	//	}
+	
+	public IIdentifiableConverter<User> getCourseGroupManagerConverter()
+	{
+		return instructorConverter;
+	}
+	
+	//	public IIdentifiableConverter<CourseGroupMember> getCourseGroupMemberConverter()
+	//	{
+	//		return courseGroupMemberConverter;
+	//	}
+	
+	public String save() throws Exception
+	{
+		//		courseGroup.setMembers(new HashSet<CourseGroupMember>(courseGroupMembersDualModel.getTarget()));
+		
+		if (validationHelper.validate(this))
+		{
+			courseGroupManager.createOrUpdateCourseGroup(SessionBean.getUsername(), courseGroup);
+			
+			return InstitutionConstants.CourseGroupsListPageUrl + URLHelper.facesRedirectTrue;
+		}
+		
+		return "invalid";
+	}
+}

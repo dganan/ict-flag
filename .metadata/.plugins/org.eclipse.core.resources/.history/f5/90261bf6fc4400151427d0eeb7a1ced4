@@ -1,0 +1,32 @@
+package com.lissenberg.beanvalidation;
+
+import javax.inject.Named;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/**
+ * @author Harro Lissenberg
+ */
+@Named
+public class Bean {
+	@NotNull
+	Long id;
+	@Size(min = 1, max = 10)
+	String name;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+}

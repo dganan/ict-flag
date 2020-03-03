@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1438444401764_1" label="Model" name="Model">
+<item elementID="=edu.uoc.ictflag.gamification.model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.institution.model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.ela.model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.security.model" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1438444422442_2" label="BLL" name="BLL">
+<item elementID="=edu.uoc.ictflag.institution.bll" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.security.bll" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.ela.bll" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1438444435924_3" label="DAL" name="DAL">
+<item elementID="=edu.uoc.ictflag.ela.dal" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.institution.dal" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.security.dal" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1438444470200_4" label="Application" name="Application">
+<item elementID="=edu.uoc.ictflag.ela.web" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.institution.web" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.core" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.security.web" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/edu.uoc.ictflag" type="4"/>
+<item elementID="=edu.uoc.ictflag.web" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1438444486156_5" label="TEST" name="TEST">
+<item elementID="=edu.uoc.ictflag.core.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.dal.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.bll.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.web.test" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1438495691542_7" label="SETUP" name="SETUP">
+<item elementID="=edu.uoc.ictflag.helpers.SetupHelper" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.helpers.PilotConfiguration" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.setup.core" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+<item elementID="=edu.uoc.ictflag.helpers.DBConfigurator" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1445711486061_11" label="Clientlib" name="Clientlib">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/edu.uoc.ictflag.clientlib.java" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/edu.uoc.ictflag.clientlib.php" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1445711512365_12" label="Sample clients" name="Sample clients">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/edu.uoc.ictflag.fakefat.java" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1437933880134_0" label="Window Working Set" name="Aggregate for window 1437933880133"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1438444490564_6" label="Multiple Working Sets" name="Aggregate:Application:BLL:DAL:Model:TEST:">
+<workingSet IMemento.internal.id="Application"/>
+<workingSet IMemento.internal.id="BLL"/>
+<workingSet IMemento.internal.id="DAL"/>
+<workingSet IMemento.internal.id="Model"/>
+<workingSet IMemento.internal.id="TEST"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1441097510572_12" label="Multiple Working Sets" name="Aggregate:Application:BLL:DAL:EXAMPLES:HELPERS:Model:TEST:">
+<workingSet IMemento.internal.id="Application"/>
+<workingSet IMemento.internal.id="BLL"/>
+<workingSet IMemento.internal.id="DAL"/>
+<workingSet IMemento.internal.id="SETUP"/>
+<workingSet IMemento.internal.id="Model"/>
+<workingSet IMemento.internal.id="TEST"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1441533448382_11" label="Multiple Working Sets" name="Aggregate:Application:BLL:DAL:HELPERS:Model:TEST:">
+<workingSet IMemento.internal.id="Application"/>
+<workingSet IMemento.internal.id="BLL"/>
+<workingSet IMemento.internal.id="DAL"/>
+<workingSet IMemento.internal.id="SETUP"/>
+<workingSet IMemento.internal.id="Model"/>
+<workingSet IMemento.internal.id="TEST"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1444980690489_15" label="Multiple Working Sets" name="Aggregate:Application:BLL:DAL:Model:SETUP:TEST:">
+<workingSet IMemento.internal.id="Application"/>
+<workingSet IMemento.internal.id="BLL"/>
+<workingSet IMemento.internal.id="DAL"/>
+<workingSet IMemento.internal.id="Model"/>
+<workingSet IMemento.internal.id="SETUP"/>
+<workingSet IMemento.internal.id="TEST"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1445716279811_22" label="Multiple Working Sets" name="Aggregate:Application:BLL:Clientlib:DAL:Model:Sample clients:SETUP:TEST:">
+<workingSet IMemento.internal.id="Application"/>
+<workingSet IMemento.internal.id="BLL"/>
+<workingSet IMemento.internal.id="Clientlib"/>
+<workingSet IMemento.internal.id="DAL"/>
+<workingSet IMemento.internal.id="Model"/>
+<workingSet IMemento.internal.id="Sample clients"/>
+<workingSet IMemento.internal.id="SETUP"/>
+<workingSet IMemento.internal.id="TEST"/>
+</workingSet>
+<mruList name="Sample clients"/>
+<mruList name="Application"/>
+<mruList name="SETUP"/>
+</workingSetManager>

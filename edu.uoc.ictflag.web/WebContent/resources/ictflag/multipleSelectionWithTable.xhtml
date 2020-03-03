@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite" xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+	<composite:attribute name="listener" type="edu.uoc.ictflag.core.IMultipleSelectionListener" required="true"></composite:attribute>
+	<composite:attribute name="propertyName" type="java.lang.String" required="true"></composite:attribute>
+	<composite:attribute name="sourceValues" type="org.primefaces.model.LazyDataModel" required="true"></composite:attribute>
+	<composite:attribute name="selectedValues" type="java.util.Set" required="true"></composite:attribute>
+</composite:interface>
+
+<composite:implementation>
+
+	<p:dataTable var="item" value="#{cc.attrs.sourceValues}" style="margin-bottom:0; float:left; width:48%" emptyMessage="#{msg.No_results}" rows="10" paginator="true"
+		paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}" paginatorPosition="bottom" lazy="true">
+
+		<p:column headerText="#{msg.Available_items}">
+			<h:outputText value="#{cc.attrs.listener.itemToString(item)}" />
+		</p:column>
+
+		<p:column style="width:30px">
+			<div style="display: table">
+				<div class="img-fa-only-button" style="display: table-cell; vertical-align: middle">
+					<h:commandButton class="btn transparent submit" value="" action="#{cc.attrs.listener.selectItem(item.id)}" />
+					<i class="fa fa-arrow-right"></i>
+				</div>
+			</div>
+		</p:column>
+	</p:dataTable>
+
+	<p:dataTable var="item" value="#{cc.attrs.selectedValues}" id="#{cc.attrs.propertyName}" style="margin-bottom:0; float:right; width:48%" emptyMessage="#{msg.No_selected_items}"
+		rows="10" paginator="true" paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink}"
+		rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+
+		<p:column headerText="#{msg.Selected_items}">
+			<h:outputText value="#{cc.attrs.listener.itemToString(item)}" />
+		</p:column>
+
+		<p:column style="width:30px">
+			<div style="display: table">
+				<div class="img-fa-only-button" style="display: table-cell; vertical-align: middle">
+					<h:commandButton class="btn transparent submit" value="" action="#{cc.attrs.listener.unselectItem(item.id)}" />
+					<i class="fa fa-times"></i>
+				</div>
+			</div>
+		</p:column>
+
+	</p:dataTable>
+
+	<div style="margin-bottom: 0; float: right; width: 48%">
+		<h:message for="#{cc.attrs.propertyName}" class="has-error help-block" />
+	</div>
+
+</composite:implementation>
+
+</html>
+

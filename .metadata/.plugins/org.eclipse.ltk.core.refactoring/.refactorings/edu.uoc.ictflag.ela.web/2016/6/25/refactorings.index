@@ -1,0 +1,22 @@
+1466490552860	Copy file
+1466490884274	Copy compilation unit
+1466535942728	Extract method 'ChartsPostConfiguration'
+1466536098461	Extract method 'SetupFilters'
+1466536575877	Rename field 'right'
+1466536587017	Rename field 'wrong'
+1466536596382	Rename field 'timeout'
+1466536601956	Rename field 'error'
+1466537721176	Extract method 'chartPostConfiguration'
+1466592880312	Rename field 'assignmentsReportManager'
+1466593161012	Rename local variable 'outcomesData'
+1466593208058	Extract method 'calculateDataItemLabel'
+1466593553662	Extract method 'setupDataInCharts'
+1466593611480	Rename local variable 'outcomesData'
+1466593764221	Rename method 'setupExercisesReportCharts'
+1466594393155	Rename local variable 'label'
+1466594401736	Rename local variable 'labelTable'
+1466594683914	Rename local variable 'dataItem'
+1466596008062	Rename local variable 'assignmentDataItem'
+1466609848670	Rename local variable 'options'
+1466620361764	Delete element
+1466620368279	Delete element

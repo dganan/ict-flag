@@ -1,0 +1,7 @@
+1466089683492	Rename field 'selectedTools2'
+1466156442412	Encapsulate field 'selectedDateFilterOption'
+1466156448590	Encapsulate field 'dateFilterOptions'
+1466159428252	Encapsulate field 'startDate'
+1466159432190	Encapsulate field 'endDate'
+1466267589728	Move 2 resources to 'private'
+1466333792439	Rename field 'selectedCoursesAssignments'

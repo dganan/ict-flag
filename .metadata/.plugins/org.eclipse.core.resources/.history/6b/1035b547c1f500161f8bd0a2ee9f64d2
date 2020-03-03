@@ -1,0 +1,32 @@
+package edu.uoc.ictflag.ela.model;
+
+public class StudentReportGlobalProgressItem
+{
+	private long[] globalProgressLevels;
+	private long globalProgressCurrentValue;
+
+	public long[] getGlobalProgressLevels()
+	{
+		return globalProgressLevels;
+	}
+
+	public void setGlobalProgressLevels(long[] globalProgressLevels)
+	{
+		this.globalProgressLevels = globalProgressLevels;
+	}
+
+	public long getGlobalProgressCurrentValue()
+	{
+		return globalProgressCurrentValue;
+	}
+
+	public void setGlobalProgressCurrentValue(long globalProgressCurrentValue)
+	{
+		this.globalProgressCurrentValue = globalProgressCurrentValue;
+	}
+	
+	public long getGlobalProgressLevel(int level)
+	{
+		return globalProgressLevels[level];
+	}
+}

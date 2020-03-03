@@ -1,0 +1,31 @@
+<ui:composition template="/WEB-INF/templates/masterpage.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="head-title">ICT-FLAG Home</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<h2>
+				<h:outputText value="#{msg['hello']}" />
+			</h2>
+
+			<h:panelGrid columns="2">
+ 
+		Language : 
+		<h:selectOneMenu value="#{localization.localeCode}"
+					onchange="submit()"
+					valueChangeListener="#{localization.countryLocaleCodeChanged}">
+					<f:selectItems value="#{localization.countriesInMap}" />
+				</h:selectOneMenu>
+
+
+				<h:outputLink value="./private/ProgramsList.xhtml">link</h:outputLink>
+
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,35 @@
+<ui:composition template="/WEB-INF/templates/masterpage.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="head-title">ICT-FLAG 404 Not found</ui:define>
+
+		<ui:define name="styles">
+
+		<!-- BEGIN PAGE LEVEL STYLES -->
+		<h:outputStylesheet name="./assets/admin/pages/css/error.css" />
+		<!-- END PAGE LEVEL STYLES -->
+
+	</ui:define>
+
+
+	<ui:define name="title"></ui:define>
+
+	<ui:define name="breadcrumb"></ui:define>
+
+	<ui:define name="content">
+	
+		<br/><br/><br/>
+	
+		<div class="row">
+			<div class="col-md-12 page-404">
+				<div class="number">404</div>
+				<div class="details">
+					<h3>Oops! You're lost.</h3>
+					<p>
+						We can not find the page you're looking for.
+					</p>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

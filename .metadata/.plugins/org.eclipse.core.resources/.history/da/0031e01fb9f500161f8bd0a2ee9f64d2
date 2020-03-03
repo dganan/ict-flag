@@ -1,0 +1,175 @@
+<ui:composition template="../WEB-INF/templates/masterpage.xhtml" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:ictflag="http://java.sun.com/jsf/composite/ictflag" xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewAction action="#{studentReportController.initialize}" onPostback="true" />
+	</f:metadata>
+
+	<ui:define name="head-title">ICT-FLAG #{msg.Student_report}</ui:define>
+
+	<ui:define name="title">#{msg.Student_report}</ui:define>
+
+	<ui:define name="breadcrumb"></ui:define>
+
+	<ui:define name="content">
+
+
+		<div class="row">
+
+			<div class="col-md-12">
+				<h3 style="font-weight:bold">#{msg.GlobalProgress}</h3>
+	
+				<div style="height: 10px" />
+	
+				<span style="text-align:left">#{msg.GlobalProgressDescription}</span>
+			</div>
+
+			<div class="col-md-12" style="height: 30px" />
+			
+			<div class="col-md-3" style="padding-right:0px;border-right: black solid 2px;">
+				<h4 style="font-weight:bold;text-align:right;margin-right:10px">#{msg.Level} 1</h4>
+				
+				<div class="progress">
+  					<div class="progress-bar" role="progressbar" aria-valuenow="#{studentReportController.percentageLevel1}%"" aria-valuemin="0" aria-valuemax="100" style="background-color:#337AB8;width:#{studentReportController.percentageLevel1}%">#{studentReportController.percentageLevel1}%</div>
+				</div>
+
+				<span style="float:right;text-align:right;margin-right:10px"><h:outputText value="#{studentReportController.level1Message}" /></span>
+			</div>
+			<div class="col-md-3" style="padding-right:0px;padding-left:0px;border-right: black solid 2px;">
+				<h4 style="font-weight:bold;text-align:right;margin-right:10px">#{msg.Level} 2</h4>
+
+				<div class="progress">
+  					<div class="progress-bar" role="progressbar" aria-valuenow="#{studentReportController.percentageLevel2}" aria-valuemin="0" aria-valuemax="100" style="background-color:#7133B8;width:#{studentReportController.percentageLevel2}%">#{studentReportController.percentageLevel2}%</div>
+				</div>
+
+				<span style="float:right;text-align:right;margin-right:10px"><h:outputText value="#{studentReportController.level2Message}" /></span>
+			</div>
+			<div class="col-md-3" style="padding-right:0px;padding-left:0px;border-right: black solid 2px;">
+
+				<h4 style="font-weight:bold;text-align:right;margin-right:10px">#{msg.Level} 3</h4>
+				<div class="progress">
+  					<div class="progress-bar" role="progressbar" aria-valuenow="#{studentReportController.percentageLevel3}" aria-valuemin="0" aria-valuemax="100" style="background-color:#B87133;width:#{studentReportController.percentageLevel3}%">#{studentReportController.percentageLevel3}%</div>
+				</div>
+
+				<span style="float:right;text-align:right;margin-right:10px"><h:outputText value="#{studentReportController.level3Message}" /></span>
+			</div>
+			<div class="col-md-3" style="padding-left:0px;padding-right:0px;margin-right:10px;border-right: black solid 2px;">
+				<h4 style="font-weight:bold;text-align:right;margin-right:10px">#{msg.Level} 4</h4>
+
+				<div class="progress">
+  					<div class="progress-bar" role="progressbar" aria-valuenow="#{studentReportController.percentageLevel4}" aria-valuemin="0" aria-valuemax="100" style="background-color:#7AB833;width:#{studentReportController.percentageLevel4}%">#{studentReportController.percentageLevel4}%</div>
+				</div>
+
+				<span style="float:right;text-align:right;margin-right:10px"><h:outputText value="#{studentReportController.level4Message}" /></span>
+			</div>
+
+			<div class="col-md-12" style="height: 30px" />
+		</div>
+
+		<div class="row">
+
+			<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+	
+				<h3 style="font-weight:bold">#{msg.RecentActivity}</h3>
+
+				<div class="note note-info">
+                	<h4 class="block"><h:outputText value="#{studentReportController.recentActivity}" /></h4>
+                </div>
+			
+			</div>
+			
+			<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+	
+				<h3 style="font-weight:bold">#{msg.Suggestions}</h3>
+
+				<div class="note note-success">
+                	<h4 class="block"><h:outputText value="#{studentReportController.suggestions}" /></h4>
+        		</div>
+			</div>
+
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12" style="text-align:right">
+			
+				<h3 style="font-weight:bold">#{msg.ReportDate}</h3>
+				<h3><h:outputText value="#{studentReportController.reportDate}" /></h3>
+			
+			</div>
+			
+		</div>
+
+		<h3 style="font-weight:bold">#{msg.YourPerformance}</h3>
+
+		<div class="row">
+
+			<ictflag:totalSubmissionsBox dataItem="#{studentReportController.dataItem.dataForVerilUOC}" />
+			<ictflag:totalExercisesBox dataItem="#{studentReportController.dataItem.dataForVerilUOC}" />
+			<ictflag:completedExercisesBox dataItem="#{studentReportController.dataItem.dataForVerilUOC}" />
+
+ 		</div>
+
+		<h3 style="font-weight:bold">#{msg.ToolSummary}</h3>
+
+		<div class="row">
+
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="dashboard-stat2" style="height:110px">
+					<div style="float:left;"><h3>VerilCirc <br/> <small>Digital circuit design</small></h3></div>
+					<div style="float:left;margin-top:10px;margin-left:50px"><p:graphicImage name="./assets/ictflag/img/verilcirc.png" width="56" /></div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+
+
+			<ictflag:totalSubmissionsBox dataItem="#{studentReportController.dataItem.dataForVerilCirc}" />
+			<ictflag:totalExercisesBox dataItem="#{studentReportController.dataItem.dataForVerilCirc}" />
+			<ictflag:completedExercisesBox dataItem="#{studentReportController.dataItem.dataForVerilCirc}" />
+
+		</div>
+
+		<div class="row">
+
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="dashboard-stat2" style="height:110px">
+					<div style="float:left;"><h3>KeMAP <br/> <small>Karnaugh Maps</small></h3></div>
+					<div style="float:left;margin-top:10px;margin-left:50px"><p:graphicImage name="./assets/ictflag/img/kemap.png" width="56" /></div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+
+
+			<ictflag:totalSubmissionsBox dataItem="#{studentReportController.dataItem.dataForKeMap}" />
+			<ictflag:totalExercisesBox dataItem="#{studentReportController.dataItem.dataForKeMap}" />
+			<ictflag:completedExercisesBox dataItem="#{studentReportController.dataItem.dataForKeMap}" />
+
+		</div>
+
+		<div class="row" style="margin-top:20px">
+		
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="dashboard-stat2" style="height:110px">
+					<div style="float:left"><h3>VerilChart <br/> <small>Time charts</small></h3></div>
+					<div style="float:left;margin-top:10px;margin-left:50px"><p:graphicImage name="./assets/ictflag/img/verilchart.png" width="56" /></div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row" style="margin-top:20px">
+
+			<ictflag:totalSubmissionsBox dataItem="#{studentReportController.dataItem.dataForVerilChart}" />
+			<ictflag:totalExercisesBox dataItem="#{studentReportController.dataItem.dataForVerilChart}" />
+			<ictflag:completedExercisesBox dataItem="#{studentReportController.dataItem.dataForVerilChart}" />
+
+		</div>
+
+	</ui:define>
+	
+	<ui:define name="scripts">
+	       
+	</ui:define>
+</ui:composition>

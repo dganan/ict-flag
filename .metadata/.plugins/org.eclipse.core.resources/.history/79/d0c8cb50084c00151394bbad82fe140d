@@ -1,0 +1,108 @@
+package edu.com.ictflag.security.bll;
+
+import java.io.Serializable;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import edu.uoc.ictflag.core.IctFlagPermissionDeniedException;
+import edu.uoc.ictflag.security.dal.IAuthorizationRepository;
+import edu.uoc.ictflag.security.dal.IUserRepository;
+import edu.uoc.ictflag.security.model.Permission;
+import edu.uoc.ictflag.security.model.User;
+import edu.uoc.ictflag.security.model.UserRole;
+import edu.uoc.ictflag.security.model.UserRolePermissions;
+
+@Stateless
+public class AuthorizationService implements IAuthorizationService, Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	IAuthorizationRepository authorizationRepository;
+	IUserRepository userRepository;
+	
+	@Inject
+	public AuthorizationService(IUserRepository userRepository, IAuthorizationRepository authorizationRepository)
+	{
+		this.userRepository = userRepository;
+		this.authorizationRepository = authorizationRepository;
+	}
+	
+	@Override
+	public boolean userHasCreatePermission(String username, String module, String entity) throws Exception
+	{
+		return userHasPermission(username, module, entity, Permission.CREATE);
+	}
+	
+	@Override
+	public boolean userHasReadPermission(String username, String module, String entity) throws Exception
+	{
+		return userHasPermission(username, module, entity, Permission.READ);
+	}
+	
+	@Override
+	public boolean userHasUpdatePermission(String username, String module, String entity) throws Exception
+	{
+		return userHasPermission(username, module, entity, Permission.UPDATE);
+	}
+	
+	@Override
+	public boolean userHasDeletePermission(String username, String module, String entity) throws Exception
+	{
+		return userHasPermission(username, module, entity, Permission.DELETE);
+	}
+	
+	private boolean userHasPermission(String username, String module, String entity, Permission permission) throws Exception
+	{
+		boolean hasPermission = false;
+		
+		User u = userRepository.getUser(username);
+		
+		if (u != null)
+		{
+			if (u.getRole() == UserRole.SUPERUSER)
+			{
+				hasPermission = true;
+			}
+			else
+			{
+				UserRolePermissions urp = authorizationRepository.getUserRolePermissions(u.getRole(), module, entity);
+				
+				hasPermission = urp != null && urp.getPermissions().contains(permission);
+			}
+		}
+		
+		return hasPermission;
+	}
+	
+	@Override
+	public void ensureUserHasPermission(String username, String module, String entity, Permission permission) throws Exception
+	{
+		if (!userHasPermission(username, module, entity, permission))
+		{
+			throw new IctFlagPermissionDeniedException();
+		}
+	}
+	
+	@Override
+	public boolean userHasPageAccess(String username, String pageURL) throws Exception
+	{
+		boolean hasAccess = false;
+		
+		User u = userRepository.getUser(username);
+		
+		if (u != null)
+		{
+			if (u.getRole() == UserRole.SUPERUSER)
+			{
+				hasAccess = true;
+			}
+			else
+			{
+				hasAccess = !authorizationRepository.userRolePageAccessExists(u.getRole(), pageURL);
+			}
+		}
+		
+		return hasAccess;
+	}
+}
